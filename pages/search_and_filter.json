@@ -1,0 +1,15 @@
+{
+  "name": "Search & Filter",
+  "category": "Experiences",
+  "blocks": [
+    {
+      "key": "search_page"
+    },
+    {
+      "key": "testimonials_text_only",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    }
+  ]
+}

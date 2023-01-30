@@ -1,0 +1,400 @@
+---
+attributes:
+  Show_Square_Images:
+    group: design
+    label: Display square images
+    hint: If this is not selected rectangular images will be displayed in a 3-2 ratio.
+    type: Boolean
+    default: true
+  cards_per_row:
+    group: layout
+    label: Number of cards per row
+    type: range
+    min: 1
+    max: 3
+    step: 1
+    default: 3
+    unit: cards
+  Show_Cards_In_A_Swiper:
+    group: layout
+    label: Display cards in a carousel
+    type: Boolean
+  Center_Incomplete_Rows:
+    group: layout
+    label: Align cards to the centre
+    type: Boolean
+  Center_Content:
+    group: layout
+    label: Center content in cards
+    type: Boolean
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Card_Background_Image:
+    group: design
+    label: Card background image
+    hint: Recommended minimum width 720px.
+    type: Image
+  Card_Background_Color:
+    group: design
+    label: Card background colour
+    type: color
+    default:
+      palette: secondary
+  Card_Text_Color:
+    group: design
+    label: Card text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level.</p>
+  Show_Button_Above_Cards:
+    group: content
+    label: Display button above cards
+    type: Boolean
+    default: true
+  Show_Button_Below_Cards:
+    group: content
+    label: Display button below cards
+    type: Boolean
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  cards:
+    group: content
+    type: image_text_card
+    label: Image & text cards
+    hint: Recommended minimum width of images 720px.
+    array: true
+    default:
+      - title: Create
+        text: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+        cta_text: Learn More
+        image:
+          asset: images/sky.jpg
+      - title: Launch
+        text: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+        cta_text: Learn More
+        image:
+          asset: images/tree.jpg
+      - title: Grow
+        text: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+        cta_text: Learn More
+        image:
+          asset: images/ocean.jpg
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+{% assign block_id = block.id %}
+
+<style>
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Button_Color %}
+    #{{ block.id }} .block-intro-button .button {
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }} !important;
+    }
+  {% endif %}
+
+  {% if Text_Color %}
+    #{{ block.id }} .swiper-pag {
+      color: {{ Text_Color.hex }};
+    }
+  {% endif %}
+
+  {% if Text_Color %}
+    #{{ block.id }} .swiper-prev svg circle,
+    #{{ block.id }} .swiper-prev svg path,
+    #{{ block.id }} .swiper-next svg circle,
+    #{{ block.id }} .swiper-next svg path {
+      stroke: {{ Text_Color.hex }};
+    }
+  {% endif %}
+
+  #{{ block.id }} .card-content {
+    {% if Card_Background_Image %}
+      background-image: url('{{ Card_Background_Image.xlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }};
+    {% endif %}
+    {% if Card_Background_Color %}
+      background-color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Card_Text_Color %}
+    #{{ block.id }} .card-content .button {
+      color: {{ Card_Text_Color.hex }} !important;
+      border: solid 1px {{ Card_Text_Color.hex }} !important;
+    }
+  {% endif %}
+
+  #{{ block.id }} .block-intro-button .button {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .swiper-pag {
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .swiper-prev svg circle,
+  #{{ block.id }} .swiper-prev svg path,
+  #{{ block.id }} .swiper-next svg circle,
+  #{{ block.id }} .swiper-next svg path {
+    {% if Text_Color %}
+      stroke: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .card-content {
+    {% if Card_Background_Image %}
+      background-image: url('{{ Card_Background_Image.xlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }};
+    {% endif %}
+    {% if Card_Background_Color %}
+      background-color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .card-content .button {
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }} !important;
+      border: solid 1px {{ Card_Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container text-image-block">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text or Show_Button_Above_Cards %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="{% if Show_Button_Above_Cards %}mb-4{% else %}mb-5{% endif %} text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    {% if Show_Button_Above_Cards %}
+      <div class="mb-5 text-center block-intro-button">
+        <a class="button button-primary-outline text-center" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+
+    {% if Show_Cards_In_A_Swiper %}
+      <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex">
+        <div class="swiper-prev text-image-swiper-prev cursor-pointer">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)"/>
+            <path d="M22 26.6667L16.6667 20.3333L22 14"/>
+          </svg>
+        </div>
+
+        <div class="swiper-pag text-image-swiper-pagination text-center label-big w-auto px-4"></div>
+
+        <div class="swiper-next text-image-swiper-next cursor-pointer">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="19.5"/>
+            <path d="M18 14L23.3333 20.3333L18 26.6667"/>
+          </svg>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="{% if Show_Cards_In_A_Swiper %}text-image-swiper-container swiper-container{% endif %}">
+      <div class="{% if Show_Cards_In_A_Swiper %}swiper-wrapper{% else %}row{% endif %} {% if Center_Incomplete_Rows and Show_Cards_In_A_Swiper == false %}justify-content-center{% endif %}">
+        {% for card in cards %}
+          <div class="{% if Show_Cards_In_A_Swiper %}swiper-slide h-auto{% elsif cards_per_row == '1' %}col-12{% elsif cards_per_row == '2' %}col-md-6{% else %}col-md-6 col-lg-4{% endif %} mb-4">
+            <div class="text-image-card {% if cards_per_row == '1' %}row mx-0{% else %}h-100 d-flex flex-column{% endif %}">
+              {% if card.image %}
+                <div class="img-aspect {% unless Show_Square_Images %}img-aspect-wide{% endunless %} {% if cards_per_row == '1' %}col-md-6 px-0{% endif %}">
+                  <img src="{{ card.image.medium_url }}" {% if card.image.label %}alt="{{ card.image.label }}" {% endif %} />
+                </div>
+              {% endif %}
+
+              <div class="card-content {% if Center_Content %}text-center{% endif %} {% if cards_per_row == '1' %}col-md-6 justify-content-center px-lg-5{% else %}justify-content-between{% endif %} bg-secondary text-body-color p-4 flex-grow-1 d-flex flex-column">
+                <div>
+                  {% if card.title %}
+                    {% if cards_per_row == '1' %}
+                      <h3 class="mb-3">
+                        {{ card.title }}
+                      </h3>
+                    {% else %}
+                      <h4 class="mb-3">
+                        {{ card.title }}
+                      </h4>
+                    {% endif %}
+                  {% endif %}
+
+                  {% if card.text %}
+                    <div class="text-field">
+                      {{ card.text }}
+                    </div>
+                  {% endif %}
+                </div>
+
+                {% if card.cta_text %}
+                  <div>
+                    <a class="button button-primary-outline text-center mt-3" {% if card.cta_link %}href="{{ card.cta_link }}"{% endif %}{% if card.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                      {{ card.cta_text }}
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if Show_Button_Below_Cards %}
+      <div class="mt-5 text-center block-intro-button">
+        <a class="button button-primary-outline text-center" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if Show_Cards_In_A_Swiper %}
+  <script>
+    var initSwiperMultipleImgTxt{{ block_id | remove: 'block-' }} = () => {
+      if(window.swiperMultipleImgTxt{{ block_id | remove: 'block-' }}) window.swiperMultipleImgTxt{{ block_id | remove: 'block-' }}.destroy()
+
+      window.swiperMultipleImgTxt{{ block_id | remove: 'block-' }} = new Swiper('#{{ block.id }} .swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        simulateTouch: false,
+        pagination: {
+          el: '#{{ block.id }} .swiper-pag',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '#{{ block.id }} .swiper-next',
+          prevEl: '#{{ block.id }} .swiper-prev',
+        },
+        breakpoints: {
+          {% unless cards_per_row == '1'  %}
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+              loop: true
+            },
+            {% unless cards_per_row == '2' %}
+              992: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true
+              },
+            {% endunless %}
+          {% endunless %}
+        }
+      })
+
+      document.removeEventListener("DOMContentLoaded", initSwiperMultipleImgTxt{{ block_id | remove: 'block-' }})
+    }
+
+    document.addEventListener("DOMContentLoaded", initSwiperMultipleImgTxt{{ block_id | remove: 'block-' }})
+  </script>
+{% endif %}

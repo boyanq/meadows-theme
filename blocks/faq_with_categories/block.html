@@ -1,0 +1,787 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  FAQ_Header_Background_Color:
+    group: design
+    label: FAQ group headings background colour
+    type: color
+    default:
+      palette: secondary
+  FAQ_Header_Text_Color:
+    group: design
+    label: FAQ group headings text colour
+    type: color
+    default:
+      palette: body-color
+  FAQ_Question_And_Answer_Background_Color:
+    group: design
+    label: Q&A background colour
+    type: color
+  FAQ_Question_And_Answer_Text_Color:
+    group: design
+    label: Q&A text colour
+    type: color
+    default:
+      palette: body-color
+  Remove_Hover_Color:
+    group: design
+    label: Remove hover effect
+    hint: By default, the FAQ question changes to your primary colour on hover.
+    type: Boolean
+    default: false
+  Hide_Left_Hand_Navigation:
+    group: layout
+    label: Hide side navigation
+    type: Boolean
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: FAQs
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level.</p>
+  FAQ_Group_1_Header:
+    group: content
+    label: Group 1 Header
+    type: String
+    default: Questions
+  faqs_group_1:
+    type: FAQ
+    label: Group 1 FAQs
+    array: true
+    default:
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  FAQ_Group_2_Header:
+    group: content
+    label: Group 2 Header
+    type: String
+    default: Questions
+  faqs_group_2:
+    type: FAQ
+    label: Group 2 FAQs
+    array: true
+    default:
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  FAQ_Group_3_Header:
+    group: content
+    label: Group 3 Header
+    type: String
+    default: Questions
+  faqs_group_3:
+    type: FAQ
+    label: Group 3 FAQs
+    array: true
+    default:
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  FAQ_Group_4_Header:
+    group: content
+    label: Group 4 Header
+    type: String
+  faqs_group_4:
+    type: FAQ
+    label: Group 4 FAQs
+    array: true
+  FAQ_Group_5_Header:
+    group: content
+    label: Group 5 Header
+    type: String
+  faqs_group_5:
+    type: FAQ
+    label: Group 5 FAQs
+    array: true
+  FAQ_Group_6_Header:
+    group: content
+    label: Group 6 Header
+    type: String
+  faqs_group_6:
+    type: FAQ
+    label: Group 6 FAQs
+    array: true
+  FAQ_Group_7_Header:
+    group: content
+    label: Group 7 Header
+    type: String
+  faqs_group_7:
+    type: FAQ
+    label: Group 7 FAQs
+    array: true
+  FAQ_Group_8_Header:
+    group: content
+    label: Group 8 Header
+    type: String
+  faqs_group_8:
+    type: FAQ
+    label: Group 8 FAQs
+    array: true
+  FAQ_Group_9_Header:
+    group: content
+    label: Group 9 Header
+    type: String
+  faqs_group_9:
+    type: FAQ
+    label: Group 9 FAQs
+    array: true
+  FAQ_Group_10_Header:
+    group: content
+    label: Group 10 Header
+    type: String
+  faqs_group_10:
+    type: FAQ
+    label: Group 10 FAQs
+    array: true
+---
+
+<style>
+  #{{ block.id }} .faq-with-categories .collapsed .group-header {
+    opacity: 0.7;
+  }
+
+  #{{ block.id }} .faq-header-column {
+    max-width: 300px;
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .faq-group-header {
+    {% if FAQ_Header_Text_Color %}
+      color: {{ FAQ_Header_Text_Color.hex }};
+    {% endif %}
+    {% if FAQ_Header_Background_Color %}
+      background-color: {{ FAQ_Header_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .faq-group-body {
+    {% if FAQ_Question_And_Answer_Text_Color %}
+      color: {{ FAQ_Question_And_Answer_Text_Color.hex }};
+    {% endif %}
+    {% if FAQ_Question_And_Answer_Background_Color %}
+      background-color: {{ FAQ_Question_And_Answer_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .faq-group-header .accordionToggle circle,
+  #{{ block.id }} .faq-group-header .accordionToggle path {
+    {% if FAQ_Header_Text_Color %}
+      stroke: {{ FAQ_Header_Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .faq-group-body .accordionToggle circle,
+  #{{ block.id }} .faq-group-body .accordionToggle path {
+    {% if FAQ_Question_And_Answer_Text_Color %}
+      stroke: {{ FAQ_Question_And_Answer_Text_Color.hex }};
+    {% endif %}
+  }
+
+  {% unless Remove_Hover_Color %}
+    #{{ block.id }} .faq-with-categories .accordion .cursor-pointer:hover h5 {
+      color: var(--primary) !important;
+    }
+
+    #{{ block.id }} .faq-with-categories .accordion .cursor-pointer:hover svg circle, 
+    #{{ block.id }} .faq-with-categories .accordion .cursor-pointer:hover svg path  {
+      stroke: var(--primary) !important;
+    }
+  {% endunless %}
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container faq-with-categories ">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="text-field mb-5 text-center max-width-med mx-auto">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    <div class="row">
+      {% unless Hide_Left_Hand_Navigation %}
+        <div class="d-none d-md-block col-md-auto pr-md-5 faq-header-column">
+          {% assign groupCounter = 1 %}
+
+          {% if FAQ_Group_1_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_1_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_2_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_2_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_3_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_3_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_4_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_4_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_5_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_5_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_6_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_6_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_7_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_7_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_8_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_8_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_9_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_9_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_10_Header %}
+            <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="cursor-pointer pb-3 collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+              <p class="label-big cursor-pointer group-header">
+                {{ FAQ_Group_10_Header }}
+              </p>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+        </div>
+      {% endunless %}
+
+      <div class="col-md {% unless Hide_Left_Hand_Navigation %}pl-md-5{% endunless %}">
+        <div class="accordion" id="faqAccordion">
+          {% assign groupCounter = 1 %}
+
+          {% if FAQ_Group_1_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_1_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5" />
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_1 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_2_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_2_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_2 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_3_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_3_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_3 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                      </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_4_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_4_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_4 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_5_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_5_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_5 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_6_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_6_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_6 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_7_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_7_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_7 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_8_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_8_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                  {% for faq in faqs_group_8 %}
+                    <div class="py-3">
+                      <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                        <h5 class="mb-0">
+                          {{ faq.question }}
+                        </h5>
+
+                        <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                          <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                        </svg>
+                      </div>
+
+                      <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                        <div class="pt-3 text-field">
+                          {{ faq.answer }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+              </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_9_Header %}
+            <div class="mb-4">
+                <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                  <h5 class="mb-0">
+                    {{ FAQ_Group_9_Header }}
+                  </h5>
+
+                  <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                    <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                  </svg>
+                </div>
+
+                <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                  {% for faq in faqs_group_9 %}
+                    <div class="py-3">
+                      <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                        <h5 class="mb-0">
+                          {{ faq.question }}
+                        </h5>
+
+                        <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                          <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                        </svg>
+                      </div>
+
+                      <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                        <div class="pt-3 text-field">
+                          {{ faq.answer }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+
+            {% assign groupCounter = groupCounter | plus: 1 %}
+          {% endif %}
+
+          {% if FAQ_Group_10_Header %}
+            <div class="mb-4">
+              <div id="faqGroupHeader{{ block.id }}{{ groupCounter }}" class="faq-group-header cursor-pointer bg-secondary w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faqGroup{{ block.id }}{{ groupCounter }}" aria-expanded="true" aria-controls="faqGroup{{ block.id }}{{ groupCounter }}">
+                <h5 class="mb-0">
+                  {{ FAQ_Group_10_Header }}
+                </h5>
+
+                <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                  <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                </svg>
+              </div>
+
+              <div id="faqGroup{{ block.id }}{{ groupCounter }}" class="collapse faq-group-body" aria-labelledby="faqGroupHeader{{ block.id }}{{ groupCounter }}">
+                {% for faq in faqs_group_10 %}
+                  <div class="py-3">
+                    <div id="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <h5 class="mb-0">
+                        {{ faq.question }}
+                      </h5>
+
+                      <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                        <path d="M19.5 13.5L14.75 17.5L10 13.5"/>
+                      </svg>
+                    </div>
+
+                    <div id="faq{{ block.id }}{{ groupCounter }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ groupCounter }}{{ forloop.index }}">
+                      <div class="pt-3 text-field">
+                        {{ faq.answer }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

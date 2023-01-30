@@ -1,0 +1,181 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  FAQ_Question_And_Answer_Background_Color:
+    group: design
+    label: Q&A background colour
+    type: color
+  FAQ_Question_And_Answer_Text_Color:
+    group: design
+    label: Q&A text colour
+    type: color
+    default:
+      palette: body-color
+  Remove_Hover_Color:
+    group: design
+    label: Remove hover effect
+    hint: By default, the FAQ question changes to your primary colour on hover.
+    type: Boolean
+    default: false
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: FAQs
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level.</p>
+  faqs:
+    type: FAQ
+    label: FAQs
+    array: true
+    default:
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+      - question: A frequently asked question?
+        answer: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+---
+
+<style>
+  {% unless Remove_Hover_Color %}
+    #{{ block.id }} .faq-no-categories .accordion .cursor-pointer:hover h5 {
+      color: var(--primary);
+    }
+
+    #{{ block.id }} .faq-no-categories .accordion .cursor-pointer:hover svg circle, 
+    #{{ block.id }} .faq-no-categories .accordion .cursor-pointer:hover svg path {
+      stroke: var(--primary);
+    }
+  {% endunless %}
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .accordion {
+    {% if FAQ_Question_And_Answer_Text_Color %}
+      color: {{ FAQ_Question_And_Answer_Text_Color.hex }};
+    {% endif %}
+    {% if FAQ_Question_And_Answer_Background_Color %}
+      background-color: {{ FAQ_Question_And_Answer_Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .accordionToggle {
+    fill: none;
+  }
+
+  #{{ block.id }} .accordionToggle path,
+  #{{ block.id }} .accordionToggle circle {
+    {% if FAQ_Question_And_Answer_Text_Color %}
+      stroke: {{ FAQ_Question_And_Answer_Text_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container faq-no-categories">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="mb-5 text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-12">
+        <div class="accordion" id="faqAccordion">
+          <div>
+            {% for faq in faqs %}
+              <div class="py-3">
+                <div id="faqHeading{{ block.id }}{{ forloop.index }}" class="cursor-pointer w-100 px-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ block.id }}{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ block.id }}{{ forloop.index }}">
+                  <h5 class="mb-0">
+                    {{ faq.question }}
+                  </h5>
+
+                  <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)"/>
+                    <path d="M19.5 13.5L14.75 17.5L10 13.5" />
+                  </svg>
+                </div>
+
+                <div id="faq{{ block.id }}{{ forloop.index }}" class="collapse px-4" aria-labelledby="faqHeading{{ block.id }}{{ forloop.index }}">
+                  <div class="pt-3 text-field">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+{
+  "key": "image_grid_card",
+  "name": "Image Grid Card",
+  "attributes": [
+    {
+      "name": "title",
+      "label": "Title",
+      "type": "string"
+    },
+    {
+      "name": "image",
+      "label": "Image",
+      "type": "image"
+    },
+    {
+      "name": "label",
+      "label": "Image alt text",
+      "type": "string"
+    },
+    {
+      "name": "cta_link",
+      "label": "Image link",
+      "type": "string"
+    },
+    {
+      "name": "new_tab",
+      "label": "Open link in a new tab",
+      "type": "boolean"
+    }
+  ]
+}

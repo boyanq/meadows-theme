@@ -1,0 +1,179 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+    default:
+      asset: images/waves.jpg
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on images
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Image:
+    group: content
+    label: Poster image
+    hint: Recommended minimum width 1200px.
+    type: Image
+    default:
+      asset: images/poster-1.jpg
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: VIEW POSTER
+---
+
+<style>
+  .poster-hero .poster-col {
+    overflow-y: hidden;
+  }
+
+  .poster-hero .poster-col img {
+    max-height: 28rem;
+    object-fit: contain;
+    margin-bottom: -2rem;
+  }
+
+  .poster-hero .poster-col .view-gallery-button {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%);
+  }
+
+  .poster-hero-container {
+    min-height: 28rem;
+  }
+
+  #{{ block.id }} .block-container {
+    {% if Background_Image %}
+      background-image: {% unless Remove_Background_Image_Overlay %}linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%),{% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .view-gallery-button circle,
+  #{{ block.id }} .view-gallery-button path {
+    {% if Button_Color %}
+      stroke: {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="genie-block poster-hero py-0 block-container">
+  <div class="poster-hero-container container-fluid px-md-5 d-flex flex-column justify-content-end">
+    <div class="row mx-0">
+      <div class="col-md-6 mt-5 mt-md-3 mt-lg-0 mb-5 mb-md-5 mb-xl-5 d-flex flex-column justify-content-end">
+        {% if Header %}
+          <h1 class="{% if Text %}mb-3{% endif %} w-100">
+            {{ Header }}
+          </h1>
+        {% endif %}
+
+        {% if Text %}
+          <div class="text-big w-100 text-field">
+            {{ Text }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6 poster-col text-center">
+        {% if Image.url %}
+          <a class="gallery-img d-flex align-items-end" href="{{ Image.xlarge_url }}">
+            <img class="w-100 h-100" src="{{ Image.medium_url }}" alt="{{ Image.name }}" />
+          </a>
+        {% endif %}
+
+        {% if Image.url and Show_Button %}
+          <div class="mb-5 text-center d-flex align-items-center justify-content-center cursor-pointer view-gallery-button">
+            <p class="button mr-2 text-white">
+              {{ Button_Text }}
+            </p>
+
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="15" cy="15" r="14.5"/>
+              <path d="M13.5 10.5L17.5 15.25L13.5 20"/>
+            </svg>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var $gallery{ block.id | remove: '-' }} = new SimpleLightbox('#{{ block.id }} .gallery-img', {
+      showCounter: false,
+    });
+
+    $('#{{ block.id }} .view-gallery-button').click(function () {
+      $gallery{{ block.id | remove: '-' }}.open();
+    });
+  });
+</script>

@@ -1,0 +1,16 @@
+{
+  "key": "testimonial_card",
+  "name": "Testimonial Card",
+  "attributes": [
+    {
+      "name": "name",
+      "label": "Name",
+      "type": "string"
+    },
+    {
+      "name": "text",
+      "label": "Text",
+      "type": "text"
+    }
+  ]
+}

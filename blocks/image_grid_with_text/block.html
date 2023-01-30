@@ -1,0 +1,222 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Link_Color:
+    group: design
+    label: Image text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Center_Headers:
+    group: layout
+    label: Align headers to the centre
+    type: Boolean
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Subheader:
+    group: content
+    label: Subtitle
+    type: String
+    default: CREATING EXPERIENCES IS AN ART
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  cards:
+      type: image_grid_card
+      label: Images
+      hint: Recommended minimum width of images 720px.
+      array: true
+      default:
+        - title: CREATE
+          image:
+            asset: images/sky.jpg
+        - title: LAUNCH
+          image:
+            asset: images/steps.jpg
+        - title: GROW
+          image:
+            asset: images/beach.jpg
+        - title: SELL
+          image:
+            asset: images/tree.jpg
+        - title: SHARE
+          image:
+            asset: images/grass.jpg
+        - title: DREAM
+          image:
+            asset: images/rocks.jpg
+---
+
+<style>
+  #{{ block.id }} .image-grid-card .position-absolute {
+    bottom: 0;
+  }
+
+  #{{ block.id }} .image-grid a {
+    color: inherit;
+  }
+
+  #{{ block.id }} .image-grid a:hover {
+    opacity: 0.9;
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .cards {
+    {% if Link_Color %}
+      color: {{ Link_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container image-grid">
+  <div class="container">
+    <div class="{% unless Center_Headers %}row{% endunless %} mb-4">
+      <div class="{% if Center_Headers %}text-center max-width-med mx-auto{% else %}col-md d-flex flex-column justify-content-end{% endif %}">
+        {% if Subheader %}
+          <p class="label-small-uppercase mb-3">
+            {{ Subheader }}
+          </p>
+        {% endif %}
+
+        {% if Header %}
+          <h2 class="{% if Center_Headers %}mb-4{% else %}mb-3 mb-md-2{% endif %}">
+            {{ Header }}
+          </h2>
+        {% endif %}
+      </div>
+
+      <div class="{% if Center_Headers %}text-center max-width-med mx-auto{% else %}col-md d-flex flex-column justify-content-end{% endif %}">
+        {% if Text %}
+          <div class="{% if Show_Button and Center_Headers %}mb-5{% elsif Show_Button %}mb-3{% endif %} text-field">
+            {{ Text }}
+          </div>
+        {% endif %}
+
+        {% if Show_Button %}
+          <div>
+            <a class="button button-primary-outline" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              {{ Button_Text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="cards row pt-4">
+      {% for card in cards %}
+        <a class="col-6 col-md-4 mb-4"{% if card.new_tab %} target="_blank" rel="noopener noreferrer" {% endif %}{% if card.cta_link %} href="{{ card.cta_link }}"{% endif %}>
+          <div class="image-grid-card">
+            {% if card.image %}
+              <div class="img-aspect">
+                <img src="{{ card.image.medium_url }}" {% if card.image.label %} alt="{{ card.image.label }}" {% endif %} />
+              </div>
+            {% endif %}
+
+            {% if card.title %}
+              <div class="p-4 position-absolute">
+                <h4>
+                  {{ card.title }}
+                </h4>
+              </div>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>

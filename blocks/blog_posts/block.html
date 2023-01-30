@@ -1,0 +1,454 @@
+---
+attributes:
+  Show_Square_Images:
+    group: design
+    label: Display square images
+    hint: If this is not selected rectangular images will be displayed in a 3-2 ratio.
+    type: Boolean
+  cards_per_row:
+    group: layout
+    label: Number of blog posts per row
+    type: range
+    min: 1
+    max: 3
+    step: 1
+    default: 3
+    unit: posts
+  Show_Cards_In_A_Swiper:
+    group: layout
+    label: Display blog cards in a carousel
+    type: Boolean
+  Center_Incomplete_Rows:
+    group: layout
+    label: Align blog cards to the centre
+    type: Boolean
+  Hide_Author_Images:
+    group: design
+    label: Hide images of authors
+    type: Boolean
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Card_Background_Image:
+    group: design
+    label: Blog card background image
+    hint: Recommended minimum width 720px.
+    type: Image
+  Card_Background_Color:
+    group: design
+    label: Blog card background colour
+    type: color
+    default:
+      palette: secondary
+  Card_Text_Color:
+    group: design
+    label: Blog card text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: The Blog
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button_Above_Cards:
+    group: content
+    label: Display button above cards
+    type: Boolean
+    default: true
+  Show_Button_Below_Cards:
+    group: content
+    label: Display button below cards
+    type: Boolean
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Featured_Blog_Posts:
+    group: content
+    label: Choose featured blogs to display
+    hint: Leave blank to display all blog posts from most recent to oldest.
+    type: Post
+    array: true
+  open_posts_in_new_tab:
+    group: content
+    label: Open blog posts in new tab
+    type: boolean
+    default: true
+  Max_Number_Of_Posts_To_Show:
+    group: content
+    label: Maximum number of blog posts to display
+    hint: Applied if you choose to display all blog posts.
+    default: 12
+    type: Number
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+{% assign block_id = block.id %}
+
+<style>
+  #{{ block.id }} .blog-posts-block .blog-author-image {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button-primary-outline {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .swiper-prev circle,
+  #{{ block.id }} .swiper-prev path,
+  #{{ block.id }} .swiper-next circle,
+  #{{ block.id }} .swiper-next path {
+    {% if Text_Color %}
+      stroke: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .blog-posts-swiper-pagination {
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .blog-post-card {
+    {% if Card_Background_Image %}
+      background-image: url('{{ Card_Background_Image.xlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }} !important;
+    {% endif %}
+    {% if Card_Background_Color %}
+      background-color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .hover-arrow-right span {
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .hover-arrow-right circle,
+  #{{ block.id }} .hover-arrow-right path {
+    {% if Card_Text_Color %}
+      stroke: {{ Card_Text_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container blog-posts-block">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text or Show_Button_Above_Cards %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="{% if Show_Button_Above_Cards %}mb-4{% else %}mb-5{% endif %} text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    {% if Show_Button_Above_Cards %}
+      <div class="mb-5 text-center">
+        <a class="button button-primary-outline text-center" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+
+    {% if Show_Cards_In_A_Swiper %}
+      <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex">
+        <div class="swiper-prev blog-posts-swiper-prev cursor-pointer">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" />
+            <path d="M22 26.6667L16.6667 20.3333L22 14"/>
+          </svg>
+        </div>
+
+        <div class="swiper-pag blog-posts-swiper-pagination text-center label-big w-auto px-4"></div>
+
+        <div class="swiper-next blog-posts-swiper-next cursor-pointer">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="19.5"/>
+            <path d="M18 14L23.3333 20.3333L18 26.6667"/>
+          </svg>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="{% if Show_Cards_In_A_Swiper %}blog-posts-swiper-container swiper-container{% endif %}">
+      <div class="{% if Show_Cards_In_A_Swiper %}swiper-wrapper{% else %}row{% endif %} {% if Center_Incomplete_Rows and Show_Experiences_In_A_Swiper == false %}justify-content-center{% endif %}">
+        {% if Featured_Blog_Posts.size > 0 %}
+          {% for post in Featured_Blog_Posts %}
+            <div class="{% if Show_Cards_In_A_Swiper %}swiper-slide h-auto{% elsif cards_per_row == '1' %}col-12{% elsif cards_per_row == '2' %}col-md-6{% else %}col-md-6 col-lg-4{% endif %} mb-4">
+              <div class="blog-card{% if cards_per_row == '1' %} row mx-0{% else %} h-100 d-flex flex-column{% endif %}">
+                {% if post.hero_image != blank %}
+                  <div class="img-aspect{% unless Show_Square_Images %} img-aspect-wide{% endunless %}{% if cards_per_row == '1' %} col-md-6 px-0{% endif %}">
+                    <img src="{{ post.hero_image.medium_url }}" alt="{{ post.hero_image.name }}" />
+                  </div>
+                {% endif %}
+
+                <div class="{% if cards_per_row == '1' %}col-md-6 px-lg-5 py-lg-5{% endif %} justify-content-between bg-secondary text-body p-4 flex-grow-1 d-flex flex-column blog-post-card">
+                  {% if post.published_at or post.author.name %}
+                    <p class="mb-3 label-small post-info d-flex align-items-center">
+                      {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                        <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+                      {% endif %}
+
+                      {% if post.author.name %}
+                        <span class="post-autor">
+                          {{ post.author.name }}
+                        </span>
+                      {% endif %}
+
+                      {% if post.published_at and post.author.name %}
+                        <span class="px-3">
+                          &#183;
+                        </span>
+                      {% endif %}
+
+                      {% if post.published_at %}
+                        <span class="post-published">
+                          {{ post.published_at | date: "%a %e %b %Y" }}
+                        </span>
+                      {% endif %}
+                    </p>
+                  {% endif %}
+
+                  <div>
+                    {% if post.title %}
+                      <h4 class="mb-3">
+                        {{ post.title }}
+                      </h4>
+                    {% endif %}
+
+                    {% if post.tagline %}
+                      <p class="post-tagline">
+                        {{ post.tagline }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <a class="d-flex align-items-center hover-arrow-right cursor-pointer mt-3" href="{{ post.url }}"{% if open_posts_in_new_tab %} target="_blank"{% endif %}>
+                    <span class="mr-2 text-body">
+                      READ
+                    </span>
+
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="15" cy="15" r="14.5"></circle>
+                      <path d="M13.5 10.5L17.5 15.25L13.5 20"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for post in company.posts limit: Max_Number_Of_Posts_To_Show %}
+            <div class="{% if Show_Cards_In_A_Swiper %}swiper-slide h-auto{% elsif cards_per_row == '1' %}col-12{% elsif cards_per_row == '2' %}col-md-6{% else %}col-md-6 col-lg-4{% endif %} mb-4">
+              <div class="blog-card{% if cards_per_row == '1' %} row mx-0{% else %} h-100 d-flex flex-column{% endif %}">
+                {% if post.hero_image != blank %}
+                  <div class="img-aspect{% unless Show_Square_Images %} img-aspect-wide{% endunless %}{% if cards_per_row == '1' %} col-md-6 px-0{% endif %}">
+                    <img src="{{ post.hero_image.medium_url }}" alt="{{ post.hero_image.name }}" />
+                  </div>
+                {% endif %}
+
+                <div class="{% if cards_per_row == '1' %}col-md-6 px-lg-5 py-lg-5{% endif %} justify-content-between bg-secondary text-body p-4 flex-grow-1 d-flex flex-column blog-post-card">
+                  {% if post.published_at or post.author.name %}
+                    <p class="mb-3 label-small post-info d-flex align-items-center">
+                      {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                        <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+                      {% endif %}
+
+                      {% if post.author.name %}
+                        <span class="post-autor">
+                          {{ post.author.name }}
+                        </span>
+                      {% endif %}
+
+                      {% if post.published_at and post.author.name %}
+                        <span class="px-3">
+                          &#183;
+                        </span>
+                      {% endif %}
+
+                      {% if post.published_at %}
+                        <span class="post-published">
+                          {{ post.published_at | date: "%a %e %b %Y" }}
+                        </span>
+                      {% endif %}
+                    </p>
+                  {% endif %}
+
+                  <div>
+                    {% if post.title %}
+                      <h4 class="mb-3">
+                        {{ post.title }}
+                      </h4>
+                    {% endif %}
+
+                    {% if post.tagline %}
+                      <p class="post-tagline">
+                        {{ post.tagline }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <a class="d-flex align-items-center hover-arrow-right cursor-pointer mt-3" href="{{ post.ur l }}"{% if open_posts_in_new_tab %} target="_blank"{% endif %}>
+                    <span class="mr-2 text-body">
+                      READ
+                    </span>
+
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="15" cy="15" r="14.5"></circle>
+                      <path d="M13.5 10.5L17.5 15.25L13.5 20"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if Show_Button_Below_Cards %}
+      <div class="mt-5 text-center">
+        <a class="button button-primary-outline text-center" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if Show_Cards_In_A_Swiper %}
+  <script>
+    var initSwiperBlog{{ block_id | remove: 'block-' }} = () => {
+      if(window.swiperBlog{{ block_id | remove: 'block-' }}) window.swiperBlog{{ block_id | remove: 'block-' }}.destroy()
+
+      window.swiperBlog{{ block_id | remove: 'block-' }} = new Swiper('#{{ block.id }} .swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        simulateTouch: false,
+        pagination: {
+          el: '#{{ block.id }} .swiper-pag',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '#{{ block.id }} .swiper-next',
+          prevEl: '#{{ block.id }} .swiper-prev',
+        },
+        breakpoints: {
+          {% unless cards_per_row == '1'  %}
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+              loop: true
+            },
+            {% unless cards_per_row == '2' %}
+              992: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true
+              },
+            {% endunless %}
+          {% endunless %}
+        }
+      })
+
+      document.removeEventListener("DOMContentLoaded", initSwiperBlog{{ block_id | remove: 'block-' }})
+    }
+
+    document.addEventListener("DOMContentLoaded", initSwiperBlog{{ block_id | remove: 'block-' }})
+  </script>
+{% endif %}

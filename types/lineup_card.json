@@ -1,0 +1,31 @@
+{
+  "key": "lineup_card",
+  "name": "Lineup Card",
+  "attributes": [
+    {
+      "name": "name",
+      "label": "Name",
+      "type": "string"
+    },
+    {
+      "name": "role",
+      "label": "Role",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "type": "text"
+    },
+    {
+      "name": "image",
+      "label": "Image",
+      "type": "image"
+    },
+    {
+      "name": "label",
+      "label": "Image alt text",
+      "type": "string"
+    }
+  ]
+}

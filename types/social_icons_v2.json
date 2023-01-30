@@ -1,0 +1,94 @@
+{
+  "key": "social_icons",
+  "name": "Social Icon V2",
+  "attributes": [
+    {
+      "name": "icon",
+      "type": "select",
+      "label": "Choose icon",
+      "options": [
+        {
+          "value": "fa fa-2x fa-calendar-plus",
+          "label": "Calendar"
+        },
+        {
+          "value": "fa fa-2x fa-envelope",
+          "label": "Email"
+        },
+        {
+          "value": "fab fa-2x fa-facebook",
+          "label": "Facebook"
+        },
+        {
+          "value": "fab fa-2x fa-instagram",
+          "label": "Instagram"
+        },
+        {
+          "value": "fab fa-2x fa-linkedin-in",
+          "label": "LinkedIn"
+        },
+        {
+          "value": "fab fa-2x fa-mixcloud",
+          "label": "Mixcloud"
+        },
+        {
+          "value": "fa fa-2x fa-phone",
+          "label": "Phone"
+        },
+        {
+          "value": "fab fa-2x fa-pinterest",
+          "label": "Pinterest"
+        },
+        {
+          "value": "fab fa-2x fa-reddit",
+          "label": "Reddit"
+        },
+        {
+          "value": "fab fa-2x fa-skype",
+          "label": "Skype"
+        },
+        {
+          "value": "fab fa-2x fa-snapchat",
+          "label": "Snapchat"
+        },
+        {
+          "value": "fab fa-2x fa-soundcloud",
+          "label": "SoundCloud"
+        },
+        {
+          "value": "fab fa-2x fa-spotify",
+          "label": "Spotify"
+        },
+        {
+          "value": "fab fa-2x fa-strava",
+          "label": "Strava"
+        },
+        {
+          "value": "fab fa-2x fa-tiktok",
+          "label": "TikTok"
+        },
+        {
+          "value": "fab fa-2x fa-twitter",
+          "label": "Twitter"
+        },
+        {
+          "value": "fab fa-2x fa-vimeo",
+          "label": "Vimeo"
+        },
+        {
+          "value": "fab fa-2x fa-whatsapp",
+          "label": "WhatsApp"
+        },
+        {
+          "value": "fab fa-2x fa-youtube",
+          "label": "YouTube"
+        }
+      ]
+    },
+    {
+      "name": "link",
+      "type": "link",
+      "label": "Link"
+    }
+  ]
+}

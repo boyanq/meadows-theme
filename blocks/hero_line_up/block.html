@@ -1,0 +1,173 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on images
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Line_Up_Text_Color:
+    group: design
+    label: Lineup text colour
+    type: color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+  Button_Text_Color:
+    group: design
+    label: Button text colour
+    type: color
+  Subheader:
+    group: content
+    label: Subtitle
+    type: String
+    default: Creating experiences is an art
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Line_Up_Text:
+    group: content
+    label: Lineup text
+    type: Text
+    default: <h2>Artist 1  •  Artist 2  •  Artist 3  •  Artist 4  •  Artist 5  •  Artist 6  •  Artist 7  •  Artist 8  •  Artist 9  •  Artist 10  •  Artist 11  •  Artist 12  •  Artist 13  •  Artist 14  •  Artist 15  •  Artist 16  •  Artist 17  •  Artist 18  •  Artist 19  •  Artist 20</h2>
+  Reduce_Line_Up_Text_Width:
+    group: layout
+    label: Reduce lineup text width
+    type: Boolean
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+---
+
+<style>
+  .line-up-hero-container {
+    min-height: 43rem;
+  }
+
+  .lineup-items {
+    line-height: 1.6;
+  }
+
+  @media (max-width: 767px) {
+    .lineup-items h2 {
+      font-size: 1.7rem;
+      line-height: 1.5;
+    }
+  }
+
+  #{{ block.id }} .genie-block {
+    {% if Background_Image %}
+      background-image: {% unless Remove_Background_Image_Overlay %} linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%),{% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .lineup-items {
+    white-space: pre-wrap;
+    {% if Line_Up_Text_Color %}
+      color: {{ Line_Up_Text_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Text_Color %}
+      color: {{ Button_Text_Color }} !important;
+    {% endif %}
+    {% if Button_Color %}
+      border: solid 1px {{ Button_Color.hex }} !important;
+      background-color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .genie-block {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="genie-block line-up-hero py-0">
+  <div class="line-up-hero-container container-fluid px-md-5 d-flex flex-column justify-content-center">
+    <div class="line-up-hero-inner py-4 py-md-5 text-center">
+      {% if Subheader %}
+        <p class="label-big mb-3">
+          {{ Subheader }}
+        </p>
+      {% endif %}
+
+      {% if Header %}
+        <h1 class="{% if Text %}mb-3{% endif %} max-width-med mx-auto">
+          {{ Header }}
+        </h1>
+      {% endif %}
+
+      {% if Text %}
+        <div class="text-big max-width-med mx-auto text-field">
+          {{ Text }}
+        </div>
+      {% endif %}
+
+      {% if Line_Up_Text %}
+        <div class="w-100 text-justify mt-4 mt-md-5 {% if Reduce_Line_Up_Text_Width %}container{% endif %}">
+          <div class="lineup-items">
+            {{ Line_Up_Text }}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if Show_Button %}
+        <a class="button button-primary-solid mt-5" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

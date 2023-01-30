@@ -1,0 +1,106 @@
+{% assign center_headings = false %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-10">
+      <article>
+        <header class="mt-5">
+          {% if post.title %}
+            <h1 class="post-header mb-4 {% if center_headings %}text-center{% endif %}">
+              {{ post.title }}
+            </h1>
+          {% endif %}
+
+          {% if post.tagline %}
+            <p class="text-big mb-4">
+              {{ post.tagline }}
+            </p>
+          {% endif %}
+
+          {% if post.hero_image != blank %}
+            <figure class="mb-4">
+              <img class="img-fluid hero-blog-image" src="{{ post.hero_image.xlarge_url }}" alt="{{ post.hero_image.name }}" />
+            </figure>
+          {% endif %}
+
+          {% if post.published_at or post.author.name %}
+            <p class="mb-3 label-small post-info d-flex align-items-center {% if center_headings %}text-center{% endif %}">
+              {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+              {% endif %}
+
+              {% if post.author.name %}
+                <span class="post-autor">
+                  by {{ post.author.name }}
+                </span>
+              {% endif %}
+
+              {% if post.published_at and post.author.name %}
+                <span class="px-3">
+                  &#183;
+                </span>
+              {% endif %}
+
+              {% if post.published_at %}
+                <span class="post-published">
+                  {{ post.published_at | date: "%a %e %b %Y" }}
+                </span>
+              {% endif %}
+            </p>
+          {% endif %}
+
+          <div class="mt-3 d-flex align-items-center {% if center_headings %}justify-content-center{% endif %}">
+            <a class="btn-share-link" href="https://facebook.com/sharer/sharer.php?u={{ post.url }}" target="_blank" rel="noopener" aria-label="">
+              <i class="fa fa-facebook text-body mr-2"></i>
+            </a>
+
+            <a class="btn-share-link" href="https://twitter.com/intent/tweet/?url={{ post.url }}" target="_blank" rel="noopener" aria-label="">
+              <i class="fa fa-twitter text-body"></i>
+            </a>
+          </div>
+        </header>
+
+        <section class="mb-5 mt-4 text-field">
+          {{ post.body }}
+        </section>
+      </article>
+
+      <div class="mb-5 d-flex justify-content-between align-items-center">
+        <div class="col d-flex justify-content-start pl-0">
+          {% if post.previous_post != blank %}
+            <a class="text-body d-flex align-items-center button hover-arrow-left hover-arrow-left-small" href="{{ post.previous_post.url }}">
+              <svg width="0.8rem" height="0.8rem" viewBox="16.17 13.5 6.33 13.67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"></path>
+              </svg>
+
+              <span class="label-small pl-2">
+                Prev
+              </span>
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="col d-flex justify-content-center">
+          <a class="text-body d-flex align-items-center button" href="/blog"> 
+            <span class="label-small">
+              VIEW ALL
+            </span>
+          </a>
+        </div>
+
+        <div class="col d-flex justify-content-end pr-0">
+          {% if post.next_post != blank %}
+            <a class="text-body d-flex align-items-center button hover-arrow-right hover-arrow-right-small" href="{{ post.next_post.url }}">
+              <span class="label-small pr-2">
+                Next
+              </span>
+
+              <svg width="0.8rem" height="0.8rem" viewBox="17.5 13.5 6.33 13.67" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"></path>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

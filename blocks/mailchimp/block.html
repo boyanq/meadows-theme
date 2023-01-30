@@ -1,0 +1,355 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: secondary
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Subscribe to our newsletter
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Get the latest news and updates.</p>
+  Mailchimp_Form_Code:
+    group: content
+    label: Insert Mailchimp code
+    hint: Learn how to [find your Mailchimp code](https://support.easol.com/hc/en-gb/articles/4403735195537-Integrate-Mailchimp-with-your-signup-forms).
+    type: String
+  Mailchimp_Button_Text:
+    group: content
+    label: Mailchimp button text
+    type: String
+    default: Sign Up
+  Show_Mailchimp_Optin_Field:
+    group: content
+    label: Show an opt-in check box
+    type: Boolean
+    default: true
+  Mailchimp_Optin_Field_Text:
+    group: content
+    label: Opt-in checkbox label
+    type: String
+    default: I've read and agree with the privacy policy
+  Mailchimp_Button_Color:
+    group: design
+    label: Mailchimp button colour
+    type: color
+    default:
+      palette: primary
+  Mailchimp_Button_Text_Color:
+    group: design
+    label: Mailchimp button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Mailchimp_Input_Field_Background_Color:
+    group: design
+    label: Mailchimp input fields background colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Mailchimp_Input_Field_Text_Color:
+    group: design
+    label: Mailchimp input fields text colour
+    type: color
+    default:
+      palette: body-color
+  Use_Your_Own_Embedded_Sign_Up_Form:
+    group: content
+    label: Add a custom sign up form
+    hint: Replace the default Mailchimp sign up form with a form from a third-party CMS tool.
+    type: Boolean
+    default: false
+  Embedded_Sign_Up_Form_Code:
+    group: content
+    label: Code for custom form
+    hint: Configure the form with the third-party before pasting in the supplied code. Codes often begin with `<frame>` or `<script>`
+    type: String
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} .mailchimp-block {
+    max-width: 43rem;
+  }
+
+  #{{ block.id }} .mailchimp-block input:not(#mc-embedded-subscribe) {
+    border-radius: 0 !important;
+    border: none !important;
+    height: 3.57rem;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #{{ block.id }} #mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+    color: inherit;
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+  }
+
+  #{{ block.id }} #mc_embed_signup #mc-embedded-subscribe-form .optin-field div.mce_inline_error {
+    padding-top: 0 !important;
+    padding-left: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    #{{ block.id }} .mailchimp-block .mc-field-group, 
+    #{{ block.id }} .mailchimp-block .sign-up-button {
+      width: 100% !important;
+    }
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsBody {
+    padding: 0;
+    background-color: transparent;
+    text-align: unset !important;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsForm {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsBody .fsLabel,
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRequiredMarker, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsBody .fsSupporting {
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    font-family: var(--font-family-base);
+    color: var(--body-color);
+    margin-bottom: 0.5rem;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsBody .fsSupporting {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRow {
+    margin-bottom: 0 !important;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsFieldCell {
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsFieldFocused:not(.fsValidationError) {
+    padding-bottom: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed input, 
+  #{{ block.id }} #mailchimp-block-custom-embed textarea, 
+  #{{ block.id }} #mailchimp-block-custom-embed select {
+    background-color: #F7F7F9;
+    border: none;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsForm .fsSubmit {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsForm .fsSubmitButton {
+    padding: 1em 2.1875em;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: solid 1px var(--primary);
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.2s ease;
+    font-family: var(--headings-font-family);
+    width: 100%;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameFirst, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameFirst {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-left: 0;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameLast, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameLast {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-right: 0;
+  }
+
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRowBody input[type=checkbox]:before, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRowBody input[type=checkbox]:checked:before, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRowBody input[type=radio]:before, 
+  #{{ block.id }} #mailchimp-block-custom-embed .fsRowBody input[type=radio]:checked:before {
+    position: absolute;
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} input:not(#mc-embedded-subscribe) {
+    {% if Mailchimp_Input_Field_Text_Color %}
+      color: {{ Mailchimp_Input_Field_Text_Color.hex }};
+    {% endif %}
+    {% if Mailchimp_Input_Field_Background_Color %}
+      background-color: {{ Mailchimp_Input_Field_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .sign-up-button .button {
+    {% if Mailchimp_Button_Text_Color %}
+      color: {{ Mailchimp_Button_Text_Color.hex }} !important;
+    {% endif %}
+    {% if Mailchimp_Button_Color %}
+      border: solid 1px {{ Mailchimp_Button_Color.hex }} !important;
+      background-color: {{ Mailchimp_Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .bot-signups {
+    position: absolute;
+    left: -5000px;
+  }
+
+  #{{ block.id }} .response {
+    display: none;
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container bg-secondary genie024-mailchimp">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="mb-5 text-center max-width-small mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    <div>
+      {% unless Use_Your_Own_Embedded_Sign_Up_Form %}
+        <!-- Begin Mailchimp Signup Form -->
+          <div id="mc_embed_signup" class="mailchimp-block mx-auto">
+            <form action="{{ Mailchimp_Form_Code }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate p-0" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll" class="d-flex flex-wrap">
+                <div class="mc-field-group m-0 w-50">
+                  <label for="mce-EMAIL" class="label-small-uppercase d-block">Email Address  <span class="asterisk">*</span></label>
+                  <input type="email" value="" name="EMAIL" class="required email w-100" id="mce-EMAIL">
+                </div>
+
+                <div class="clear mt-md-4 w-50 sign-up-button">
+                  <input type="submit" value="{{ Mailchimp_Button_Text }}" name="subscribe" id="mc-embedded-subscribe" class="button button-primary-solid d-block w-100 m-0">
+                </div>
+
+                {% if Show_Mailchimp_Optin_Field %}
+                  <div class="mc-field-group m-0 w-100 d-flex align-items-center optin-field">
+                    <input type="checkbox" value="OPTIN" name="OPTIN" class="required" id="mce-OPTIN" aria-required="true">
+                    <label for="mce-OPTIN" class="label-small mb-0 pl-3">{{ Mailchimp_Optin_Field_Text }}</label>
+                  </div>
+                {% endif %}
+
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div class="bot-signups" aria-hidden="true">
+                  <input type="text" name="b_f5d8e779a9ef4bf56908a5178_cdee62a635" tabindex="-1" value="">
+                </div>
+
+                <div id="mce-responses" class="clear">
+                  <div class="response" id="mce-error-response"></div>
+                  <div class="response" id="mce-success-response"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='SELECTYUI';ftypes[3]='text';fnames[4]='TEXTAREAY';ftypes[4]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+        <!--End mc_embed_signup-->
+      {% endunless %}
+
+      {% if Use_Your_Own_Embedded_Sign_Up_Form %}
+        <div id="mailchimp-block-custom-embed">
+          {{ Embedded_Sign_Up_Form_Code }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,45 @@
+WORKAROUND LOGIC IN PRODUCT PAGE
+
+--> CURRENTLY 
+
+- If deposits are allowed -> what is the min product deposit?
+    deposit percentage multiplied by lowest product price to give deposit. 
+
+- Is product on promotion? 
+    -> Promotions are applied to variants not products.
+    for variants in product
+        if variant.promotion.active 
+            PROMOTION ACTIVE ON PRODUCT = TRUE
+        endif
+    endfor
+
+- If a variant has a promotion running, what is the new price?
+    -> variant.humanized_display_amount shows the total price of the variant on promotion rather than maintaining per person value
+    Calculate promo price for variant using price and promotion_discount_amount
+    If deposits allowed, calculate deposit price for variant using price and deposit percentage
+
+- If any variant has a promotion is running, what is the new cheapest price on the product?
+    -> product.humanized_display_amount shows the total price of the product on promotion rather than maintaining per person value.
+    -> promotions may not be applied to all variants and therefore may not affect the current product.min_price e.g. if the promotion is only on the most expensive variant
+    -> multiple promotions may be actvie on a product e.g. 20% single room - 10% off double room
+    Utilising the above loops to check for the lowest price variant (post promo) -> STORE LOWPRICE
+    If LOWPRICE is less than the product.min_price then show product prices in format: 'LOWPRICE <del>product.min_price</del>'
+    Else just show the product.min_price
+    ---
+    Compare discount levels on the promotions and use the tagline from the highest discount variant 
+    ---
+    If deposits allowed, calculate deposit price for product using lowprice and deposit percentage
+
+- If the product is in a series what is the lowest priced product
+    -> utilize dates loop to get identify lowest price in series -> STORE SERIES_LOWFULLPRICE
+
+- If the product is in a series is one of the products on promo?
+    -> utilize dates loop to check if any product is on promotion
+
+- If one of the products is on promotion, what is the lowest promotion price?
+    -> utilize dates look to grab lowest promotion price -> STORE SERIES_LOWPROMOPRICE
+
+- In the booking bar only show crossed out / full price value if SERIES_LOWPROMOPRICE < STORE SERIES_LOWFULLPRICE
+    -> promotions may not be applied to all products and therefore may not affect the lowest price in the series e.g. if the promotion is only on the most expensive date
+
+- Show the tagline of the highest level promotion -> utilising dates loops

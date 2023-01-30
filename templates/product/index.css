@@ -1,0 +1,144 @@
+@media (min-width: 1200px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: 1000px;
+  }
+}
+
+body {
+  overflow-x: unset !important;
+}
+
+section {
+  padding-top: 6.25rem;
+  padding-bottom: 6.25rem;
+}
+
+#footer {
+  padding-bottom: var(--booking-bar-height) !important;
+}
+
+.label-jumpbar {
+  font-size: 0.75rem;
+  line-height: 1.33;
+  letter-spacing: 0.0625em;
+  color: var(--body-color);
+}
+
+.label-jumpbar.active {
+  color: var(--primary);
+}
+
+#product-jumpbar.sticky-top {
+  top: -1px;
+}
+
+@media (max-width: 767px) {
+  .label-jumpbar {
+    line-height: 1.125;
+  }
+}
+
+.product-hero-block {
+  width: 100%;
+  min-height: calc(100vh - var(--booking-bar-height) - var(--jumpbar-height) - var(--menu-height));
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.product-hero-inner {
+  width: 630px;
+  max-width: 100%;
+}
+
+#product-overview p {
+  white-space: pre-line;
+}
+
+#includedAccordion .cursor-pointer:hover svg path {
+  transform: translateY(8%);
+}
+
+@media (max-width: 767px) {
+  .sl-next,
+  .sl-next svg,
+  .sl-prev,
+  .sl-prev svg {
+    width: 30px !important;
+  }
+}
+
+.tip-card p {
+  white-space: pre-line;
+}
+
+.reviews-card {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .quotation-marks {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .quotation-marks-noimage {
+    position: absolute;
+    top: 0;
+  }
+}
+
+.date-card .button {
+  min-width: 140px;
+  text-align: center;
+}
+
+.date-card .label-banner:not(:last-of-type) {
+  margin-right: 0.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .date-card .button {
+    min-width: 180px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .booking-bar-banners .label-banner:not(:last-of-type) {
+    margin-right: 0.5rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #product-bookingbar .label-small-uppercase {
+    font-size: 0.8rem;
+  }
+  #product-bookingbar .label-big {
+    font-size: 1rem;
+  }
+}
+
+.swiper-next,
+.swiper-prev {
+  cursor: pointer;
+}
+
+.swiper-controls {
+  margin-top: -1rem;
+}
+
+.blog-author-image {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}

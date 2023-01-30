@@ -1,0 +1,144 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Center_Content:
+    group: layout
+    label: Center header and text
+    type: Boolean
+    default: true
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Narrow_Width:
+    group: layout
+    label: Reduce width of text
+    type: Boolean
+  Full_Width:
+    group: layout
+    label: Increase width of text
+    type: Boolean
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container text-block">
+  <div class="container{% if Full_Width %}-fluid{% endif %} {% if Center_Content %}text-center{% endif %}">
+    <div class="{% if Narrow_Width %}max-width-med mx-auto{% endif %}">
+      {% if Header %}
+        <h2 class="{% if Text %}mb-4{% endif %}">
+          {{ Header }}
+        </h2>
+      {% endif %}
+
+      {% if Text %}
+        <div class="mx-auto text-field">
+          {{ Text }}
+        </div>
+      {% endif %}
+
+      {% if Show_Button %}
+        <div class="mt-4">
+          <a class="button button-primary-outline" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ Button_Text }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

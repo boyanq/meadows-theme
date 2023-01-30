@@ -1,0 +1,1129 @@
+---
+attributes:
+  cards_per_row:
+    group: layout
+    label: Number of experiences per row
+    type: range
+    min: 1
+    max: 3
+    step: 1
+    default: 3
+    unit: experiences
+  Center_Incomplete_Rows:
+    group: layout
+    label: Align cards to the centre
+    type: Boolean
+  Center_Text:
+    group: layout
+    label: Align text to the centre
+    type: Boolean
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+    default:
+      asset: images/footsteps.jpg
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on images
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Button_Text_Color:
+    group: design
+    label: Button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Dropdown_Background_Color:
+    group: design
+    label: Search dropdown background colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Dropdown_Text_Color:
+    group: design
+    label: Search dropdown text colour
+    type: color
+    default:
+      r: 0
+      g: 0
+      b: 0
+  Info_Bar_Background_Color:
+    group: design
+    label: Search navigation bar background colour
+    type: color
+    default:
+      palette: secondary
+  Info_Bar_Text_Color:
+    group: design
+    label: Search navigation bar text colour
+    type: color
+    default:
+      palette: body-color
+  Results_Background_Image:
+    group: design
+    label: Search results background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Results_Background_Color:
+    group: design
+    label: Search results background colour
+    type: color
+  Card_Background_Image:
+    group: design
+    label: Experience card background image
+    hint: Recommended minimum width 720px.
+    type: Image
+  Card_Background_Color:
+    group: design
+    label: Experience card background colour
+    type: color
+    default:
+      palette: secondary
+  Card_Text_Color:
+    group: design
+    label: Experience card text colour
+    type: color
+    default:
+      palette: body-color
+  Card_Button_Color:
+    group: design
+    label: Experience card button colour
+    type: color
+    default:
+      palette: primary
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Search Experiences
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Dates:
+    group: content
+    label: Display experience dates
+    type: Boolean
+    default: true
+  Show_Sold_Out:
+    group: content
+    label: Hide sold out experiences
+    type: Boolean
+    default: false
+  Show_City:
+    group: content
+    label: Display experience city
+    type: Boolean
+    default: true
+  Show_Country:
+    group: content
+    label: Display experience country
+    type: Boolean
+    default: true
+  Show_Duration:
+    group: content
+    label: Display experience duration
+    type: Boolean
+    default: true
+  Override_Enquire_Button_Text:
+    group: content
+    label: Customise 'enquire' button text
+    hint: For experiences that have [enquiry only](/admin/link/enquiry-only) enabled.
+    default: ENQUIRE
+    type: String
+  Button_Text:
+    group: content
+    label: Search button text
+    type: String
+    default: Search
+  Show_Promotion_Filter:
+    group: content
+    label: Search by active promotions
+    type: Boolean
+  Show_Category_Filter:
+    group: content
+    label:  Search by experience category
+    type: Boolean
+  Show_Subcategory_Filter:
+    group: content
+    label: Search by experience subcategory
+    type: Boolean
+    default: true
+  Show_Country_Filter:
+    group: content
+    label: Search by experience country
+    type: Boolean
+    default: true
+  Show_Departure_Month_Filter:
+    group: content
+    label: Search by experience departure month
+    type: Boolean
+    default: true
+  Show_Departure_Year_Filter:
+    group: content
+    label: Search by experience departure year
+    type: Boolean
+  Show_Duration_Filter:
+    group: content
+    label: Search by experience duration
+    type: Boolean
+  Show_Card_Book_Button:
+    group: content
+    label: Display book buttons on cards
+    type: Boolean
+    default: true
+  Show_Card_Info_Button:
+    group: content
+    label: Display info buttons on cards
+    type: Boolean
+    default: true
+  Hide_Info_Bar:
+    group: content
+    label: Hide search navigation bar
+    hint: Not recommended if you have over 12 experiences.
+    type: Boolean
+
+layout:
+  - type: tab
+    label: Content
+    elements:
+      - Header
+      - Text
+      - type: accordion
+        label: Customise search
+        elements:
+          - Show_Promotion_Filter
+          - Show_Category_Filter
+          - Show_Subcategory_Filter
+          - Show_Country_Filter
+          - Show_Departure_Month_Filter
+          - Show_Departure_Year_Filter
+          - Show_Duration_Filter
+      - type: accordion
+        label: Customise results
+        elements:
+          - Show_Sold_Out
+          - Show_Dates
+          - Show_City
+          - Show_Country
+          - Show_Duration
+          - Show_Card_Book_Button
+          - Show_Card_Info_Button
+          - Override_Enquire_Button_Text
+          - Hide_Info_Bar
+  - type: tab
+    label: Layout
+    elements:
+      - Center_Incomplete_Rows
+      - cards_per_row
+      - Center_Text
+  - type: tab
+    label: Design
+    elements:
+      - Background_Image
+      - Background_Color
+      - Text_Color
+      - Info_Bar_Background_Color
+      - Info_Bar_Text_Color
+      - Results_Background_Image
+      - Results_Background_Color
+      - Card_Background_Image
+      - Card_Background_Color
+      - Card_Text_Color
+      - Card_Button_Color
+  - type: tab
+    label: Mobile
+    elements:
+      - Mobile_Background_Image
+---
+
+{% assign filter_count = 0 %}
+
+{% if Show_Country_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Category_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Subcategory_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Departure_Month_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Departure_Year_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Duration_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Promotion_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+<style>
+  #{{ block.id }} .search-page-container {
+    min-height: 28rem;
+    {% if Background_Image %}
+      background-image: {% unless Remove_Background_Image_Overlay %} linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%),{% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .search-page-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .search-page-header {
+    max-width: 66rem;
+  }
+
+  #{{ block.id }} .search-page-text {
+    max-width: 43rem;
+  }
+
+  #{{ block.id }} .search-page .filters-select {
+    position: relative;
+    display: block;
+    padding: 1rem 2.5rem 1rem 1.3rem;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    height: 4rem;
+  }
+
+  #{{ block.id }} .search-page .filters .btn-search {
+    height: 4rem;
+  }
+
+  #{{ block.id }} .search-page .filters-select:after {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: '';
+  }
+
+  #{{ block.id }} .search-page .filters-select:not(.first-of-type) {
+    border-left: solid 1px #EDEDF0;
+  }
+
+  #{{ block.id }} .search-page .filters-open {
+    position: absolute;
+    top: calc(100% + 0px);
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+    z-index: 20;
+  }
+
+  #{{ block.id }} .search-page .filters-open ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+
+  #{{ block.id }} .search-page .filters-open ul li {
+    padding: 1rem 1.3rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  #{{ block.id }} .search-page .btn-search:focus {
+    outline: none;
+  }
+
+  #{{ block.id }} .search-page .filters-select:focus {
+    outline: none;
+    border-bottom: solid 1px #EDEDF0;
+  }
+
+  {% if Show_Subcategory_Filter %}
+    @media (min-width: 576px) {
+      #{{ block.id }} .search-page .filter-item-outer {
+        width: 17rem;
+      }
+    }
+  {% else %}
+    @media (min-width: 576px) {
+      #{{ block.id }} .search-page .filter-item-outer {
+        width: 13rem;
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .btn-search {
+    {% if Button_Text_Color %}
+      color: {{ Button_Text_Color }} !important;
+    {% endif %}
+    {% if Button_Color %}
+      border: solid 1px {{ Button_Color.hex }} !important;
+      background-color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .info-bar {
+    {% if Info_Bar_Background_Image %}
+      background-image: url('{{ Info_Bar_Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Info_Bar_Background_Color %}
+      background-color: {{ Info_Bar_Background_Color.hex }} !important;
+    {% endif %}
+    {% if Info_Bar_Text_Color %}
+      color: {{ Info_Bar_Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .search-page {
+    {% if Results_Background_Image %}
+      background-image: url('{{ Results_Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Results_Background_Color %}
+      background-color: {{ Results_Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card-inner {
+    {% if Card_Background_Image %}
+      background-image: url('{{ Card_Background_Image.xlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Card_Text_Color %}
+      color: {{ Card_Text_Color.hex }};
+    {% endif %}
+    {% if Card_Background_Color %}
+      background-color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card .button {
+    width: 50%;
+    padding: 1em;
+    {% if Show_Card_Book_Button %}
+      text-align: center;
+    {% else %}
+      text-align: left;
+      padding-left: 0;
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card .button-primary-solid {
+    {% if Card_Background_Color %}
+      color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+    {% if Card_Button_Color %}
+      border: solid 1px {{ Card_Button_Color.hex }} !important;
+      background-color: {{ Card_Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card .button-primary-outline {
+    {% if Card_Button_Color %}
+      color: {{ Card_Button_Color.hex }} !important;
+      border: solid 1px {{ Card_Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card .hover-arrow-right {
+    {% if Card_Button_Color %}
+      color: {{ Card_Button_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .product-card .hover-arrow-right circle,
+  #{{ block.id }} .product-card .hover-arrow-right path {
+    {% if Card_Button_Color %}
+      stroke: {{ Card_Button_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Dropdown_Background_Color %}
+    #{{ block.id }} .search-page .filters-select {
+      background-color: {{ Dropdown_Background_Color.hex }};
+    }
+
+    #{{ block.id }} .search-page .filters-open {
+      background-color: {{ Dropdown_Background_Color.hex }};
+    }
+  {% endif %}
+
+  {% if Dropdown_Text_Color %}
+    #{{ block.id }} .search-page .filters-select:after {
+      border-top: 5px solid {{ Dropdown_Text_Color.hex }};
+    }
+
+    #{{ block.id }} .search-page .filters-open {
+      color: {{ Dropdown_Text_Color.hex }};
+    }
+
+    #{{ block.id }} .search-page .filters-select {
+      color: {{ Dropdown_Text_Color.hex }};
+    }
+  {% endif %}
+</style>
+
+{% product_search page_size: 12, departure_date: { greater_or_equal_than: 'now' }, sort: 'departure_date_asc', exclude_sold_out_products: Show_Sold_Out %}
+  <section class="genie-block search-page py-0">
+    <div class="search-page-container container-fluid px-md-5 d-flex flex-column {% if Center_Text %}justify-content-center{% else %}justify-content-end{% endif %}">
+      <div class="search-page-inner py-4 py-md-5 {% if Center_Text %}d-flex flex-column align-items-center text-center{% endif %}">
+        {% if Header %}
+          <h1 class="{% if Text %}mb-3{% else %}mb-5{% endif %} search-page-header w-100">
+            {{ Header }}
+          </h1>
+        {% endif %}
+
+        {% if Text %}
+          <div class="text-big mb-5 search-page-text w-100 text-field">
+            {{ Text }}
+          </div>
+        {% endif %}
+
+        {% if filter_count > 0 %}
+          <div class="filters">
+            <div class="filters-wrapper {% if filter_count < 5 %}d-md-flex{% endif %} justify-content-start">
+              <div class="filters-wrapper-selects d-sm-flex flex-wrap">
+                {% if Show_Country_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="countrySelect" data-filteron="country">
+                      <span class="text-nowrap">
+                        All countries
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-country"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Category_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="categorySelect" data-filteron="category">
+                      <span class="text-nowrap">
+                        All categories
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-category"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Subcategory_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="subcategorySelect" data-filteron="subcategory">
+                      <span class="text-nowrap">
+                        All subcategories
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-subcategory"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Departure_Month_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="monthSelect" data-filteron="departure_month">
+                      <span class="text-nowrap">
+                        All months
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-month"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Departure_Year_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="yearSelect" data-filteron="departure_year">
+                      <span class="text-nowrap">
+                        All years
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-year"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Duration_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="durationSelect" data-filteron="duration">
+                      <span class="text-nowrap">
+                        All durations
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-duration"></div>
+                  </div>
+                {% endif %}
+
+                {% if Show_Promotion_Filter %}
+                  <div class="filter-item-outer position-relative flex-grow-1">
+                    <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="promotionSelect" data-filteron="active_promotion">
+                      <span class="text-nowrap">
+                        All prices
+                      </span>
+                    </button>
+
+                    <div class="filters-open filters-open-promotion"></div>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div>
+                <button class="btn-search button button-primary-solid mt-3 {% if filter_count < 5 %} mt-md-0 {% endif %}" onclick="searchClick()">
+                  {{ Button_Text }}
+                </button>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% unless Hide_Info_Bar %}
+      <div class="info-bar container-fluid px-md-5 py-3 d-flex justify-content-between align-items-center bg-secondary filters__bottom text-body">
+        <div class="d-flex align-items-center">
+          <p class="label-small-uppercase">
+            {{ paginate.collection_size }} trip{% if paginate.collection_size > 1 %}s{% endif %}
+          </p>
+
+          {% if paginate.collection_size > 12 %}
+            <span class="px-3">|</span>
+          {% endif %}
+
+          <p class="label-small-uppercase">
+            {{ paginate | default_pagination }}
+          </p>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center">
+          {% if filter_count > 0 %}
+            <a class="btn-reset ml-5 label-small-uppercase cursor-pointer" onclick="resetClick()">
+              Reset all
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    {% endunless %}
+  </section>
+
+  <div class="py-3 search-page">
+    <div class="container my-5">
+      <div class="row {% if Center_Incomplete_Rows %}justify-content-center{% endif %}">
+        {% for product in result.items %}
+          {% assign has_promotion = false %}
+          {% assign deposit_active = false %}
+
+          {% if product.dates %}
+            {% assign dates_string = product.dates %}
+          {% else %}
+            {% assign dates_string = false %}
+          {% endif %}
+
+          {% assign featured_variant = product.featured_variant %}
+          {% assign full_price = featured_variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+
+          {% if featured_variant.promotion.active %}
+            {% assign has_promotion = true %}
+            {% assign promo_tagline = featured_variant.promotion.tagline %}
+            {% assign promo_price_drop = featured_variant.price | apply_promotion: featured_variant.promotion %}
+            {% assign promo_price = promo_price_drop.per_person_fractional | money: no_cents_if_whole: true %}
+            {% assign cheapest_price = promo_price_drop.per_person_fractional %}
+          {% else %}
+            {% assign cheapest_price = featured_variant.price.per_person_fractional %}
+          {% endif %}
+
+          {% if product.deposit.enabled and product.type != 'accommodation' and cheapest_price != 0 and product.sold_out == false %}
+            {% assign deposit_active = true %}
+            {% assign deposit_rate = product.deposit.rate %}
+            {% assign deposit_price = cheapest_price | times: deposit_rate | money: no_cents_if_whole: true %}
+          {% endif %}
+
+          {% if product.type == "experience" %}
+            {% capture unit %}<sub>/pp</sub>{% endcapture %}
+          {% else %}
+            {% capture unit %}<sub>/night</sub>{% endcapture %}
+          {% endif %}
+      
+          {% if featured_variant == blank %}
+            {% capture price_string %}Coming soon{% endcapture %}
+          {% elsif has_promotion %}
+            {% capture price_string %}
+              <span class="label-small pr-2">FROM</span>{{ promo_price }}{{ unit }}<span class="label-small"><del class="text-danger">{{ full_price }}{{ unit }}</del></span>
+            {% endcapture %}
+          {% elsif cheapest_price == 0 %}
+            {% capture price_string %}
+              Free
+            {% endcapture %}
+          {% else %}
+            {% capture price_string %}
+              <span class="label-small pr-2">FROM</span>{{ full_price }}{{ unit }}
+            {% endcapture %}
+          {% endif %}
+
+          <div class="{% if cards_per_row == '1' %}col-12{% elsif cards_per_row == '2' %}col-md-6{% else %}col-md-6 col-lg-4{% endif %} mb-4">
+            <div class="product-card {% if cards_per_row == '1' %}row mx-0{% else %}h-100 d-flex flex-column{% endif %}">
+              <div class="img-aspect img-aspect-wide {% if cards_per_row == '1' %}col-md-6 px-0{% endif %}">
+                <img src="{{ product.hero_image.small_url }}" alt="{{ product.name }}" />
+              </div>
+
+              <div class="position-absolute p-4">
+                <div class="d-flex flex-wrap">
+                  {% if has_promotion %}
+                    <p class="label-small label-banner banner-promo mb-2 mr-2">
+                      {{ promo_tagline }}
+                    </p>
+                  {% endif %}
+
+                  {% assign stock = product.remaining_stock | plus: 0 %}
+
+                  {% if stock < 10 and stock != 0 and product.sold_out == false %}
+                    <p class="label-small label-banner banner-limited mb-2 mr-2">
+                      {{ stock }} SPOT{% if stock > 1 %}S{% endif %} LEFT
+                    </p>
+                  {% endif %}
+
+                  {% if deposit_active and deposit_price != 0 %}
+                    <p class="label-small label-banner banner-deposit mb-2">
+                      PAY ONLY {{ deposit_price }}{{ unit }} DEPOSIT
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="product-card-inner {% if cards_per_row == '1' %}col-md-6 justify-content-center px-lg-5{% else %}justify-content-between{% endif %} bg-secondary text-body-color p-4 flex-grow-1 d-flex flex-column">
+                <div>
+                  <p class="mb-2 label-small-uppercase">
+                    {% if product.address.city and Show_City %}
+                      {{ product.product.address.city }}
+                    {% endif %}
+
+                    {% if product.address.city and Show_City and product.country and Show_Country %}
+                      , 
+                    {% endif %}
+
+                    {% if product.country and Show_Country %}
+                      {{ product.country }}
+                    {% endif %}
+                  </p>
+
+                  <p class="mb-3 label-small-uppercase">
+                    {% if dates_string and Show_Dates %}
+                      <span>
+                        {{ dates_string }}
+                      </span>
+
+                      {% if product.duration and Show_Duration and dates_string and Show_Dates %}
+                        <span class="px-3">
+                          &#183;
+                        </span>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if product.duration and Show_Duration %}
+                      <span>
+                        {{ product.duration }}
+                      </span>
+                    {% endif %}
+                  </p>
+
+                  {% if cards_per_row == '1' %}
+                    <h3 class="mb-3 product-name">
+                      {{ product.name }}
+                    </h3>
+                  {% else %}
+                    <h4 class="mb-3 product-name">
+                      {{ product.name }}
+                    </h4>
+                  {% endif %}
+
+                  <p class="mb-3 text-small">
+                    {{ product.tagline }}
+                  </p>
+                </div>
+
+                <div>
+                  <p class="label-big mb-3">
+                    {{ price_string }}
+                  </p>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    {% if Show_Card_Book_Button %}
+                      {% if product.enquire_only %}
+                        <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                          {% if Override_Enquire_Button_Text %}
+                            {{ Override_Enquire_Button_Text }}
+                          {% else %}
+                            ENQUIRE
+                          {% endif %}
+                        </a>
+                      {% elsif product.min_price contains "Announcing" %}
+                        <a class="button button-primary-solid button-disabled">
+                          COMING SOON
+                        </a>
+                      {% elsif product.sold_out %}
+                        <a class="button button-primary-solid button-disabled">
+                          SOLD OUT
+                        </a>
+                      {% else %}
+                        <a class="button button-primary-solid" href="{{ product.shop_path }}">
+                          BOOK
+                        </a>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if Show_Card_Info_Button %}
+                      <a class="button hover-arrow-right" href="{{ product.url }}">
+                        <span class="mr-2">
+                          INFO
+                        </span>
+
+                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="15" cy="15" r="14.5"/>
+                          <path d="M13.5 10.5L17.5 15.25L13.5 20"/>
+                        </svg>
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endproduct_search %}
+
+<script>
+  /* SETUP ARRAYS */
+  var country = [],
+      category = [],
+      subcategory = [];
+      departure_month = [];
+      departure_year = [];
+      duration = [];
+      active_promotion = ['All Prices', 'On Offer', 'Full Price'];
+</script>
+
+{% for product in company.products %}
+  {% assign today_date = 'now' | date: '%s' %}
+  {% assign depart_date = product.depart_on | date: '%s' %}
+
+  {% if depart_date > today_date %}
+    <script>
+      country.push('{{ product.country }}');
+      category.push('{{ product.category }}');
+      subcategory.push('{{ product.subcategory }}');
+      departure_month.push('{{ product.depart_on | date: "%B" }}');
+      departure_year.push('{{ product.depart_on | date: "%Y" }}');
+      duration.push('{{ product.duration  | split: " " | first }}');
+    </script>
+  {% endif %}
+{% endfor %}
+
+<script>
+  var uniqCountries = new Set(country);
+  country = [...uniqCountries];
+  country.sort();
+  country.unshift('All Countries');
+
+  var uniqCategories = new Set(category);
+  category = [...uniqCategories];
+  category.sort();
+  category.unshift('All Categories');
+
+  var uniqSubcategory = new Set(subcategory);
+  subcategory = [...uniqSubcategory];
+  subcategory.sort();
+  subcategory.unshift('All Subcategories');
+
+  var uniqMonths = new Set(departure_month);
+  departure_month = [...uniqMonths];
+  var monthNames = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12
+  };
+
+  departure_month.sort(function(a, b) {
+    return monthNames[a] - monthNames[b];
+  });
+
+  departure_month.unshift('All Months');
+
+  var uniqYears = new Set(departure_year);
+  departure_year = [...uniqYears];
+  departure_year.sort();
+  departure_year.unshift('All Years');
+
+  var uniqDurations = new Set(duration);
+  duration = [...uniqDurations];
+  duration.sort(function(a, b){return a-b});
+  duration = duration.map(i => i + ' nights');
+  duration.unshift('All Durations');
+
+  function filterClick(clicked) {
+    var selectedFilter = clicked;
+    var filterId = $(selectedFilter).attr('id');
+    var filterArray = $(selectedFilter).closest('.filter-item-outer').find('.filters-select').data('filteron');
+    var newText = eval(filterArray)[filterId];
+
+    $(selectedFilter).closest('.filter-item-outer').find('span').html(newText);
+
+    jQuery('.filters-open').html('');
+  }
+
+  function searchClick() {
+    var searchString = '?'
+    var searchOption;
+    var searchTag;
+    var searchCount = 0;
+
+    $( ".filters-select" ).each(function() {
+      searchOption = $(this).find('span').html();
+
+      if (searchOption.indexOf("All") < 0) {
+        searchTag = $(this).data('filteron')
+
+        if (searchTag == 'duration') {
+          /* fix nights vs days */
+          searchOption = +searchOption.replace(' nights','')+1;
+        }
+
+        if (searchTag == 'departure_month') {
+          /* fix full date vs abbrev date */
+          searchOption = searchOption.slice(0,3);
+        }
+
+        if (searchTag == 'departure_year') {
+          /* create date range */
+          var selectedYear = Number(searchOption);
+          var endDate = (selectedYear + 1)+"-01-01";
+          var startDate = (selectedYear - 1)+"-12-31";
+          fullStartDate = new Date(startDate);
+          var currentDate = new Date();
+
+          if (fullStartDate < currentDate) {
+            var searchStartDate = "{{ 'now' | date: '%F' }}"
+          } else {
+            var searchStartDate = startDate;
+          }
+
+          yearSearchString = "search[departure_date][greater_than]="+searchStartDate+"&search[departure_date][less_than]="+endDate;
+        }
+
+        if (searchCount == 0) {
+          if (searchTag == 'departure_year') {
+            searchString += yearSearchString;
+          } else {
+            searchString += 'search['+searchTag+']='+searchOption;
+          }
+        } else {
+          if (searchTag == 'departure_year') {
+            searchString += '&'+yearSearchString;
+          } else {
+            searchString += '&search['+searchTag+']='+searchOption;
+          }
+        }
+
+        searchCount++;
+      }
+    });
+
+    searchString = searchString.replace('[duration]','[duration][equal_to]').replace('On Offer','true').replace('Full Price','false').replace(' ','+');
+    document.location = searchString;
+  }
+
+  function resetClick() {
+    document.location = '?';
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    
+    $( ".filters-select" ).each(function() {
+      var filterOn = $(this).data('filteron');
+
+      if (filterOn == 'duration') {
+        var paramString = 'search[duration][equal_to]';
+
+        if (urlParams.has(paramString)) {
+          var searchedOpt = urlParams.get(paramString);
+          var manipulateString = searchedOpt - 1;
+          $(this).find('span').html(manipulateString+' nights');
+        }
+      } else if (filterOn == 'active_promotion') {
+        var paramString = 'search['+filterOn+']';
+
+        if (urlParams.has(paramString)) {
+          var searchedOpt = urlParams.get(paramString);
+
+          if (searchedOpt == 'true') {
+            var manipulateString = 'On Offer';
+          } else {
+            var manipulateString = 'Full Price';
+          }
+
+          $(this).find('span').html(manipulateString);
+        }
+      } else if (filterOn == 'departure_month') {
+        var paramString = 'search['+filterOn+']';
+
+        if (urlParams.has(paramString)) {
+          var searchedOpt = urlParams.get(paramString);
+
+          switch (searchedOpt) {
+            case 'Jan':
+              var manipulateString = 'January';
+              break;
+            case 'Feb':
+              var manipulateString = 'February';
+              break;
+            case 'Mar':
+              var manipulateString = 'March';
+              break;
+            case 'Apr':
+              var manipulateString = 'April';
+              break;
+            case 'May':
+              var manipulateString = 'May';
+              break;
+            case 'Jun':
+              var manipulateString = 'June';
+              break;
+            case 'Jul':
+              var manipulateString = 'July';
+              break;
+            case 'Aug':
+              var manipulateString = 'August';
+              break;
+            case 'Sep':
+              var manipulateString = 'September';
+              break;
+            case 'Oct':
+              var manipulateString = 'October';
+              break;
+            case 'Nov':
+              var manipulateString = 'November';
+              break;
+            case 'Dec':
+              var manipulateString = 'December';
+              break;
+          }
+
+          $(this).find('span').html(manipulateString);
+        }
+      } else if (filterOn == 'departure_year') {
+        var paramString = 'search[departure_date][less_than]';
+
+        if (urlParams.has(paramString)) {
+          var searchedOpt = urlParams.get(paramString);
+          var manipulateString = searchedOpt.substr(0,4);
+
+          manipulateString = Number(manipulateString) - 1;
+
+          $(this).find('span').html(manipulateString);
+        }
+      } else {
+        var paramString = 'search['+filterOn+']';
+
+        if (urlParams.has(paramString)) {
+          var searchedOpt = urlParams.get(paramString);
+          $(this).find('span').html(searchedOpt);
+        }
+      }
+    });
+
+    jQuery('.filters-select').click(function () {
+      if (jQuery(this).next('.filters-open').find('ul').length !== 0) {
+        jQuery('.filters-open').html('');
+      } else {
+        var counter = 0;
+        var filterArray = jQuery(this).data('filteron');
+
+        jQuery('.filters-open').html('');
+        jQuery(this).next('.filters-open').html('<ul></ul>');
+
+        while (counter < eval(filterArray).length) {
+          jQuery(this).next('.filters-open').find('ul').append('<li onclick="filterClick(this)" id="' + counter + '">' + eval(filterArray)[counter] + '</li>');
+          counter++;
+        }
+      }
+    });
+  });
+</script>

@@ -1,0 +1,564 @@
+---
+attributes:
+  Hide_Nav:
+    group: layout
+    label: Hide header menu
+    type: Boolean
+    default: true
+  Hide_Footer:
+    group: layout
+    label: Hide footer
+    type: Boolean
+    default: true
+  Logo:
+    group: content
+    label: Logo
+    hint: Recommended minimum width 405px.
+    type: Image
+    default:
+      asset: images/bayou-dark.png
+  Background_Color_Left:
+    group: design
+    label: Left-side background colour
+    type: color
+    default:
+      palette: body-bg
+  Background_Image_Left:
+    group: design
+    label: Left-side background image
+    hint: Recommended minimum width 1140px.
+    type: Image
+  Mobile_Background_Image_Left:
+    type: image
+    label: Top mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Text_Color_Left:
+    group: design
+    label: Left-side text colour
+    type: color
+    default:
+      palette: body-color
+  Background_Color_Right:
+    group: design
+    label: Right side background colour
+    type: color
+    default:
+      palette: body-bg
+  Background_Image_Right:
+    group: design
+    label: Right side background image
+    hint: Recommended minimum width 1140px.
+    type: Image
+    default:
+      asset: images/cliff.jpg
+  Mobile_Background_Image_Right:
+    type: image
+    label: Bottom mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Text_Color_Right:
+    group: design
+    label: Signup box text colour
+    type: color
+    default:
+      palette: body-color
+  Box_Background_Color:
+    group: design
+    label: Signup box background colour
+    type: color
+    default:
+      palette: body-bg
+  Subtitle:
+    group: content
+    label: Subtitle
+    type: String
+    default: Creating experiences is an art.
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Intro_Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Facebook_Link:
+    group: content
+    label: Link to your facebook page
+    type: link
+    default:
+      url: https://www.facebook.com/your_id
+  Twitter_Link:
+    group: content
+    label: Link to your twitter page
+    type: link
+    default:
+      url: https://www.twitter.com/your_id
+  Instagram_Link:
+    group: content
+    label: Link to your instagram page
+    type: link
+    default:
+      url: https://www.instagram.com/your_id
+  Form_Header:
+    group: content
+    label: Form header
+    type: String
+    default: Be the first
+  Form_Intro:
+    group: content
+    label: Form introduction text
+    type: Text
+  Mailchimp_Form_Action:
+    group: content
+    label: Insert Mailchimp code
+    hint: Learn how to [find your Mailchimp code](https://support.easol.com/hc/en-gb/articles/4403735195537-Integrate-Mailchimp-with-your-signup-forms).
+    type: String
+    default: https://account.list-manage.com/subscribe/post?u=userid&amp;id=listid
+  Show_First_Name_Last_Name_Fields:
+    group: content
+    label: Display first name and last name fields in form
+    type: Boolean
+    default: true
+  Show_Mailchimp_Optin_Field:
+    group: content
+    label: Show an opt-in check box
+    type: Boolean
+    default: true
+  Mailchimp_Optin_Field_Text:
+    group: content
+    label: Opt-in checkbox label
+    type: String
+    default: I've read and agree with the privacy policy
+  Sign_Up_Button_Text:
+    group: content
+    label: Mailchimp button text
+    type: String
+    default: Sign Up
+  Sign_Up_Button_Color:
+    group: design
+    label: Mailchimp button colour
+    type: color
+    default:
+      palette: primary
+  Sign_Up_Button_Text_Color:
+    group: design
+    label: Mailchimp button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Use_Your_Own_Embeded_Form_Code:
+    group: content
+    label: Insert custom signup form
+    hint: Replace the default Mailchimp signup with a different third-party tool. [Learn more](https://support.easol.com/hc/en-gb/articles/4414539689361-Add-a-newsletter-signup-form-to-your-website).
+    type: String
+---
+
+<style>
+  #{{ block.id }} #landing-page .landing-page-left-inner {
+    max-width: 37rem;
+  }
+
+  #{{ block.id }} #landing-page .sign-up-inner {
+    max-width: 30rem;
+  }
+
+  #{{ block.id }} #landing-page .logo img {
+    object-fit: contain;
+    object-position: top left;
+    width: 6rem;
+  }
+
+  @media (min-width: 992px) {
+    #{{ block.id }} #landing-page .landing-page-left {
+      min-height: calc(100vh - var(--menu-height));
+    }
+  }
+
+  @media (max-width: 991.98px) {
+      #{{ block.id }} #landing-page h1 {
+        font-size: 2.5rem;
+    }
+  }
+
+  #{{ block.id }} #mailchimp-landing-page input:not(#mc-embedded-subscribe) {
+    border-radius: 0 !important;
+    background: #F7F7F9;
+    border: none !important;
+    height: 50px;
+    font-size: 0.8rem;
+  }
+
+  #{{ block.id }} #mailchimp-landing-page #mc-embedded-subscribe-form div.mce_inline_error {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+  }
+
+  #{{ block.id }} #mailchimp-landing-page #mc-embedded-subscribe {
+    padding: 1em 2.1875em;
+    border-radius: 0 !important;
+    border: none !important;
+    height: 50px;
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    line-height: 1;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsBody {
+    padding: 0;
+    background-color: transparent;
+    text-align: unset !important;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsForm {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsLabel,
+  #{{ block.id }} #landing-page-custom-embed .fsRequiredMarker, 
+  #{{ block.id }} #landing-page-custom-embed .fsBody .fsSupporting {
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    font-family: var(--font-family-base);
+    color: var(--body-color);
+    margin-bottom: 0.5rem;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsBody .fsSupporting {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsRow {
+    margin-bottom: 0 !important;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsFieldCell {
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsFieldFocused:not(.fsValidationError) {
+    padding-bottom: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed input, 
+  #{{ block.id }} #landing-page-custom-embed textarea, 
+  #{{ block.id }} #landing-page-custom-embed select {
+    background-color: #F7F7F9;
+    border: none;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsForm .fsSubmit {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsForm .fsSubmitButton {
+    padding: 1em 2.1875em;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: solid 1px var(--primary);
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.2s ease;
+    font-family: var(--headings-font-family);
+    width: 100%;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameFirst, 
+  #{{ block.id }} #landing-page-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameFirst {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-left: 0;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameLast, 
+  #{{ block.id }} #landing-page-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameLast {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-right: 0;
+  }
+
+  #{{ block.id }} #landing-page-custom-embed .fsRowBody input[type=checkbox]:before, 
+  #{{ block.id }} #landing-page-custom-embed .fsRowBody input[type=checkbox]:checked:before, 
+  #{{ block.id }} #landing-page-custom-embed .fsRowBody input[type=radio]:before, 
+  #{{ block.id }} #landing-page-custom-embed .fsRowBody input[type=radio]:checked:before {
+    position: absolute;
+  }
+
+  {% if Hide_Nav %}
+    nav {
+      display: none !important;
+    }
+  {% endif %}
+
+  {% if Hide_Footer %}
+    footer {
+      display: none !important;
+    }
+  {% endif %}
+
+  #{{ block.id }} .landing-page-left {
+    {% if Background_Image_Left %}
+      background-image: url('{{ Background_Image_Left.xlarge_url }}');
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color_Left %}
+      background-color: {{ Background_Color_Left.hex }};
+    {% endif %}
+    {% if Text_Color_Left %}
+      color: {{ Text_Color_Left.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image_Left %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .landing-page-left {
+        background-image: url('{{ Mobile_Background_Image_Left.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .social-icons rect {
+    {% if Text_Color_Left %}
+      fill: {{ Text_Color_Left.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .social-icons path {
+    {% if Background_Color_Left %}
+      {% unless Background_Image_Left %}
+        fill: {{ Background_Color_Left.hex }};
+      {% endunless %}
+    {% endif %}
+  }
+
+  #{{ block.id }} .landing-page-right {
+    {% if Background_Image_Right %}
+      background-image: url('{{ Background_Image_Right.xlarge_url }}');
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color_Right %}
+      background-color: {{ Background_Color_Right.hex }} !important;
+    {% endif %}
+    {% if Text_Color_Right %}
+      color: {{ Text_Color_Right.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image_Right %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .landing-page-right {
+        background-image: url('{{ Mobile_Background_Image_Right.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .sign-up-inner {
+    {% if Box_Background_Color %}
+      background-color: {{ Box_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Sign_Up_Button_Color %}
+      background-color: {{ Sign_Up_Button_Color.hex }};
+      border: solid 1px {{ Sign_Up_Button_Color.hex }};
+    {% endif %}
+    {% if Sign_Up_Button_Text_Color %}
+      color: {{ Sign_Up_Button_Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .bot-signups {
+    position: absolute;
+    left: -5000px;
+  }
+
+  #{{ block.id }} .response {
+    display: none;
+  }
+</style>
+
+<div id="landing-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6 d-flex flex-column justify-content-between align-items-center align-items-lg-start px-3 py-5 px-md-5 landing-page-left">
+        <div class="landing-page-left-inner w-100">
+          {% if Logo %}
+            <a class="logo mb-4 mb-md-5 d-block" href="/">
+              <img src="{{ Logo.thumbnail_url }}" />
+            </a>
+          {% endif %}
+        </div>
+
+        <div class="landing-page-left-inner w-100">
+          {% if Subtitle %}
+            <p class="label-big mb-5">
+              {{ Subtitle }}
+            </p>
+          {% endif %}
+
+          {% if Header %}
+            <h1 class="mb-4 mb-md-5">
+              {{ Header }}
+            </h1>
+          {% endif %}
+
+          {% if Intro_Text %}
+            <div class="text-big mb-0 mb-md-5 text-field">
+              {{ Intro_Text }}
+            </div>
+          {% endif %}
+
+          {% if Facebook_Link.url != blank or Twitter_Link.url != blank or Instagram_Link.url != blank %}
+            <div class="social-icons d-none d-md-block">
+              {% if Facebook_Link.url != blank %}
+                <a href="{{ Facebook_Link.url }}"{% if Facebook_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} class="pr-3">
+                  <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="35" height="35" rx="17.5"/>
+                    <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M21.7885 10.1082V12.488H20.3732C19.8564 12.488 19.5078 12.5962 19.3275 12.8125C19.1472 13.0288 19.0571 13.3534 19.0571 13.7861V15.4898H21.6983L21.3468 18.1581H19.0571V25H16.2987V18.1581H14V15.4898H16.2987V13.5246C16.2987 12.4068 16.6112 11.54 17.2362 10.924C17.8612 10.308 18.6935 10 19.7332 10C20.6166 10 21.3017 10.0361 21.7885 10.1082Z"/>
+                  </svg>
+                </a>
+              {% endif %}
+
+              {% if Twitter_Link.url != blank %}
+                <a href="{{ Twitter_Link.url }}"{% if Twitter_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} class="pr-3">
+                  <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="35" height="35" rx="17.5"/>
+                    <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M26 11.6625C25.5182 12.3771 24.9357 12.9859 24.2525 13.4891C24.2597 13.5911 24.2633 13.7443 24.2633 13.9484C24.2633 14.8964 24.1267 15.8424 23.8534 16.7867C23.5802 17.731 23.1649 18.637 22.6075 19.5047C22.0502 20.3724 21.3868 21.1398 20.6174 21.807C19.8479 22.4742 18.9203 23.0065 17.8344 23.4039C16.7485 23.8013 15.5871 24 14.3503 24C12.4014 24 10.618 23.4714 9 22.4141C9.25169 22.4432 9.53215 22.4578 9.84137 22.4578C11.4594 22.4578 12.9012 21.9547 14.1669 20.9484C13.4118 20.9339 12.7358 20.6987 12.139 20.243C11.5421 19.7872 11.1322 19.2057 10.9093 18.4984C11.1466 18.5349 11.3659 18.5531 11.5673 18.5531C11.8765 18.5531 12.1821 18.513 12.4841 18.4328C11.6787 18.2651 11.0117 17.8586 10.4832 17.2133C9.95463 16.568 9.69036 15.8188 9.69036 14.9656V14.9219C10.1794 15.199 10.7043 15.3484 11.2652 15.3703C10.7906 15.0495 10.4131 14.6302 10.1326 14.1125C9.85216 13.5948 9.71193 13.0333 9.71193 12.4281C9.71193 11.7865 9.87013 11.1922 10.1865 10.6453C11.0567 11.7318 12.1156 12.6013 13.3633 13.2539C14.6109 13.9065 15.9467 14.2693 17.3706 14.3422C17.313 14.0651 17.2843 13.7953 17.2843 13.5328C17.2843 12.5557 17.624 11.7227 18.3036 11.0336C18.9832 10.3445 19.8048 10 20.7684 10C21.7752 10 22.6237 10.3719 23.3141 11.1156C24.0979 10.9625 24.835 10.6781 25.5254 10.2625C25.2593 11.101 24.7487 11.75 23.9937 12.2094C24.6624 12.1365 25.3312 11.9542 26 11.6625Z"/>
+                  </svg>
+                </a>
+              {% endif %}
+
+              {% if Instagram_Link.url != blank %}
+                <a href="{{ Instagram_Link.url }}"{% if Instagram_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                  <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="35" height="35" rx="17.5"/>
+                    <path fill="black" fill-rule="evenodd" clip-rule="evenodd" d="M14.4491 10.0444C15.2478 10.0148 16.2782 10 17.5403 10C18.8025 10 19.8329 10.0148 20.6316 10.0444C21.312 10.074 21.9184 10.1923 22.4508 10.3993C22.9636 10.5966 23.4073 10.8825 23.782 11.2572C24.1567 11.6319 24.4426 12.0756 24.6398 12.5884C24.8469 13.1208 24.9652 13.7272 24.9948 14.4076C25.0244 15.2063 25.0392 16.2367 25.0392 17.4988C25.0392 18.761 25.0244 19.7914 24.9948 20.5901C24.9652 21.2704 24.8469 21.8769 24.6398 22.4093C24.4426 22.9221 24.1567 23.3658 23.782 23.7405C23.4073 24.1152 22.9636 24.4011 22.4508 24.5983C21.9184 24.8054 21.312 24.9237 20.6316 24.9533C19.8329 24.9829 18.8025 24.9977 17.5403 24.9977C16.2782 24.9977 15.2478 24.9829 14.4491 24.9533C13.7687 24.9237 13.1623 24.8054 12.6299 24.5983C12.1171 24.4011 11.6734 24.1152 11.2987 23.7405C10.924 23.3658 10.6381 22.9221 10.4409 22.4093C10.2338 21.8769 10.1155 21.2704 10.0859 20.5901C10.0563 19.7914 10.0415 18.761 10.0415 17.4988C10.0415 16.2367 10.0563 15.2063 10.0859 14.4076C10.1155 13.7272 10.2338 13.1208 10.4409 12.5884C10.6381 12.0756 10.924 11.6319 11.2987 11.2572C11.6734 10.8825 12.1171 10.5966 12.6299 10.3993C13.1623 10.1923 13.7687 10.074 14.4491 10.0444ZM15.4104 19.6287C16.002 20.2105 16.7119 20.5013 17.5402 20.5013C18.3685 20.5013 19.076 20.208 19.6627 19.6213C20.2494 19.0346 20.5427 18.3271 20.5427 17.4988C20.5427 16.6706 20.2494 15.9631 19.6627 15.3764C19.076 14.7897 18.3685 14.4964 17.5402 14.4964C16.7119 14.4964 16.0044 14.7897 15.4178 15.3764C14.8311 15.9631 14.5377 16.6706 14.5377 17.4988C14.5377 18.3271 14.8286 19.0371 15.4104 19.6287ZM14.8187 14.7774C15.5681 14.028 16.4752 13.6533 17.5402 13.6533C18.6051 13.6533 19.5122 14.028 20.2616 14.7774C21.011 15.5268 21.3857 16.4339 21.3857 17.4989C21.3857 18.5638 21.011 19.471 20.2616 20.2203C19.5122 20.9697 18.6051 21.3444 17.5402 21.3444C16.4752 21.3444 15.5681 20.9697 14.8187 20.2203C14.0693 19.471 13.6946 18.5638 13.6946 17.4989C13.6946 16.4339 14.0693 15.5268 14.8187 14.7774ZM22.1697 12.8694C22.3571 13.0469 22.4508 13.2589 22.4508 13.5054C22.4508 13.7519 22.362 13.9614 22.1845 14.134C22.0071 14.3065 21.7901 14.3928 21.5338 14.3928C21.2872 14.3928 21.0777 14.3065 20.9052 14.134C20.7326 13.9614 20.6463 13.7519 20.6463 13.5054C20.6463 13.249 20.7326 13.0321 20.9052 12.8546C21.0777 12.6771 21.2872 12.5884 21.5338 12.5884C21.7803 12.5884 21.9923 12.682 22.1697 12.8694Z"/>
+                  </svg>
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="landing-page-right col-lg-6 d-md-flex flex-column justify-content-center align-items-center p-3 p-md-5 bg-secondary">
+        <div class="sign-up-inner bg-white p-4 p-md-5 w-100 mx-auto">
+          {% if Form_Header %}
+            <h4 class="mb-3">
+              {{ Form_Header }}
+            </h4>
+          {% endif %}
+
+          {% if Form_Intro %}
+            <div class="mb-3 mb-md-4 text-field">
+              {{ Form_Intro }}
+            </div>
+          {% endif %}
+
+          {% if Use_Your_Own_Embeded_Form_Code %}
+            <div id="landing-page-custom-embed">
+              {{ Use_Your_Own_Embeded_Form_Code }}
+            </div>
+          {% else %}
+            <!-- Begin Mailchimp Signup Form -->
+            <div id="mailchimp-landing-page">
+              <form action="{{ Mailchimp_Form_Action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate p-0" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+                  <div class="mc-field-group m-0 w-100 pb-3">
+                    <label for="mce-EMAIL" class="label-small-uppercase">Email Address  <span class="asterisk">*</span></label>
+                    <input type="email" value="" name="EMAIL" class="required email w-100" id="mce-EMAIL">
+                  </div>
+
+                  {% if Show_First_Name_Last_Name_Fields %}
+                    <div class="mc-field-group m-0 w-100 pb-3">
+                      <label for="mce-FNAME" class="label-small-uppercase">First Name </label>
+                      <input type="text" value="" name="FNAME" class="w-100" id="mce-FNAME">
+                    </div>
+
+                    <div class="mc-field-group m-0 w-100 pb-3">
+                      <label for="mce-LNAME" class="label-small-uppercase">Last Name </label>
+                      <input type="text" value="" name="LNAME" class="w-100" id="mce-LNAME">
+                    </div>
+                  {% endif %}
+
+                  {% if Show_Mailchimp_Optin_Field %}
+                    <div class="mc-field-group m-0 w-100 d-flex align-items-center optin-field">
+                      <input type="checkbox" value="OPTIN" name="OPTIN" class="required" id="mce-OPTIN" aria-required="true">
+                      <label for="mce-OPTIN" class="label-small mb-0 pl-3">{{ Mailchimp_Optin_Field_Text }}</label>
+                    </div>
+                  {% endif %}
+
+                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                  <div class="bot-signups" aria-hidden="true"><input type="text" name="b_f5d8e779a9ef4bf56908a5178_cdee62a635" tabindex="-1" value=""></div>
+                  <div class="clear"><input type="submit" value="{{ Sign_Up_Button_Text }}" name="subscribe" id="mc-embedded-subscribe" class="button button-primary-solid w-100 m-0 h6"></div>
+
+                  <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response"></div>
+                    <div class="response" id="mce-success-response"></div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='SELECTYUI';ftypes[3]='text';fnames[4]='TEXTAREAY';ftypes[4]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+            <!--End mc_embed_signup-->
+          {% endif %}
+        </div>
+
+        {% if Facebook_Link.url != blank or Twitter_Link.url != blank or Instagram_Link.url != blank %}
+          <div class="social-icons mt-4 d-md-none text-center">
+            {% if Facebook_Link.url != blank %}
+              <a href="{{ Facebook_Link.url }}"{% if Facebook_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} class="pr-3">
+                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="35" height="35" rx="17.5"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M21.7885 10.1082V12.488H20.3732C19.8564 12.488 19.5078 12.5962 19.3275 12.8125C19.1472 13.0288 19.0571 13.3534 19.0571 13.7861V15.4898H21.6983L21.3468 18.1581H19.0571V25H16.2987V18.1581H14V15.4898H16.2987V13.5246C16.2987 12.4068 16.6112 11.54 17.2362 10.924C17.8612 10.308 18.6935 10 19.7332 10C20.6166 10 21.3017 10.0361 21.7885 10.1082Z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if Twitter_Link.url != blank %}
+              <a href="{{ Twitter_Link.url }}"{% if Twitter_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} class="pr-3">
+                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="35" height="35" rx="17.5"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M26 11.6625C25.5182 12.3771 24.9357 12.9859 24.2525 13.4891C24.2597 13.5911 24.2633 13.7443 24.2633 13.9484C24.2633 14.8964 24.1267 15.8424 23.8534 16.7867C23.5802 17.731 23.1649 18.637 22.6075 19.5047C22.0502 20.3724 21.3868 21.1398 20.6174 21.807C19.8479 22.4742 18.9203 23.0065 17.8344 23.4039C16.7485 23.8013 15.5871 24 14.3503 24C12.4014 24 10.618 23.4714 9 22.4141C9.25169 22.4432 9.53215 22.4578 9.84137 22.4578C11.4594 22.4578 12.9012 21.9547 14.1669 20.9484C13.4118 20.9339 12.7358 20.6987 12.139 20.243C11.5421 19.7872 11.1322 19.2057 10.9093 18.4984C11.1466 18.5349 11.3659 18.5531 11.5673 18.5531C11.8765 18.5531 12.1821 18.513 12.4841 18.4328C11.6787 18.2651 11.0117 17.8586 10.4832 17.2133C9.95463 16.568 9.69036 15.8188 9.69036 14.9656V14.9219C10.1794 15.199 10.7043 15.3484 11.2652 15.3703C10.7906 15.0495 10.4131 14.6302 10.1326 14.1125C9.85216 13.5948 9.71193 13.0333 9.71193 12.4281C9.71193 11.7865 9.87013 11.1922 10.1865 10.6453C11.0567 11.7318 12.1156 12.6013 13.3633 13.2539C14.6109 13.9065 15.9467 14.2693 17.3706 14.3422C17.313 14.0651 17.2843 13.7953 17.2843 13.5328C17.2843 12.5557 17.624 11.7227 18.3036 11.0336C18.9832 10.3445 19.8048 10 20.7684 10C21.7752 10 22.6237 10.3719 23.3141 11.1156C24.0979 10.9625 24.835 10.6781 25.5254 10.2625C25.2593 11.101 24.7487 11.75 23.9937 12.2094C24.6624 12.1365 25.3312 11.9542 26 11.6625Z"/>
+                </svg>
+              </a>
+            {% endif %}
+
+            {% if Instagram_Link.url != blank %}
+              <a href="{{ Instagram_Link.url }}"{% if Instagram_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="35" height="35" rx="17.5"/>
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M14.4491 10.0444C15.2478 10.0148 16.2782 10 17.5403 10C18.8025 10 19.8329 10.0148 20.6316 10.0444C21.312 10.074 21.9184 10.1923 22.4508 10.3993C22.9636 10.5966 23.4073 10.8825 23.782 11.2572C24.1567 11.6319 24.4426 12.0756 24.6398 12.5884C24.8469 13.1208 24.9652 13.7272 24.9948 14.4076C25.0244 15.2063 25.0392 16.2367 25.0392 17.4988C25.0392 18.761 25.0244 19.7914 24.9948 20.5901C24.9652 21.2704 24.8469 21.8769 24.6398 22.4093C24.4426 22.9221 24.1567 23.3658 23.782 23.7405C23.4073 24.1152 22.9636 24.4011 22.4508 24.5983C21.9184 24.8054 21.312 24.9237 20.6316 24.9533C19.8329 24.9829 18.8025 24.9977 17.5403 24.9977C16.2782 24.9977 15.2478 24.9829 14.4491 24.9533C13.7687 24.9237 13.1623 24.8054 12.6299 24.5983C12.1171 24.4011 11.6734 24.1152 11.2987 23.7405C10.924 23.3658 10.6381 22.9221 10.4409 22.4093C10.2338 21.8769 10.1155 21.2704 10.0859 20.5901C10.0563 19.7914 10.0415 18.761 10.0415 17.4988C10.0415 16.2367 10.0563 15.2063 10.0859 14.4076C10.1155 13.7272 10.2338 13.1208 10.4409 12.5884C10.6381 12.0756 10.924 11.6319 11.2987 11.2572C11.6734 10.8825 12.1171 10.5966 12.6299 10.3993C13.1623 10.1923 13.7687 10.074 14.4491 10.0444ZM15.4104 19.6287C16.002 20.2105 16.7119 20.5013 17.5402 20.5013C18.3685 20.5013 19.076 20.208 19.6627 19.6213C20.2494 19.0346 20.5427 18.3271 20.5427 17.4988C20.5427 16.6706 20.2494 15.9631 19.6627 15.3764C19.076 14.7897 18.3685 14.4964 17.5402 14.4964C16.7119 14.4964 16.0044 14.7897 15.4178 15.3764C14.8311 15.9631 14.5377 16.6706 14.5377 17.4988C14.5377 18.3271 14.8286 19.0371 15.4104 19.6287ZM14.8187 14.7774C15.5681 14.028 16.4752 13.6533 17.5402 13.6533C18.6051 13.6533 19.5122 14.028 20.2616 14.7774C21.011 15.5268 21.3857 16.4339 21.3857 17.4989C21.3857 18.5638 21.011 19.471 20.2616 20.2203C19.5122 20.9697 18.6051 21.3444 17.5402 21.3444C16.4752 21.3444 15.5681 20.9697 14.8187 20.2203C14.0693 19.471 13.6946 18.5638 13.6946 17.4989C13.6946 16.4339 14.0693 15.5268 14.8187 14.7774ZM22.1697 12.8694C22.3571 13.0469 22.4508 13.2589 22.4508 13.5054C22.4508 13.7519 22.362 13.9614 22.1845 14.134C22.0071 14.3065 21.7901 14.3928 21.5338 14.3928C21.2872 14.3928 21.0777 14.3065 20.9052 14.134C20.7326 13.9614 20.6463 13.7519 20.6463 13.5054C20.6463 13.249 20.7326 13.0321 20.9052 12.8546C21.0777 12.6771 21.2872 12.5884 21.5338 12.5884C21.7803 12.5884 21.9923 12.682 22.1697 12.8694Z"/>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

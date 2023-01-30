@@ -1,0 +1,184 @@
+<style>
+  /* POPUP */
+  body.popup-open {
+    overflow-y: hidden;
+    height: 100%;
+  }
+
+  .popup1-open .popup1 {
+    display: flex !important;
+  }
+
+  .popup-overlay {
+    top:0;
+    left:0;
+    z-index:9999;
+    background-color:rgba(0,0,0,0.6);
+    overflow-y: auto;
+  }
+
+  .popup-inner {
+    max-width: 750px;
+  }
+
+  .mailchimp-popup input:not(#mc-embedded-subscribe) {
+    border-radius: 0 !important;
+    background: #F7F7F9;
+    border: none !important;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+    color: var(--body-color);
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form .optin-field div.mce_inline_error {
+    padding-top: 0 !important;
+    padding-left: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .mailchimp-popup .mc-field-group {
+      width: 100% !important;
+    }
+  }
+</style>
+
+<footer id="footer">
+  <div class="container-fluid p-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img class="footer-logo mb-5" height="30" src="https://lucid.myeasol.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxtWWpNd05ETTRNUzAzT1RsaUxUUXpPV1V0WVRkaU15MDBZVGxrWlROaU9HSXhNRElHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--53b9052f1a29fc865583cd427329fe3e1796c7c5/lucidfooterlogo.png" />
+
+        <p class="label-small-uppercase mb-5">
+          SWITCHED ON ART
+        </p>
+
+        <div class="footer-socials">
+          <a class="pr-3" style="color: inherit;" href="" target="_blank">
+            <i class="fa fa-instagram fa-2x"></i>
+          </a>
+
+          <a style="color: inherit;" href="" target="_blank">
+            <i class="fa fa-facebook fa-2x"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-12 text-right">
+            <hr class="my-4 d-md-none">
+
+            <a class="dropdown-item label-small-uppercase text-white d-block link-button py-2" href="/about">
+              About Lucid
+            </a>
+
+            <a class="dropdown-item label-small-uppercase text-white d-block link-button py-2" href="/programme">
+              Festival Programme
+            </a>
+
+            <a class="dropdown-item label-small-uppercase text-white d-block link-button py-2" href="/book">
+              Book Tickets
+            </a>
+
+            <a class="dropdown-item label-small-uppercase text-white d-block link-button py-2" href="/visitor-info">
+              Visitor Info
+            </a>
+
+            <a class="dropdown-item label-small-uppercase text-white d-block link-button py-2" href="/faq">
+              Frequently Asked Questions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <a class="label-small-uppercase" href="http://easol.co/" target="_blank">
+          Powered by Easol Experience Commerce
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FORM MODAL -->
+<div class="popup-overlay popup1 p-4 p-md-5 position-fixed w-100 vh-100 flex-column d-none">
+  <div class="popup-inner p-4 p-md-5 mx-auto bg-body-bg">
+    <div class="d-flex justify-content-between mb-5">
+      <h4 class="mr-5">
+        I'm interested!
+      </h4>
+
+      <div class="closepop cursor-pointer" onclick="closePop()">
+        <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14.5" cy="14.5" r="14.5" fill="var(--primary)"/>
+          <path d="M9 9L20 20M20 9L9 20" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div> 
+
+    <!-- Begin Mailchimp Signup Form -->
+    <div id="mc_embed_signup" class="mailchimp-popup">
+      <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate p-0" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll" class="d-flex flex-wrap">
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-FNAME" class="label-small-uppercase d-block">First Name </label>
+            <input type="text" value="" name="FNAME" class="w-100" id="mce-FNAME">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-LNAME" class="label-small-uppercase d-block">Last Name </label>
+            <input type="text" value="" name="LNAME" class="w-100" id="mce-LNAME">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-EMAIL" class="label-small-uppercase d-block">Email Address  <span class="asterisk">*</span></label>
+            <input type="email" value="" name="EMAIL" class="required email w-100" id="mce-EMAIL">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-PHONE" class="label-small-uppercase d-block">Phone  </label>
+            <input type="text" value="" name="PHONE" class="phone w-100" id="mce-PHONE">
+          </div>
+
+          <div class="mc-field-group m-0 w-100 d-flex align-items-center optin-field">
+            <input type="checkbox" value="OPTIN" name="" class="required" id="mce-OPTIN"><label for="mce-OPTIN" class="label-small mb-0 pl-3">Tell me more  </label>
+          </div>
+
+          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f5d8e779a9ef4bf56908a5178_cdee62a635" tabindex="-1" value=""></div>
+          <div class="clear mt-4 w-100"><input type="submit" value="TELL ME MORE" name="subscribe" id="mc-embedded-subscribe" class="button button-primary-solid d-block w-100 m-0"></div>
+
+          <div id="mce-responses" class="clear">
+            <div class="response" id="mce-error-response" style="display:none"></div>
+            <div class="response" id="mce-success-response" style="display:none"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='SELECTYUI';ftypes[3]='text';fnames[4]='TEXTAREAY';ftypes[4]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    <!--End mc_embed_signup-->
+  </div>
+</div>
+<!-- FORM MODAL -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.2.1/simple-lightbox.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.2.1/simple-lightbox.jquery.min.js"></script>

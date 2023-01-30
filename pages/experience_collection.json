@@ -1,0 +1,45 @@
+{
+  "name": "Experience Collection",
+  "category": "Experiences",
+  "blocks": [
+    {
+      "key": "hero_image",
+      "attributes": {
+        "Center_Text": true
+      }
+    },
+    {
+      "key": "jump_bar"
+    },
+    {
+      "key": "featured_experiences",
+      "attributes": {
+        "Show_Experiences_In_A_Swiper": true,
+        "Show_Button": false,
+        "cards_per_row": "1"
+      }
+    },
+    {
+      "key": "featured_experiences",
+      "attributes": {
+        "Show_Experiences_In_A_Swiper": true,
+        "Show_Button": false,
+        "cards_per_row": "2"
+      }
+    },
+    {
+      "key": "featured_experiences",
+      "attributes": {
+        "Show_Experiences_In_A_Swiper": true,
+        "Show_Button": false,
+        "cards_per_row": "3"
+      }
+    },
+    {
+      "key": "testimonials_text_only",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    }
+  ]
+}

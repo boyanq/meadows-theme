@@ -1,0 +1,560 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: body-bg
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Center_Headings:
+    group: layout
+    label: Align headers to the centre
+    type: Boolean
+  Logo:
+    group: content
+    label: Logo
+    hint: Recommended minimum width 405px.
+    type: Image
+    default:
+      asset: images/bayou-dark.png
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Subscribe to our newsletter
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Get the latest news and updates.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: false
+  Center_Button:
+    group: layout
+    label: Align button to the centre
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Show_Mailchimp_Sign_Up_Form:
+    group: content
+    label: Display a Mailchimp signup form
+    type: Boolean
+    default: true
+  Mailchimp_Form_Action_Code:
+    group: content
+    label: Insert Mailchimp code
+    hint: Learn how to [find your Mailchimp code](https://support.easol.com/hc/en-gb/articles/4403735195537-Integrate-Mailchimp-with-your-signup-forms).
+    type: String
+  Mailchimp_Signup_Button_Text:
+    group: content
+    label: Mailchimp button text
+    type: String
+    default: SIGN UP
+  Show_Mailchimp_Optin_Field:
+    group: content
+    label: Show an opt-in check box
+    type: Boolean
+    default: true
+  Mailchimp_Optin_Field_Text:
+    group: content
+    label: Opt-in checkbox label
+    type: String
+    default: I've read and agree with the privacy policy
+  Mailchimp_Sign_Up_Button_Color:
+    group: design
+    label: Mailchimp button colour
+    type: color
+    default:
+      palette: primary
+  Mailchimp_Sign_Up_Button_Text_Color:
+    group: design
+    label: Mailchimp button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Mailchimp_Input_Field_Background_Color:
+    group: design
+    label: Mailchimp input fields background colour
+    type: color
+    default:
+      palette: secondary
+  Mailchimp_Input_Field_Text_Color:
+    group: design
+    label: Mailchimp input fields text colour
+    type: color
+    default:
+      palette: body-color
+  Use_Your_Own_Embedded_Sign_Up_Form:
+    group: content
+    label: Add a custom sign up form
+    hint: Replace the default Mailchimp sign up form with a form from a third-party CMS tool.
+    type: Boolean
+    default: false
+  Embedded_Sign_Up_Form_Code:
+    group: content
+    label: Code for custom form
+    hint: Configure the form with the third-party before pasting in the supplied code. Codes often begin with `<frame>` or `<script>`
+    type: String
+  Pop_Up_Automatically:
+    group: design
+    label: Enable automatic popup
+    type: Boolean
+    default: true
+  Seconds_Until_Popup:
+    group: design
+    label: Number of seconds until popup automatically displays after page load
+    type: String
+    default: 5
+  Enable_Cookies:
+    group: design
+    label: Show the popup only once a week per visitor
+    type: Boolean
+    default: false
+layout:
+  - type: tab
+    label: Content
+    elements: 
+      - Logo
+      - Header
+      - Text
+      - Show_Button
+      - Button_Text
+      - Button_Link
+      - Show_Mailchimp_Sign_Up_Form
+      - Mailchimp_Form_Action_Code
+      - Mailchimp_Signup_Button_Text
+      - Show_Mailchimp_Optin_Field
+      - Mailchimp_Optin_Field_Text
+      - Use_Your_Own_Embedded_Sign_Up_Form
+      - Embedded_Sign_Up_Form_Code
+  - type: tab
+    label: Design
+    elements: 
+      - Background_Image
+      - Background_Color
+      - Text_Color
+      - Button_Color
+      - Mailchimp_Sign_Up_Button_Color
+      - Mailchimp_Sign_Up_Button_Text_Color
+      - Mailchimp_Input_Field_Background_Color
+      - Mailchimp_Input_Field_Text_Color
+  - type: tab
+    label: Layout
+    elements:
+      - Center_Headings
+      - Center_Button
+  - type: tab
+    label: Settings
+    elements: 
+      - Pop_Up_Automatically
+      - Seconds_Until_Popup
+      - Enable_Cookies
+  - type: tab
+    label: Mobile
+    elements:
+      - Mobile_Background_Image
+---
+
+<style>
+  .popup-alchemist-{{ block.id }}-open {
+    overflow-y: hidden;
+    height: 100%;
+  }
+
+  .popup-alchemist-{{ block.id }}-open #{{ block.id }} .popup-alchemist-block {
+    display: flex !important;
+  }
+
+  #{{ block.id }} .popup-alchemist-block {
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.6);
+    overflow-y: auto;
+  }
+
+  #{{ block.id }} .popup-alchemist-block .popup-inner {
+    width: 95%;
+    max-width: 750px;
+  }
+
+  .mailchimp-popup input:not(#mc-embedded-subscribe) {
+    border-radius: 0 !important;
+    border: none !important;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form .optin-field div.mce_inline_error {
+    padding-top: 0 !important;
+    padding-left: 1rem;
+  }
+
+  #popup-alchemist-block-custom-embed .fsBody {
+    padding: 0;
+    background-color: transparent;
+    text-align: unset !important;
+  }
+
+  #popup-alchemist-block-custom-embed .fsForm {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  #popup-alchemist-block-custom-embed .fsBody .fsLabel,
+  #popup-alchemist-block-custom-embed .fsRequiredMarker, 
+  #popup-alchemist-block-custom-embed .fsBody .fsSupporting {
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    font-family: var(--font-family-base);
+    color: var(--body-color);
+    margin-bottom: 0.5rem;
+  }
+
+  #popup-alchemist-block-custom-embed .fsBody .fsSupporting {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  #popup-alchemist-block-custom-embed .fsRow {
+    margin-bottom: 0 !important;
+  }
+
+  #popup-alchemist-block-custom-embed .fsFieldCell {
+    margin-bottom: 1rem !important;
+  }
+
+  #popup-alchemist-block-custom-embed .fsFieldFocused:not(.fsValidationError) {
+    padding-bottom: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #popup-alchemist-block-custom-embed input,
+  #popup-alchemist-block-custom-embed textarea,
+  #popup-alchemist-block-custom-embed select {
+    background-color: #F7F7F9;
+    border: none;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #popup-alchemist-block-custom-embed .fsForm .fsSubmit {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  #popup-alchemist-block-custom-embed .fsForm .fsSubmitButton {
+    padding: 1em 2.1875em;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: solid 1px var(--primary);
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.2s ease;
+    font-family: var(--headings-font-family);
+    width: 100%;
+  }
+
+  #popup-alchemist-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameFirst,
+  #popup-alchemist-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameFirst {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-left: 0;
+  }
+
+  #popup-alchemist-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameLast,
+  #popup-alchemist-block-custom-embed .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameLast {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-right: 0;
+  }
+
+  #popup-alchemist-block-custom-embed .fsRowBody input[type=checkbox]:before,
+  #popup-alchemist-block-custom-embed .fsRowBody input[type=checkbox]:checked:before,
+  #popup-alchemist-block-custom-embed .fsRowBody input[type=radio]:before,
+  #popup-alchemist-block-custom-embed .fsRowBody input[type=radio]:checked:before {
+    position: absolute;
+  }
+
+  #{{ block.id }} .popup-alchemist-block .popup-inner {
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.large_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .popup-alchemist-block .popup-inner {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .bot-signups {
+    position: absolute;
+    left: -5000px;
+  }
+
+  #{{ block.id }} .button-primary-outline {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .mailchimp-popup .button {
+    {% if Mailchimp_Sign_Up_Button_Text_Color %}
+      color: {{ Mailchimp_Sign_Up_Button_Text_Color.hex }} !important;
+    {% endif %}
+    {% if Mailchimp_Sign_Up_Button_Color %}
+      border: solid 1px {{ Mailchimp_Sign_Up_Button_Color.hex }} !important;
+      background-color: {{ Mailchimp_Sign_Up_Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .mailchimp-popup input:not(#mc-embedded-subscribe) {
+    {% if Mailchimp_Input_Field_Text_Color %}
+      color: {{ Mailchimp_Input_Field_Text_Color.hex }};
+    {% endif %}
+    {% if Mailchimp_Input_Field_Background_Color %}
+      background-color: {{ Mailchimp_Input_Field_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .mailchimp-popup .response {
+    display: none;
+  }
+
+  #{{ block.id }} .closepop svg circle {
+    {% if Button_Color %}
+      fill: {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .closepop svg path {
+    {% if Background_Color %}
+      stroke: {{ Background_Color.hex }};
+    {% endif %}
+  }
+</style>
+
+<div class="popup-overlay popup-alchemist-block popup-alchemist-block-{{ block.id }} p-4 p-md-5 position-fixed w-100 vh-100 flex-column d-none">
+  <div class="popup-inner p-4 p-md-5 mx-auto bg-body-bg">
+    <div class="d-flex justify-content-end">
+      <div class="closepop cursor-pointer" onclick="closePopGenieBlock{{ block.id | remove: '-' }}()">
+        <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14.5" cy="14.5" r="14.5"/>
+          <path d="M9 9L20 20M20 9L9 20" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="d-flex {% if Center_Headings %}justify-content-center{% endif %}">
+      <div class="{% if Center_Headings %}text-center{% endif %}">
+        {% if Logo %}
+          <img class="mb-5" src="{{ Logo.thumbnail_url }}" width="80" />
+        {% endif %}
+
+        {% if Header %}
+          <h4 class="mb-5 {% if Center_Headings %}text-center{% endif %}">
+            {{ Header }}
+          </h4>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if Text %}
+      <div class="mb-4">
+        <div class="text-field {% if Center_Headings %}text-center{% endif %}">
+          {{ Text }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if Show_Button %}
+      <div class="{% if Center_Button %}text-center{% endif %} {% if Show_Mailchimp_Sign_Up_Form or Use_Your_Own_Embedded_Sign_Up_Form %}mb-4{% endif %}">
+        <a class="button button-primary-outline" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+
+    {% if Show_Mailchimp_Sign_Up_Form %}
+      <div id="mc_embed_signup" class="mailchimp-popup">
+        <form action="{{ Mailchimp_Form_Action_Code }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate p-0" target="_blank" novalidate>
+          <div id="mc_embed_signup_scroll" class="d-flex flex-wrap">
+            <div class="mc-field-group m-0 w-100 pb-3">
+              <label for="mce-EMAIL" class="label-small-uppercase d-block">Email Address  <span class="asterisk">*</span></label>
+              <input type="email" value="" name="EMAIL" class="required email w-100" id="mce-EMAIL">
+            </div>
+
+            {% if Show_Mailchimp_Optin_Field %}
+              <div class="mc-field-group m-0 w-100 d-flex align-items-center optin-field">
+                <input type="checkbox" value="OPTIN" name="OPTIN" class="required" id="mce-OPTIN" aria-required="true"><label for="mce-OPTIN" class="label-small mb-0 pl-3">{{ Mailchimp_Optin_Field_Text }}</label>
+              </div>
+            {% endif %}
+
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div class="bot-signups" aria-hidden="true"><input type="text" name="b_f5d8e779a9ef4bf56908a5178_cdee62a635" tabindex="-1" value=""></div>
+
+            <div class="clear mt-4 w-100">
+              <input type="submit" value="{{ Mailchimp_Signup_Button_Text }}" name="subscribe" id="mc-embedded-subscribe" class="button button-primary-solid d-block w-100 m-0">
+            </div>
+
+            <div id="mce-responses" class="clear">
+              <div class="response" id="mce-error-response"></div>
+              <div class="response" id="mce-success-response"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='SELECTYUI';ftypes[3]='text';fnames[4]='TEXTAREAY';ftypes[4]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    {% endif %}
+
+    {% if Use_Your_Own_Embedded_Sign_Up_Form %}
+      <div id="popup-alchemist-block-custom-embed">
+        {{ Embedded_Sign_Up_Form_Code }}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Make sure preview has enough height -->
+<style>
+  .block-preview-wrapper { 
+    min-height: 600px; 
+  }
+</style>
+
+<script>
+  function openPopupGenieBlock{{ block.id | remove: '-' }}() {
+    jQuery('body').addClass('popup-alchemist-{{ block.id }}-open');
+  }
+
+  {% if Pop_Up_Automatically %}
+    {% if Seconds_Until_Popup %}
+      var popupTime = {{ Seconds_Until_Popup }} * 1000;
+    {% else %}
+      var popupTime = 0 * 1000;
+    {% endif %}
+
+    {% if Enable_Cookies  %}
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+
+      function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+
+        return "";
+      }
+
+      function closePopGenieBlock{{ block.id | remove: '-' }}() {
+        jQuery('body').removeClass('popup-alchemist-{{ block.id }}-open');
+        setCookie('alchemistpopupshown{{ block.id | remove: '-' }}', 'yes', 7);
+      }
+
+      setTimeout(function(){
+        var alchemistpopupshown{{ block.id | remove: '-' }} = getCookie('alchemistpopupshown{{ block.id | remove: '-' }}');
+
+        if(alchemistpopupshown{{ block.id | remove: '-' }} != 'yes') {
+          jQuery('body').addClass('popup-alchemist-{{ block.id }}-open');
+          jQuery('.popup-alchemist-block-{{ block.id }}').focus();
+        }
+      }, popupTime);
+    {% else %}
+      function closePopGenieBlock{{ block.id | remove: '-' }}() {
+        jQuery('body').removeClass('popup-alchemist-{{ block.id }}-open');
+      };
+
+      setTimeout(function(){
+        jQuery('body').addClass('popup-alchemist-{{ block.id }}-open');
+        jQuery('.popup-alchemist-block-{{ block.id }}').focus();
+      }, popupTime);
+    {% endif %}
+  {% else %}
+    function closePopGenieBlock{{ block.id | remove: '-' }}() {
+      jQuery('body').removeClass('popup-alchemist-{{ block.id }}-open');
+    };
+  {% endif %}
+</script>

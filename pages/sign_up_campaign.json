@@ -1,0 +1,8 @@
+{
+  "name": "Sign-up Campaign",
+  "blocks": [
+    {
+      "key": "landing_page"
+    }
+  ]
+}

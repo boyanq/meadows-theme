@@ -1,0 +1,652 @@
+<!-- SUPERNAV WORK IN PROGRESS -->
+<style>
+  body {
+    padding-top: 58px;
+    padding-top: var(--menu-height);
+  }
+
+  #menu .nav-link {
+    font-family: var(--headings-font-family);
+  }
+
+  /* #menu .nav-link.dropdown-toggle {
+    color: inherit;
+  } */
+
+  #menu .dropdown-menu a {
+    color: inherit;
+  }
+
+  .link-subnav {
+    color: inherit;
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+  }
+
+  .nav-item .dropdown-item {
+    color: inherit;
+  }
+
+  .dropdown-menu .swiper-container {
+    color: inherit;
+  } 
+
+  .dropdown-menu .swiper-container a {
+    color: inherit;
+  }
+
+  .link-subnav:hover,
+  .nav-item .dropdown-item:hover,
+  #menu .dropdown-menu a:hover,
+  .dropdown-menu .swiper-container a:hover {
+    color: var(--primary);
+  }
+
+  @media (min-width: 992px) {
+    .navbar-brand img {
+      position: relative;
+      height: 30px;
+      z-index: 5 !important;
+      transition: 0.2s;
+    }
+
+    #menu .nav-link {
+      padding: .5rem 0;
+      margin: 0 1.5rem;
+    }
+
+    .nav-item.dropdown .dropdown-menu {
+      z-index: 0;
+      background-color: var(--body-bg);
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 59px;
+      top: var(--menu-height);
+      padding: 3rem;
+      display: none;
+    }
+
+    .link-subnav {
+      display: block;
+      padding-bottom: 1.5rem !important;
+      padding-top: 0 !important;
+    }
+
+    .menu-button {
+      z-index: 3;
+      padding: 0.8rem 2rem;
+    }
+
+    #menu.nav-open {
+      box-shadow: 0px 5px 15px rgba(45, 64, 75, 0.07);
+    }
+
+    .nav-item.dropdown.active .dropdown-menu {
+      display: block !important;
+      box-shadow: 0px 5px 15px rgba(45, 64, 75, 0.07);
+    }
+
+    .dropdown.active .dropdown-toggle {
+      color: var(--primary) !important;
+    }
+  }
+
+  @media (max-width: 991px) {
+    #menu {
+      transition: all .2s;
+    }
+
+    #menu.open {
+      background-color: var(--body-bg);
+      box-shadow: 0px 5px 15px rgba(45, 64, 75, 0.07);
+      top: -1px;
+    }
+
+    .navbar-brand img {
+      height: 35px;
+    }
+
+    #menu .menu-button {
+      padding: 0.5rem 1rem;
+    }
+
+    #menu .dropdown-menu {
+      display: none;
+    }
+
+    #menu .nav-link {
+      padding: 1.2rem 0;
+      color: var(--body-color);
+    }
+
+    #menu .navbar-nav {
+      padding-top: 1rem;
+    }
+
+    .nav-item.navDropHide {
+      display: none;
+    }
+
+    .nav-item.navDropOpen .nav-link {
+      margin-left: 1.5rem;
+    }
+
+    .nav-item.navDropOpen .nav-link:before {
+      content: "\f053";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      position: absolute;
+      left: 0;
+      margin-top: 1px;
+    }
+
+    .nav-item.navDropOpen .dropdown-menu {
+      display: block !important;
+    }
+
+    .nav-item .dropdown-item {
+      display: block;
+      padding: .75rem 0 !important;
+    }
+
+    .dropdown-menu .swiper-container {
+      margin-bottom: 1rem;
+    }
+
+    #menu .navbar-nav .label-small-uppercase {
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg fixed-top" id="menu">
+  <div class="container-fluid">
+    <div class="col-auto col-lg-3 px-0 px-lg-3">
+      <a class="navbar-brand mx-auto" href="/">
+        <img src="{{ company.logo.small_url }}" />
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse col-auto col-lg-6 px-0 px-lg-3 order-last justify-content-center" id="menu-navbar">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link link-button dropdown-toggle" href="#" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            EXPLORE
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdown1">
+            <div class="row">
+              <div class="col-12 col-lg-3">
+                <h5 class="header-subnav pb-3 d-none d-lg-block">
+                  Explore
+                </h5>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/about">
+                  ABOUT
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/lineup">
+                  LINE UP
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/photos">
+                  GALLERY
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/videos">
+                  VIDEOS
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/partners">
+                  PARTNERS
+                </a>
+              </div>
+
+              <div class="col-12 col-lg-9 px-0 px-lg-3">
+                <h5 class="header-subnav px-3 mt-4 mt-lg-0">
+                  Line Up
+                </h5>
+
+                <div class="swiper-container menu-swiper-1">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide p-3">
+                      <a href="/lineup" class="nav-swiper-link">
+                        <div class="bg-secondary p-3 p-md-4">
+                          <div class="img-aspect mb-4">
+                            <img style="border-radius: 50%;" class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWt4WlRCak0yTmpOeTAwWXpJM0xUUTJNR010WWpJMlppMHhOV0prTkdFNE9URmpOVEFHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--441c3a972df6474bd99daf36baa3357a28140427/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/Senata.png" alt="artist" />
+                          </div>
+
+                          <p class="mb-2 text-center label-small-uppercase">
+                            MUSIC
+                          </p>
+
+                          <h6 class="label-big text-center">
+                            Senata
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/lineup" class="nav-swiper-link">
+                        <div class="bg-secondary p-3 p-md-4">
+                          <div class="img-aspect mb-4">
+                            <img style="border-radius: 50%;" class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxsTVRkbE56QmpOUzAxWVRsaUxUUm1aVGd0T1dOaE5TMDBaR1JsTnpVM056SXlOV1lHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--f62f82cc5873ac8a9644e38d6ad663b92636bebd/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/Kerina.png" alt="artist" />
+                          </div>
+
+                          <p class="mb-2 text-center label-small-uppercase">
+                            VISUAL ARTIST
+                          </p>
+
+                          <h6 class="label-big text-center">
+                            Kerina K
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/lineup" class="nav-swiper-link">
+                        <div class="bg-secondary p-3 p-md-4">
+                          <div class="img-aspect mb-4">
+                            <img style="border-radius: 50%;" class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswTXpGaU1qSTVNeTB3TkROaUxUUTVOV0l0WVRFMk9TMWhNVGRrWXpnek5USmhZVFlHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--d563b3cb1886d20accaf758aa738de7f8deada12/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/SherriLee.png" alt="artist" />
+                          </div>
+
+                          <p class="mb-2 text-center label-small-uppercase">
+                            PERFORMANCE
+                          </p>
+
+                          <h6 class="label-big text-center">
+                            Sherri-lee
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/lineup" class="nav-swiper-link">
+                        <div class="bg-secondary p-3 p-md-4">
+                          <div class="img-aspect mb-4">
+                            <img style="border-radius: 50%;" class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWsxWmpkaE1XTmpOQzB6T1RnMExUUTVNemt0WWpRek1TMDRZamsxWkRRME5qSTBZV01HT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--9420e766a0d97a1f3e198d7d4fe28bcb69442ea6/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/Elna.png" alt="artist" />
+                          </div>
+
+                          <p class="mb-2 text-center label-small-uppercase">
+                            SPIRITUAL GUIDE
+                          </p>
+
+                          <h6 class="label-big text-center">
+                            Elna Dlamini
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/lineup" class="nav-swiper-link">
+                        <div class="bg-secondary p-3 p-md-4">
+                          <div class="img-aspect mb-4">
+                            <img style="border-radius: 50%;" class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxpT1RJeE4yRTNaaTB5WXpaaExUUXpZbU10WVRJM01pMDRPV1ExT0dJMlpUSTBORE1HT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--8a767716bf58c7b65bb927abba99cec469e36b26/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/Mieke.png" alt="artist" />
+                          </div>
+
+                          <p class="mb-2 text-center label-small-uppercase">
+                            SPEAKER
+                          </p>
+
+                          <h6 class="label-big text-center">
+                            Mieke Kunene
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link link-button dropdown-toggle" href="#" id="dropdown2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            PLAN
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdown2">
+            <div class="row">
+              <div class="col-12 col-lg-3">
+                <h5 class="header-subnav pb-3 d-none d-lg-block">
+                  Plan
+                </h5>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/plan">
+                  PLAN
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/info">
+                  FAQS
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/contact">
+                  CONTACT
+                </a>
+              </div>
+
+              <div class="col-12 col-lg-9 px-0 px-lg-3">
+                <h5 class="header-subnav px-3 mt-4 mt-lg-0">
+                  Plan for your trip
+                </h5>
+
+                <div class="swiper-container menu-swiper-2">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide p-3">
+                      <a class="nav-swiper-link cursor-pointer">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxrWXpneVlXSXdNaTA0TjJKakxUUmtZVFV0WW1Zd05TMW1NR1prT1dKalpEazBOemtHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--d5b35cbfdcb4531c41e953b91825112afd6e25f3/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/BlogImage.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          How to prepare for our experience
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          Feb 25th 2020
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          Hanson Gerty
+                        </p>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a class="nav-swiper-link cursor-pointer">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxrTm1OaE1UbGxZeTFoWWpjM0xUUmtObVl0WVdNeU1TMDJPREUxWW1NM056RXpNalFHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--7ab2bdbf95b8a05c79efec679d14cf9333f3c79d/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/BlogImage.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          Ultimate crystals for your journey
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          Feb 25th 2020
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          John Riley
+                        </p>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a class="nav-swiper-link cursor-pointer">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswWkRJM1pETTBNUzAxTUdGaUxUUXlOemd0WWpNMU55MDNZekV6T1dZeU1UUm1PVGNHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--ac09eeea7e3c90f0fe149eb3b391c3fbe931e405/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUljQWc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--22860ad3069747f5466d67283a0b8874bafc6a6a/BlogImage.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          Harnessing the power of oils
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          Feb 25th 2020
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          Jane McCarthy
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link link-button dropdown-toggle" href="#" id="dropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            BOOK
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="dropdown3">
+            <div class="row">
+              <div class="col-12 col-lg-3">
+                <h5 class="header-subnav pb-3 d-none d-lg-block">
+                  Book
+                </h5>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/accommodation">
+                  Tickets
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/accommodation">
+                  Accommodation
+                </a>
+
+                <a class="dropdown-item link-subnav link-button py-2" href="/accommodation">
+                  Adventures
+                </a>
+              </div>
+
+              <div class="col-12 col-lg-9 px-0 px-lg-3">
+                <h5 class="header-subnav px-3 mt-4 mt-lg-0">
+                  Book Now
+                </h5>
+
+                <div class="swiper-container menu-swiper-3">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide p-3">
+                      <a href="/products/cape-cirque" class="nav-swiper-link">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswWm1GbVlUSXdZeTFtWlRnM0xUUTNabVl0WWpjeU9TMDJPVGs0WlRJM1ptVXdNRElHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--8635f4349765401977c27ad5cd9673fe481d5e6c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUowQkE9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--2293456a7fb9e29ba9521014fe383d27e9b08bd1/DanceExperience.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          Cape Cirque
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          May 21 - 26 2021
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          South Africa
+                        </p>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/products/cape-cirque" class="nav-swiper-link">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswWm1GbVlUSXdZeTFtWlRnM0xUUTNabVl0WWpjeU9TMDJPVGs0WlRJM1ptVXdNRElHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--8635f4349765401977c27ad5cd9673fe481d5e6c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUowQkE9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--2293456a7fb9e29ba9521014fe383d27e9b08bd1/DanceExperience.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          Cape Cirque
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          May 21 - 26 2021
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          South Africa
+                        </p>
+                      </a>
+                    </div>
+
+                    <div class="swiper-slide p-3">
+                      <a href="/products/cape-cirque" class="nav-swiper-link">
+                        <div class="img-aspect img-aspect-wide">
+                          <img class="" src="https://myeasol.com/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswWm1GbVlUSXdZeTFtWlRnM0xUUTNabVl0WWpjeU9TMDJPVGs0WlRJM1ptVXdNRElHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--8635f4349765401977c27ad5cd9673fe481d5e6c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxhUUowQkE9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--2293456a7fb9e29ba9521014fe383d27e9b08bd1/DanceExperience.png" alt="retreat" />
+                        </div>
+
+                        <h6 class="my-2">
+                          Cape Cirque
+                        </h6>
+
+                        <p class="label-small-uppercase mb-1">
+                          May 21 - 26 2021
+                        </p>
+
+                        <p class="label-small-uppercase">
+                          South Africa
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown d-none">
+          <a class="nav-link link-button dropdown-toggle no-dropdown" href="/">
+            CONTACT
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    {% if menu.cta_enabled %}
+      <div class="d-flex justify-content-end align-items-center col-auto col-lg-3 px-0 px-lg-3 order-lg-last">
+        <a class="button button-primary-solid menu-button flex-shrink-0" href="{{ menu.cta_target }}">
+          {{ menu.cta_text }}
+        </a>
+
+        <button class="navbar-toggler pr-0" type="button" data-toggle="collapse" data-target="#menu-navbar" aria-controls="menu-navbar" aria-expanded="false" aria-label="Toggle navigation">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" fill="" />
+            <path d="M8 11H28" stroke="#2D404B" stroke-linejoin="round" />
+            <path d="M8 18H28" stroke="#2D404B" stroke-linejoin="round" />
+            <path d="M8 25H28" stroke="#2D404B" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    $('.nav-item.dropdown').on('mouseenter', function (e) {
+      e.preventDefault();
+      $('.nav-item').removeClass('active');
+      $(this).addClass('active');
+      $('#menu').addClass('nav-open');
+      menuSwiper1.update();
+      menuSwiper2.update();
+      menuSwiper3.update();
+    });
+
+    $('#menu').on('mouseleave', function () {
+      $('.nav-item').removeClass('active');
+      $('#menu').removeClass('nav-open');
+    });
+
+    $('.nav-item').click(function (e) {
+      var clickOver = $(e.target);
+
+      if (screen.width < 992) {
+        if (clickOver.hasClass('link-subnav') || clickOver.hasClass('nav-swiper-link') || clickOver.hasClass('no-dropdown') || clickOver.parents('.nav-swiper-link').length) {
+
+        } else {
+          e.preventDefault();
+
+          if ($(this).hasClass('navDropOpen')) {
+            $('.nav-item').removeClass('navDropOpen');
+            $('.nav-item').removeClass('navDropHide');
+          } else {
+            $('.nav-item').removeClass('navDropOpen');
+            $('.nav-item').removeClass('navDropHide');
+            $(this).addClass('navDropOpen');
+            $('.nav-item').not(this).addClass('navDropHide');
+            menuSwiper1.update();
+            menuSwiper2.update();
+            menuSwiper3.update();
+          }
+        }
+      }
+    });
+
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        $('#menu').addClass('scrolled');
+      } else {
+        $('#menu').removeClass('scrolled');
+      }
+    }
+
+    $(window).on('click', function (event) {
+      var clickOver = $(event.target)
+
+      if ($('.navbar .navbar-toggler').attr('aria-expanded') == 'true' && clickOver.closest('.navbar').length === 0) {
+        $('button[aria-expanded="true"]').click();
+      }
+    });
+
+    var menuSwiper1 = new Swiper('.menu-swiper-1', {
+      slidesPerView: 2.2,
+      spaceBetween: 10,
+      updateOnWindowResize: true,
+      simulateTouch: false,
+      breakpoints: {
+        768: {
+          slidesPerView: 3.2,
+          spaceBetween: 10,
+        },
+        992: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        1200: {
+          slidesPerView: 5,
+          spaceBetween: 10,
+        }
+      }
+    });
+
+    var menuSwiper2 = new Swiper('.menu-swiper-2', {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      updateOnWindowResize: true,
+      simulateTouch: false,
+      breakpoints: {
+        768: {
+          slidesPerView: 2.2,
+          spaceBetween: 20,
+        },
+        992: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        }
+      }
+    });
+
+    var menuSwiper3 = new Swiper('.menu-swiper-3', {
+      slidesPerView: 1.2,
+      spaceBetween: 20,
+      updateOnWindowResize: true,
+      simulateTouch: false,
+      breakpoints: {
+        768: {
+          slidesPerView: 2.2,
+          spaceBetween: 20,
+        },
+        992: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        }
+      }
+    });
+  });
+</script>

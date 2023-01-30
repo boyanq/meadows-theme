@@ -1,0 +1,99 @@
+{% assign center_headings = false %}
+
+<style>
+  .content-social-link .fa {
+    font-size: 1.4em;
+  }
+
+  .content-social-link {
+    padding-right: 1rem;
+  }
+
+  .content-social-link:last-of-type {
+    padding-right: 0;
+  }
+
+  .content-social-link:hover .fa {
+    color: var(--primary) !important;
+  }
+</style>
+
+<section class="content-page">
+  <div class="container">
+    <div class="row justify-content-center mx-0 my-5">
+      {% if content.image %}
+        <div class="col-md-6 px-0 d-flex">
+          <div class="img-aspect">
+            <img src="{{ content.image.medium_url }}" alt="{{ content.image.name }}" />
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="{% if content.image %}col-md-6 pt-4 p-md-4 p-lg-5{% else %}col-12 col-lg-10{% endif %} d-flex flex-column justify-content-center">
+        {% if content.name != blank %}
+          <h2 class="mb-4 {% if center_headings %}text-center{% endif %}">
+            {{ content.name }}
+          </h2>
+        {% endif %}
+
+        {% if content.business != blank or content.location != blank %}
+          <p class="label-small content-info mb-4 {% if center_headings %}text-center{% endif %}">
+            {% if content.business != blank %}
+              <span class="content-business">
+                {{ content.business }}
+              </span>
+            {% endif %}
+
+            {% if content.business != blank and content.location != blank %}
+              <span class="px-3">
+                &#183;
+              </span>
+            {% endif %}
+
+            {% if content.location != blank %}
+              <span class="content-location">
+                {{ content.location }}
+              </span>
+            {% endif %}
+          </p>
+        {% endif %}
+
+        {% if content.description != blank %}
+          <div class="text-field">
+            {{ content.description }}
+          </div>
+        {% endif %}
+
+        {% if content.instagram != blank %}
+          <div class="mt-4 d-flex align-items-center {% if center_headings %}justify-content-center{% endif %}">
+            {% if content.instagram != blank or content.facebook != blank or content.twitter != blank %}
+              <a class="content-social-link" href="https://www.instagram.com/{{ content.instagram }}" target="_blank" rel="noopener">
+                <i class="fa fa-instagram text-body"></i>
+              </a>
+            {% endif %}
+
+            {% if content.facebook != blank %}
+              <a class="content-social-link" href="https://www.facebook.com/{{ content.facebook }}" target="_blank" rel="noopener">
+                <i class="fa fa-facebook text-body"></i>
+              </a>
+            {% endif %}
+
+            {% if content.twitter != blank %}
+              <a class="content-social-link" href="https://www.twitter.com/{{ content.twitter }}" target="_blank" rel="noopener">
+                <i class="fa fa-twitter text-body"></i>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if content.link != blank %}
+          <div class="{% if center_headings %}text-center{% endif %}">
+            <a class="button button-primary-outline mt-4" href="{{ content.link }}">
+              VISIT WEBSITE
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

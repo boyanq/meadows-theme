@@ -1,0 +1,256 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Embed_Code:
+    group: content
+    label: Insert third-party widget or custom code
+    type: String
+  Full_Width:
+    group: layout
+    label: Increase width of embed area
+    hint: If the inserted code has pre-defined dimensions, this will not affect the size of the embedded item.
+    type: Boolean
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} #eapps-instagram-feed-1 .eapps-instagram-feed-posts-grid-load-more {
+    font-family: var(--headings-font-family);
+    text-transform: uppercase;
+    border-radius: 0;
+    padding: 1em 2.1875em;
+    height: auto;
+    background: transparent !important;
+    color: var(--primary) !important;
+    border: solid 1px var(--primary);
+    width: 180px;
+    line-height: 1.6rem;
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+  }
+
+  #{{ block.id }} .embed-block .fsBody {
+    padding: 0;
+    background-color: transparent !important;
+    text-align: unset !important;
+  }
+
+  #{{ block.id }} .embed-block .fsForm {
+    padding: 0;
+    margin: 0;
+    background-color: transparent !important;
+  }
+
+  #{{ block.id }} .embed-block .fsBody .fsLabel,
+  .embed-block .fsRequiredMarker, 
+  #{{ block.id }} .embed-block .fsBody .fsSupporting {
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    font-family: var(--font-family-base);
+    color: var(--body-color) !important;
+    margin-bottom: 0.5rem;
+  }
+
+  #{{ block.id }} .embed-block .fsBody .fsSupporting {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  #{{ block.id }} .embed-block .fsRow {
+    margin-bottom: 0 !important;
+  }
+
+  #{{ block.id }} .embed-block .fsFieldCell {
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} .embed-block .fsFieldFocused:not(.fsValidationError) {
+    padding-bottom: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #{{ block.id }} .embed-block input, 
+  #{{ block.id }} .embed-block textarea, 
+  #{{ block.id }} .embed-block select {
+    background-color: #F7F7F9;
+    border: none;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #{{ block.id }} .embed-block input[type=radio], 
+  #{{ block.id }} .embed-block input[type=checkbox] {
+    height: 10px;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  #{{ block.id }} .embed-block .fsForm .fsSubmit {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  #{{ block.id }} .embed-block .fsForm .fsSubmitButton {
+    padding: 1em 2.1875em;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: solid 1px var(--primary);
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.2s ease;
+    font-family: var(--headings-font-family) !important;
+    width: 100%;
+  }
+
+  #{{ block.id }} .embed-block .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameFirst, 
+  #{{ block.id }} .embed-block .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameFirst {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-left: 0;
+  }
+
+  #{{ block.id }} .embed-block .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameLast, 
+  #{{ block.id }} .embed-block .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameLast {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-right: 0;
+  }
+
+  #{{ block.id }} .embed-block .fsRowBody input[type=checkbox]:before, 
+  #{{ block.id }} .embed-block .fsRowBody input[type=checkbox]:checked:before, 
+  #{{ block.id }} .embed-block .fsRowBody input[type=radio]:before, 
+  #{{ block.id }} .embed-block .fsRowBody input[type=radio]:checked:before {
+    position: absolute;
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button-primary-outline {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container embed-block ">
+  <div class="container{% if Full_Width %}-fluid{% endif %} text-center">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="{% if Show_Button %}mb-4{% else %}mb-5{% endif %} text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    {% if Show_Button %}
+      <div class="mb-5">
+        <a class="button button-primary-outline" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+
+    <div class="text-left mx-auto">
+      {{ Embed_Code }}
+    </div>
+  </div>
+</section>

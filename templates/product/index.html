@@ -1,0 +1,1918 @@
+<!-- Settings -->
+<!-- Update headers for different sections -->
+{% assign overview_header = "Overview" %}
+{% assign highlights_header = "Highlights" %}
+{% assign hosts_header = "Hosts" %}
+{% assign schedule_header = "Schedule" %}
+{% assign included_header = "What's Included" %}
+{% assign variants_excl_accomm_header = "Tickets" %}
+{% assign variants_incl_accomm_header = "Accommodation" %}
+{% assign gallery_header = "Gallery" %}
+{% assign venue_header = "Venue" %}
+{% assign reviews_header = "Reviews" %}
+{% assign trip_tips_header = "Trip Tips" %}
+{% assign add_ons_header = "Add Ons" %}
+{% assign faqs_header = "FAQs" %}
+{% assign dates_header = "Dates" %}
+{% assign multiple_accomms_header = "You'll Be Staying Here" %}
+{% assign blog_header = "Related Blog Posts" %}
+{% assign enquire_button_text = "ENQUIRE" %}
+{% assign product_video = false %}
+{% assign video_code = false %}
+
+<!-- Settings -->
+{% assign show_in_series = false %}
+{% assign has_promotion = false %}
+{% assign deposit_active = false %}
+{% assign series = product.series %}
+
+{% if series and series.upcoming_products.size > 1 %}
+  {% assign show_in_series = true %}
+  {% assign featured_variant = series.featured_variant %}
+
+  {% if series.departure_months.first == series.departure_months.last %}
+    {% assign dates_string = series.departure_months.first %}
+  {% else %}
+    {% assign dates_string = series.departure_months.first | append: " - " | append: series.departure_months.last %}
+  {% endif %}
+{% else %}
+  {% assign featured_variant = product.featured_variant %}
+
+  {% if product.dates %}
+    {% assign dates_string = product.dates %}
+  {% endif %}
+{% endif %}
+
+{% assign full_price = featured_variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+
+{% if featured_variant.promotion.active %}
+  {% assign has_promotion = true %}
+  {% assign promo_tagline = featured_variant.promotion.tagline %}
+  {% assign promo_price_drop = featured_variant.price | apply_promotion: featured_variant.promotion %}
+  {% assign promo_price = promo_price_drop.per_person_fractional | money: no_cents_if_whole: true %}
+  {% assign cheapest_price = promo_price_drop.per_person_fractional %}
+{% else %}
+  {% assign cheapest_price = featured_variant.price.per_person_fractional %}
+{% endif %}
+
+{% if product.deposit.enabled and product.type != 'accommodation' and cheapest_price != 0 and product.sold_out == false %}
+  {% assign deposit_active = true %}
+  {% assign deposit_rate = product.deposit.rate %}
+  {% assign deposit_price = cheapest_price | times: deposit_rate | money: no_cents_if_whole: true %}
+{% endif %}
+
+{% if product.type == "experience" %}
+  {% capture unit %}
+    <sub>/pp</sub>
+  {% endcapture %}
+{% else %}
+  {% capture unit %}
+    <sub>/night</sub>
+  {% endcapture %}
+{% endif %}
+
+{% assign productSeriesHtmlClass = 'series-false' %}
+
+{% if product.series %}
+  {% assign productSeriesHtmlClass = product.series.id | prepend: 'series-' %}
+{% endif %}
+
+<main class="product-page product-{{ product.name | parameterize }} enquire-only-{{ product.enquire_only }} has-accommodation-{{ product.includes_accommodation }} product-type-{{ product.type }} {{ productSeriesHtmlClass }} product-id-{{ product.id }}">
+  <div id="product-jumpbar" class="sticky-top bg-secondary">
+    <div class="product-jumpbar-inner w-100 h-100">
+      <div class="d-flex align-items-center justify-content-center flex-wrap">
+        {% unless product.overview == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-overview">
+            <span>
+              {{ overview_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.highlights == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-highlights">
+            <span>
+              {{ highlights_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.host_section.hosts == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-hosts">
+            <span>
+              {{ hosts_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.schedule == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-schedule">
+            <span>
+              {{ schedule_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.whats_included.included == blank and product.whats_included.included == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-included">
+            <span>
+              {{ included_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% if product.includes_accommodation and product.variants != blank and show_in_series != true %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-variants">
+            <span>
+              {{ variants_incl_accomm_header }}
+            </span>
+          </a>
+        {% endif %}
+
+        {% unless product.includes_accommodation or product.variants == blank or show_in_series == true %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-variants">
+            <span>
+              {{ variants_excl_accomm_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.gallery == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-gallery">
+            <span>
+              {{ gallery_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% if product.venue %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-location">
+            <span>
+              {{ venue_header }}
+            </span>
+          </a>
+        {% endif %}
+
+        {% unless product.trip_tips == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-tips">
+            <span>
+              {{ trip_tips_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.testimonials == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-reviews">
+            <span>
+              {{ reviews_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.extras == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-extras">
+            <span>
+              {{ add_ons_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.accommodations == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-multiple">
+            <span>
+              {{ multiple_accomms_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.blog_post_section == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-blog">
+            <span>
+              {{ blog_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% unless product.faqs == blank %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-faqs">
+            <span>
+              {{ faqs_header }}
+            </span>
+          </a>
+        {% endunless %}
+
+        {% if show_in_series %}
+          <a class="d-block p-3 label-jumpbar text-uppercase" href="#product-dates">
+            <span>
+              {{ dates_header }}
+            </span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <section id="product-hero" class="pt-0 pb-0">
+    <div class="product-hero-block container-fluid px-md-5 d-flex flex-column justify-content-end text-white" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), url('{{ product.hero_image.xxlarge_url }}');">
+      <div class="product-hero-inner py-4 py-md-5">
+        {% if has_promotion %}
+          <p class="label-small label-banner banner-promo mb-3">
+            {{ promo_tagline }}
+          </p>
+        {% endif %}
+
+        <p class="label-big mb-3">
+          {% if product.country %}
+            <span class="hero-country">
+              {{ product.country }}
+            </span>
+          {% endif %}
+          
+          {% if dates_string and product.country %}
+            <span class="px-3">
+              &#183;
+            </span>
+          {% endif %}
+
+          {% if dates_string %}
+            <span class="hero-dates">
+              {{ dates_string }}
+            </span>
+          {% endif %}
+        </p>
+
+        <h1 class="mb-3">
+          {% if show_in_series %}
+            {{ product.series.name }}
+          {% else %}
+            {{ product.name }}
+          {% endif %}
+        </h1>
+
+        <p class="text-big mb-3">
+          {{ product.tagline }}
+        </p>
+
+        {% if show_in_series %}
+          <a class="button button-primary-solid view-dates" href="#product-dates">
+            VIEW DATES
+          </a>
+        {% elsif product.enquire_only %}
+          <a class="button button-white-outline cursor-pointer" onclick="openPopupSignup()">
+            {{ enquire_button_text }}
+          </a>
+        {% elsif product.min_price contains "Announcing" %}
+          <a class="button button-white-outline button-disabled">
+            COMING SOON
+          </a>
+        {% elsif product.sold_out %}
+          <a class="button button-primary-solid button-disabled">
+            SOLD OUT
+          </a>
+        {% else %}
+          <a class="button button-primary-solid" href="{{ product.shop_path }}">
+            BOOK NOW
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {% unless product.overview == blank %}
+    <section id="product-overview">
+      <div class="container">
+        <div class="row mx-0">
+          <div class="col-md-6 px-0 d-flex">
+            <div class="img-aspect">
+              <img src="{{ product.overview_image.medium_url }}" alt="{{ product.overview_image.name }}" />
+            </div>
+          </div>
+
+          <div class="col-md-6 d-flex flex-column justify-content-center px-0 py-4 p-md-5 overview-text">
+            <h2 class="mb-4">
+              {{ overview_header }}
+            </h2>
+
+            <p>
+              {{ product.overview }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% if product_video %}
+    <section id="product-video" class="pt-0">
+      <div class="container text-center">
+        <div class="img-aspect img-aspect-video">
+          <div class="iframe-container">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/{{ video_code }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% unless product.highlights == blank %}
+    <section id="product-highlights">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ highlights_header }}
+        </h2>
+
+        {% if product.highlights.size > 1 %}
+          <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex {% if product.highlights.size == 2 %}d-md-none{% elsif product.highlights.size  == 3 %}d-lg-none{% endif %}">
+            <div class="swiper-prev highlights-prev">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+                <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+
+            <div class="swiper-pag highlights-pagination text-center label-big w-auto px-4"></div>
+
+            <div class="swiper-next highlights-next">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+                <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="swiper-container highlights-swiper">
+          <div class="swiper-wrapper">
+            {% for highlight in product.highlights %}
+              <div class="swiper-slide h-auto">
+                <div class="highlights-card h-100 d-flex flex-column">
+                  <div class="img-aspect">
+                    <img src="{{ highlight.image.small_url }}" alt="{{ highlight.heading }}" />
+                  </div>
+
+                  <div class="bg-secondary flex-fill">
+                    <div class="highlight-card-text h-100 p-4">
+                      <h4 class="mb-3">
+                        {{ highlight.heading }}
+                      </h4>
+
+                      <p>
+                        {{ highlight.body }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.host_section.hosts == blank %}
+    <section id="product-hosts" class="bg-secondary">
+      <div class="container">
+        <h2 class="{% if product.host_section.overview %}mb-4{% else %}mb-5{% endif %} text-center">
+          {{ hosts_header }}
+        </h2>
+
+        {% unless product.host_section.overview == blank %}
+          <p class="mb-5 text-center max-width-med mx-auto">
+            {{ product.host_section.overview }}
+          </p>
+        {% endunless %}
+
+        {% if product.host_section.hosts.size > 1 %}
+          <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex {% if product.host_section.hosts.size == 2 %}d-md-none{% elsif product.host_section.hosts.size  == 3 %}d-lg-none{% endif %}">
+            <div class="swiper-prev hosts-prev">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+                <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+
+            <div class="swiper-pag hosts-pagination text-center label-big w-auto px-4"></div>
+
+            <div class="swiper-next hosts-next">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+                <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="swiper-container hosts-swiper">
+          <div class="swiper-wrapper">
+            {% for host in product.host_section.hosts %}
+              <div class="swiper-slide">
+                <div class="hosts-card h-100 d-flex flex-column">
+                  <div class="img-aspect">
+                    <img src="{{ host.image.small_url }}" alt="{{ host.name }}" />
+                  </div>
+
+                  <div class="py-4 text-md-center host-card-text px-3 flex-fill">
+                    <h4 class="mb-3">
+                      {{ host.name }}
+                    </h4>
+
+                    <div class="mb-3">
+                      {{ host.body }}
+                    </div>
+
+                    {% if host.instagram_username.size > 0 %}
+                      <a class="button text-primary" target="_blank" href="https://instagram.com/{{ host.instagram_username }}">
+                        <i class="fa fa-instagram"></i>
+
+                        <span class="pl-2">
+                          {{ host.instagram_username }}
+                        </span>
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.schedule == blank %}
+    <section id="product-schedule">
+      <div class="container">
+        <h2 class="{% if product.schedule_section.overview %}mb-4{% else %}mb-5{% endif %} text-center">
+          {{ schedule_header }}
+        </h2>
+
+        {% unless product.schedule_section.overview == blank %}
+          <p class="mb-5 text-center max-width-med mx-auto">
+            {{ product.schedule_section.overview }}
+          </p>
+        {% endunless %}
+
+        <div class="swiper-controls align-items-center justify-content-between mb-5 {% if product.schedule_section.elements.size == 1 %}d-none{% else %}d-flex{% endif %}">
+          <div class="swiper-prev schedule-prev d-flex align-items-center">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+              <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+            </svg>
+
+            <p class="label-big pl-3 d-none d-md-block">
+              Previous
+            </p>
+          </div>
+
+          <div class="swiper-pag schedule-pagination text-center label-big w-auto px-4"></div>
+
+          <div class="swiper-next schedule-next d-flex align-items-center">
+            <p class="label-big pr-3 d-none d-md-block">
+              Next
+            </p>
+
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+              <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="swiper-container schedule-swiper">
+          <div class="swiper-wrapper">
+            {% for day in product.schedule_section.elements %}
+              {% if day.type == 'section' %}
+                <div class="swiper-slide">
+                  <div class="schedule-card row mx-0">
+                    <div class="col-md-6 px-0 d-flex">
+                      <div class="img-aspect img-aspect-wide">
+                        <img src="{{ day.image.medium_url }}" alt="{{ day.image.name }}" />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 bg-secondary px-0">
+                      <div class="d-flex flex-column justify-content-center py-4 px-3 p-md-5 schedule-card-text">
+                        {% unless day.locale == blank %}
+                          <p class="label-big mb-3 mb-md-4 text-primary">
+                            <span class="schedule-subheader">
+                              {{ day.locale }}
+                            </span>
+                          </p>
+                        {% endunless %}
+
+                        <h3 class="mb-3">
+                          {{ day.heading }}
+                        </h3>
+
+                        <div class="mb-4 text-field">
+                          {{ day.body }}
+                        </div>
+
+                        {% if day.included.first or day.not_included.first %}
+                          <div class="row">
+                            {% if day.included.first %}
+                              <div class="col-md-6 mb-4 mb-md-0">
+                                <h5 class="mb-3">
+                                  Included
+                                </h5>
+
+                                {% for included in day.included %}
+                                  <div class="d-flex mb-2">
+                                    <svg class="flex-shrink-0 recolor-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <circle cx="10" cy="10" r="9.5" stroke="var(--body-color)"/>
+                                      <path d="M5 10L8.25 13.25L15 6.5" stroke="var(--body-color)"/>
+                                    </svg>
+
+                                    <p class="flex-shrink-1 text-small pl-3">
+                                      {{ included }}
+                                    </p>
+                                  </div>
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+
+                            {% if day.not_included.first %}
+                              <div class="col-md-6 reduce-opacity">
+                                <h5 class="mb-3">
+                                  Not Included
+                                </h5>
+
+                                {% for included in day.not_included %}
+                                  <div class="d-flex mb-2">
+                                    <svg class="flex-shrink-0 recolor-svg" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <circle cx="10" cy="10" r="9.5" stroke="var(--body-color)"/>
+                                      <path d="M6.84969 12.8077L9.76681 9.89156M12.5068 7.15152L9.76681 9.89156M9.76681 9.89156L12.7558 12.8805M9.76681 9.89156L6.74536 6.87012" stroke="var(--body-color)"/>
+                                    </svg>
+
+                                    <p class="flex-shrink-1 text-small pl-3">
+                                      {{ included }}
+                                    </p>
+                                  </div>
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.whats_included.included == blank and product.whats_included.included == blank %}
+    <section id="product-included">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ included_header }}
+        </h2>
+
+        <div class="accordion" id="includedAccordion">
+          {% unless product.whats_included.included == blank %}
+            <div class="px-lg-5 mb-4">
+              <div class="included-container bg-secondary w-100 h-100">
+                <div id="includedHeadingOne" class="included-header cursor-pointer w-100 h-100 p-4 d-flex justify-content-between align-items-center" role="button" data-toggle="collapse"  data-target="#includedOne" aria-expanded="true" aria-controls="includedOne">
+                  <h5 class="mb-0">
+                    What's Included
+                  </h5>
+
+                  <svg class="accordionToggle" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)" stroke="var(--body-color)"/>
+                    <path d="M19.5 13.5L14.75 17.5L10 13.5" stroke="var(--body-color)"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div id="includedOne" class="collapse show included-section-items" aria-labelledby="includedHeadingOne">
+                <div class="pt-4 row mx-0">
+                  {% for included in product.whats_included.included %}
+                    <div class="col-sm-6 col-md-4 mb-4 d-flex">
+                      <svg class="flex-shrink-0" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="var(--primary)"/>
+                        <path d="M5 10L8.25 13.25L15 6.5" stroke="var(--primary)"/>
+                      </svg>
+
+                      <p class="text-big pl-3 pl-md-4 flex-shrink-1">
+                        {{ included }}
+                      </p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endunless %}
+
+          {% unless product.whats_included.not_included == blank %}
+            <div class="px-lg-5">
+              <div class="included-container bg-secondary w-100 h-100">
+                <div id="includedHeadingTwo" class="cursor-pointer included-header reduce-opacity w-100 h-100 p-4 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse"  data-target="#includedTwo" aria-expanded="false" aria-controls="includedTwo">
+                  <h5 class="mb-0">
+                    What's Not Included
+                  </h5>
+
+                  <svg class="accordionToggle" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)" stroke="var(--body-color)"/>
+                    <path d="M19.5 13.5L14.75 17.5L10 13.5" stroke="var(--body-color)"/>
+                  </svg>
+                </div>
+              </div>
+
+              <div id="includedTwo" class="collapse included-section-items" aria-labelledby="includedHeadingTwo">
+                <div class="pt-4 row mx-0">
+                  {% for included in product.whats_included.not_included %}
+                    <div class="col-sm-6 col-md-4 mb-4 d-flex">
+                      <svg class="flex-shrink-0" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10" cy="10" r="9.5" stroke="var(--primary)"/>
+                        <path d="M6.84969 12.8077L9.76681 9.89156M12.5068 7.15152L9.76681 9.89156M9.76681 9.89156L12.7558 12.8805M9.76681 9.89156L6.74536 6.87012" stroke="var(--primary)"/>
+                      </svg>
+
+                      <p class="text-big pl-3 pl-md-4 flex-shrink-1">
+                        {{ included }}
+                      </p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          {% endunless %}
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.variants == blank %}
+    <section id="product-variants" class="bg-secondary">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {% if product.includes_accommodation %}
+            {{ variants_incl_accomm_header }}
+          {% else %}
+            {{ variants_excl_accomm_header }}
+          {% endif %}
+        </h2>
+
+        <div class="variant-container">
+          <div class="variants-with-image">
+            {% for variant in product.variants %}
+              {% capture image_variable %}{{ variant.image.small_url }}{% endcapture %}
+
+              {% unless image_variable == 'Liquid error: internal' or image_variable == blank %}
+                {% capture thecycle %}
+                  {% cycle 'odd', 'even' %}
+                {% endcapture %}
+                
+                {% assign variant_full_price = variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+
+                {% if variant.promotion.active %}
+                  {% assign promo_tagline = variant.promotion.tagline %}
+                  {% assign promo_price_drop = variant.price | apply_promotion: variant.promotion %}
+                  {% assign variant_promo_price = promo_price_drop.per_person_fractional | money: no_cents_if_whole: true %}
+                  {% assign variant_cheapest_price = promo_price_drop.per_person_fractional %}
+                {% else %}
+                  {% assign variant_cheapest_price = variant.price.per_person_fractional %}
+                {% endif %}
+                
+                {% if variant.deposit.enabled and variant.product.type != 'accommodation' and variant_cheapest_price != 0 and variant.product.sold_out == false %}
+                  {% assign variant_deposit_active = true %}
+                  {% assign deposit_rate = variant.product.deposit.rate %}
+                  {% assign variant_deposit_price = variant_cheapest_price | times: deposit_rate | money: no_cents_if_whole: true %}
+                {% else %}
+                  {% assign variant_deposit_active = false %}
+                {% endif %}
+                
+                {% if variant.product.type == "experience" %}
+                  {% capture variant_unit %}
+                    <sub>/pp</sub>
+                  {% endcapture %}
+                {% else %}
+                  {% capture variant_unit %}
+                    <sub>/night</sub>
+                  {% endcapture %}
+                {% endif %}
+
+                <div class="accommodation-card row mx-0 mb-4">
+                  <div class="col-md-6 px-0 d-flex">
+                    <div class="img-aspect img-aspect-wide">
+                      <img src="{{ variant.image.small_url }}" alt="{{ variant.name }}" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 bg-body-bg px-0 {% if thecycle == 'even' %}order-md-first{% endif %}">
+                    <div class="h-100 p-4 p-lg-5 d-flex flex-column justify-content-between accommodation-card-text">
+                      <div>
+                        {% unless show_in_series %}
+                          <div class="d-md-flex flex-wrap">
+                            {% if variant.promotion.active %}
+                              <p class="label-small label-banner banner-promo mb-2 mr-md-2">
+                                {{ variant.promotion.tagline }}
+                              </p>
+                            {% endif %}
+
+                            {% assign stock = variant.remaining_stock | plus: 0 %}
+
+                            {% if stock < 10 and stock != 0 and variant.sold_out == false %}
+                              <p class="label-small label-banner banner-limited mb-2 mr-md-2">
+                                {{ stock }} SPOT{% if stock > 1 %}S{% endif %} LEFT
+                              </p>
+                            {% endif %}
+
+                            {% if variant_deposit_active and variant_deposit_price != "0" %}
+                              <p class="label-small label-banner banner-deposit mb-2">
+                                PAY ONLY {{ variant_deposit_price }}{{ variant_unit }}
+                              </p>
+                            {% endif %}
+                          </div>
+                        {% endunless %}
+
+                        <h3 class="mb-3">
+                          {{ variant.name }}
+                        </h3>
+
+                        <p class="mb-3 text-big">
+                          {{ variant.tagline }}
+                        </p>
+                      </div>
+
+                      <div>
+                        {% unless show_in_series %}
+                          <p class="label-big mb-3">
+                            {% if variant.promotion.active %}
+                              <span class="label-small pr-2">FROM</span>{{ variant_cheapest_price }}{{ variant_unit }}
+                              <span class="label-small ml-2"><del class="text-danger">{{ variant_full_price }}{{ variant_unit }}</del></span>
+                            {% else %}
+                              <span class="label-small pr-2">FROM</span>{{ variant_full_price }}{{ variant_unit }}
+                            {% endif %}
+                          </p>
+                        {% endunless %}
+
+                        <div>
+                          {% if show_in_series %}
+                            <a class="button button-primary-solid view-dates" href="#product-dates">
+                              VIEW DATES
+                            </a>
+                          {% elsif product.enquire_only %}
+                            <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                              {{ enquire_button_text }}
+                            </a>
+                          {% elsif variant.sold_out %}
+                            <a class="button button-primary-solid button-disabled">
+                              SOLD OUT
+                            </a>
+                          {% else %}
+                            <a class="button button-primary-solid" href="{{ product.shop_path }}">
+                              BOOK NOW
+                            </a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endunless %}
+            {% endfor %}
+          </div>
+
+          <div class="variants-no-image row">
+            {% for variant in product.variants %}
+              {% capture image_variable %}
+                {{ variant.image.small_url }}
+              {% endcapture %}
+
+              {% if image_variable == 'Liquid error: internal' or image_variable == blank %}
+                {% assign variant_full_price = variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+
+                {% if variant.promotion.active %}
+                  {% assign promo_tagline = variant.promotion.tagline %}
+                  {% assign promo_price_drop = variant.price | apply_promotion: variant.promotion %}
+                  {% assign variant_promo_price = promo_price_drop.per_person_fractional | money: no_cents_if_whole: true %}
+                  {% assign variant_cheapest_price = promo_price_drop.per_person_fractional %}
+                {% else %}
+                  {% assign variant_cheapest_price = variant.price.per_person_fractional %}
+                {% endif %}
+                
+                {% if variant.deposit.enabled and variant.product.type != 'accommodation' and variant_cheapest_price != 0 and variant.product.sold_out == false %}
+                  {% assign variant_deposit_active = true %}
+                  {% assign deposit_rate = variant.product.deposit.rate %}
+                  {% assign variant_deposit_price = variant_cheapest_price | times: deposit_rate | money: no_cents_if_whole: true %}
+                {% else %}
+                  {% assign variant_deposit_active = false %}
+                {% endif %}
+                
+                {% if variant.product.type == "experience" %}
+                  {% capture variant_unit %}
+                    <sub>/pp</sub>
+                  {% endcapture %}
+                {% else %}
+                  {% capture variant_unit %}
+                    <sub>/night</sub>
+                  {% endcapture %}
+                {% endif %}
+
+                <div class="accommodation-card mb-4 col-md-6 d-flex">
+                  <div class="h-100 w-100 p-4 p-lg-5 d-flex flex-column justify-content-between accommodation-card-text bg-body-bg">
+                    <div>
+                      {% unless show_in_series %}
+                        <div class="d-md-flex flex-wrap">
+                          {% if variant.promotion.active %}
+                            <p class="label-small label-banner banner-promo mb-2 mr-md-2">
+                              {{ variant.promotion.tagline }}
+                            </p>
+                          {% endif %}
+
+                          {% assign stock = variant.remaining_stock | plus: 0 %}
+
+                          {% if stock < 10 and stock != 0 and variant.sold_out == false %}
+                            <p class="label-small label-banner banner-limited mb-2 mr-md-2">
+                              {{ stock }} SPOT{% if stock > 1 %}S{% endif %} LEFT
+                            </p>
+                          {% endif %}
+
+                          {% if variant_deposit_active and variant_deposit_price != "0" %}
+                            <p class="label-small label-banner banner-deposit mb-2">
+                              PAY ONLY {{ variant_deposit_price }}{{ variant_unit }} DEPOSIT
+                            </p>
+                          {% endif %}
+                        </div>
+                      {% endunless %}
+
+                      <h3 class="mb-3">
+                        {{ variant.name }}
+                      </h3>
+
+                      <p class="mb-3 text-big">
+                        {{ variant.tagline }}
+                      </p>
+                    </div>
+
+                    <div>
+                      {% unless show_in_series %}
+                        <p class="label-big mb-3">
+                          {% if variant.promotion.active %}
+                            <span class="label-small pr-2">FROM</span>{{ variant_promo_price }}{{ variant_unit }}<span class="label-small ml-2"><del class="text-danger">{{ variant_full_price }}{{ variant_unit }}</del></span>
+                          {% else %}
+                            <span class="label-small pr-2">FROM</span>{{ variant_full_price }}{{ variant_unit }}
+                          {% endif %}
+                        </p>
+                      {% endunless %}
+
+                      <div>
+                        {% if show_in_series %}
+                          <a class="button button-primary-solid view-dates" href="#product-dates">
+                            VIEW DATES
+                          </a>
+                        {% elsif product.enquire_only %}
+                          <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                            {{ enquire_button_text }}
+                          </a>
+                        {% elsif variant.sold_out %}
+                          <a class="button button-primary-solid button-disabled">
+                            SOLD OUT
+                          </a>
+                        {% else %}
+                          <a class="button button-primary-solid" href="{{ product.shop_path }}">
+                            BOOK NOW
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.gallery == blank %}
+    <section id="product-gallery">
+      <div class="container">
+        <h2 class="mb-4 text-center">
+          {{ gallery_header }}
+        </h2>
+
+        <div class="mb-5 text-center d-flex align-items-center justify-content-center cursor-pointer" id="view-gallery">
+          <p class="button mr-2">
+            VIEW GALLERY
+          </p>
+
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="15" cy="15" r="14.5" stroke="var(--body-color)"/>
+            <path d="M13.5 10.5L17.5 15.25L13.5 20" stroke="var(--body-color)"/>
+          </svg>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            {% if product.gallery[0].url %}
+              <a class="gallery-img" href="{{ product.gallery[0].xxlarge_url }}">
+                <img class="w-100 h-auto mb-4" src="{{ product.gallery[0].medium_url }}" alt="{{ product.gallery[0].name }}" />
+              </a>
+            {% endif %}
+
+            {% if product.gallery[2].url %}
+              <a class="gallery-img" href="{{ product.gallery[2].xxlarge_url }}">
+                <img class="w-100 h-auto mb-4 mb-md-0" src="{{ product.gallery[2].medium_url }}" alt="{{ product.gallery[2].name }}" />
+              </a>
+            {% endif %}
+          </div>
+
+          <div class="col-md-6">
+            {% if product.gallery[1].url %}
+              <a class="gallery-img" href="{{ product.gallery[1].xxlarge_url }}">
+                <img class="w-100 h-auto mb-4" src="{{ product.gallery[1].medium_url }}" alt="{{ product.gallery[1].name }}" />
+              </a>
+            {% endif %}
+
+            {% if product.gallery[3].url %}
+              <a class="gallery-img" href="{{ product.gallery[3].xxlarge_url }}">
+                <img class="w-100 h-auto mb-4 mb-md-0" src="{{ product.gallery[3].medium_url }}" alt="{{ product.gallery[3].name }}" />
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="row d-none">
+          {% for image in product.gallery offset:4 %}
+            <a class="gallery-img" href="{{ image.xxlarge_url }}">
+              <img class="w-100 h-auto mb-4" src="{{ image.medium_url }}" alt="{{ image.name }}" />
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% if product.venue %}
+    <section id="product-location" class="pb-0">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-6 d-flex flex-column justify-content-end">
+            <p class="label-big mb-3 mb-md-4 text-primary">
+              <span class="location-subheader">
+                {{ product.venue.heading }}
+              </span>
+            </p>
+
+            <h2 class="mb-3 mb-md-0">
+              {{ product.venue.tagline }}
+            </h2>
+          </div>
+
+          <div class="col-md-6 d-flex flex-column justify-content-end">
+            <div>
+              {{ product.venue.body }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid px-0">
+        <div class="img-aspect img-aspect-xwide">
+          <img src="{{ product.venue.image.xxlarge_url }}" alt="{{ product.venue.heading }}" />
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% unless product.trip_tips == blank %}
+    <section id="product-tips">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ trip_tips_header }}
+        </h2>
+
+        {% for tip in product.trip_tips %}
+          {% capture thecycle %}
+            {% cycle 'odd', 'even' %}
+          {% endcapture %}
+
+          <div class="tip-card row mx-0 mb-3 mb-md-0">
+            <div class="col-md-6 px-0 d-flex">
+              <div class="img-aspect img-aspect-wide">
+                <img src="{{ tip.image.small_url }}" alt="{{ tip.heading }}" />
+              </div>
+            </div>
+
+            <div class="col-md-6 px-md-5 py-5 d-flex flex-column justify-content-center tip-card-text {% if thecycle == 'even' %}order-md-first{% endif %}">
+              <h3 class="mb-3">
+                {{ tip.heading }}
+              </h3>
+
+              <p class="mb-0">
+                {{ tip.body }}
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.testimonials == blank %}
+    {% assign testimonial_images = true %}
+
+    {% for testimonial in product.testimonials %}
+        {% capture image_variable %}
+          {{ testimonial.source_image.small_url }}
+        {% endcapture %}
+
+        {% if image_variable == 'Liquid error: internal' %}
+          {% assign testimonial_images = false %}
+          {% break %}
+        {% endif %}
+    {% endfor %}
+
+    <section id="product-reviews">
+      <div class="container{% if testimonial_images %}-fluid{% endif %} px-md-0">
+        <h2 class="mb-5 text-center">
+          {{ reviews_header }}
+        </h2>
+
+        {% if product.testimonials.size > 1 %}
+          <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex {% unless testimonial_images %}{% if product.testimonials.size == 2 %}d-md-none{% elsif product.testimonials.size  == 3 %}d-lg-none{% endif %}{% endunless %}">
+            <div class="swiper-prev reviews-prev">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+                <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+
+            <div class="swiper-pag reviews-pagination text-center label-big w-auto px-4"></div>
+
+            <div class="swiper-next reviews-next">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+                <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="swiper-container reviews-swiper">
+          <div class="swiper-wrapper">
+            {% for testimonial in product.testimonials %}
+              <div class="swiper-slide">
+                {% if testimonial_images == true %}
+                  <div class="reviews-card row">
+                    <div class="col-md-6 px-0">
+                      <div class="img-aspect">
+                        <img src="{{ testimonial.source_image.small_url }}" alt="{{ testimonial.source_image.name }}" />
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 d-flex flex-md-column justify-content-center position-relative pt-3 pt-md-0 review-card-text">
+                      <svg class="quotation-marks" width="122" height="98" viewBox="0 0 122 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.05" d="M51.4458 48.0959V98H0V65.0923C0 52.556 2.20482 41.2251 6.61446 31.0996C11.0241 20.7331 18.496 10.3665 29.0301 0L47.7711 14.4649C41.8916 20.7331 37.3594 26.5191 34.1747 31.8229C30.99 37.1267 28.9076 42.551 27.9277 48.0959H51.4458ZM122 48.0959V98H70.5542V65.0923C70.5542 52.556 72.759 41.2251 77.1687 31.0996C81.5783 20.7331 89.0502 10.3665 99.5843 0L118.325 14.4649C112.446 20.7331 107.914 26.5191 104.729 31.8229C101.544 37.1267 99.4618 42.551 98.4819 48.0959H122Z" fill="black"/>
+                      </svg>
+
+                      <div class="d-flex flex-column justify-content-center pl-3 pl-md-0">
+                        <p class="text-quote mb-3 mb-md-5">
+                          {{ testimonial.body }}
+                        </p>
+
+                        <p class="label-small">
+                          {{ testimonial.source_name }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="reviews-card-noimage position-relative d-flex flex-column justify-content-center align-items-center px-3 review-item-text">
+                      <svg class="quotation-marks-noimage" width="122" height="98" viewBox="0 0 122 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.05" d="M51.4458 48.0959V98H0V65.0923C0 52.556 2.20482 41.2251 6.61446 31.0996C11.0241 20.7331 18.496 10.3665 29.0301 0L47.7711 14.4649C41.8916 20.7331 37.3594 26.5191 34.1747 31.8229C30.99 37.1267 28.9076 42.551 27.9277 48.0959H51.4458ZM122 48.0959V98H70.5542V65.0923C70.5542 52.556 72.759 41.2251 77.1687 31.0996C81.5783 20.7331 89.0502 10.3665 99.5843 0L118.325 14.4649C112.446 20.7331 107.914 26.5191 104.729 31.8229C101.544 37.1267 99.4618 42.551 98.4819 48.0959H122Z" fill="black"/>
+                      </svg>
+
+                      <p class="text-quote mb-3 pt-5 text-center">
+                        {{ testimonial.body }}
+                      </p>
+
+                      <p class="label-small">
+                        {{ testimonial.source_name }}
+                      </p>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.extras == blank %}
+  {% assign extraImages = true %}
+
+  {% for extra in product.extras %}
+      {% capture image_variable %}
+        {{ extra.image.small_url }}
+      {% endcapture %}
+
+      {% if image_variable == 'Liquid error: internal' or image_variable == blank %}
+        {% assign extraImages = false %}
+        {% break %}
+      {% endif %}
+  {% endfor %}
+
+  <section id="product-extras">
+    <div class="container-fluid container-lg ">
+      <h2 class="mb-5 text-center">
+        {{ add_ons_header }}
+      </h2>
+
+      {% if product.extras.size > 1 %}
+        <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex {% if product.extras.size == 2 %}d-md-none{% elsif product.extras.size  == 3 %}d-lg-none{% endif %}">
+          <div class="swiper-prev extras-prev">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+              <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+            </svg>
+          </div>
+
+          <div class="swiper-pag extras-pagination text-center label-big w-auto px-4"></div>
+
+          <div class="swiper-next extras-next">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+              <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+            </svg>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="swiper-container extras-swiper">
+        <div class="swiper-wrapper">
+          {% for extra in product.extras %}
+            <div class="swiper-slide h-auto">
+              <div class="extras-card h-100 d-flex flex-column">
+                {% if extraImages == true %}
+                  <div class="img-aspect img-aspect-wide">
+                    <img src="{{ extra.image.small_url }}" alt="{{ extra.name }}" />
+                  </div>
+                {% endif %}
+
+                <div class="bg-secondary h-100">
+                  <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between extras-card-text h-100">
+                    <div>
+                      <h4 class="mb-3">
+                        {{ extra.name }}
+                      </h4>
+
+                      {% if extra.tagline.size > 120 %}
+                        <p class="mb-3">
+                          {{ extra.tagline | slice: 0, 120 }}<span class="toggleExtra d-none">{{ extra.tagline | slice: 120, extra.tagline.size }}</span><span class="toggleExtra">...</span><br>
+
+                          <a class="extra-readmore mt-2 d-block label-small-uppercase" href="javascript:void(0)">
+                            Read More
+                          </a>
+                        </p>
+                      {% else %}
+                        <p class="mb-3">
+                          {{ extra.tagline }}
+                        </p>
+                      {% endif %}
+                    </div>
+
+                    <div>
+                      <p class="label-big mb-3">
+                        <span class="label-small pr-2">PRICE</span>{{ extra.price }}
+                      </p>
+
+                      {% if show_in_series %}
+                        <a class="button button-primary-outline view-dates" href="#product-dates">
+                          ADD THIS
+                        </a>
+                      {% elsif product.variants.first.name %}
+                        {% if extra.sold_out %}
+                          <a class="button button-primary-outline button-disabled">
+                            SOLD OUT
+                          </a>
+                        {% elsif product.enquire_only %}
+                          <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                            {{ enquire_button_text }}
+                          </a>
+                        {% else %}
+                          <a class="button button-primary-outline" href="{{ product.shop_path }}">
+                            ADD THIS
+                          </a>
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endunless %}
+
+  {% unless product.accommodations == blank %}
+    <div class="bg-secondary multiple-container">
+      <section id="product-multiple">
+        <div class="container">
+          <h2 class="mb-5 text-center">
+            {{ multiple_accomms_header }}
+          </h2>
+
+          {% for accommodation in product.accommodations %}
+            {% capture thecycle %}
+              {% cycle 'odd', 'even' %}
+            {% endcapture %}
+
+            <div class="multiple-accom-card row mx-0 {% unless forloop.last %}mb-4{% endunless %}">
+              <div class="col-md-6 px-0 d-flex">
+                <div class="img-aspect img-aspect-wide">
+                  <img src="{{ accommodation.image.small_url }}" alt="{{ accommodation.name }}" />
+                </div>
+              </div>
+
+              <div class="col-md-6 px-0 bg-body-bg {% if thecycle == 'even' %}order-md-first{% endif %}">
+                <div class="py-4 px-4 px-md-5 d-flex flex-column justify-content-center h-100 multiple-accom-card-text">
+                  <h3 class="mb-3">
+                    {{ accommodation.name }}
+                  </h3>
+
+                  <div>
+                    {{ accommodation.overview }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  {% endunless %}
+
+  {% unless product.blog_post_section == blank %}
+    <section id="product-blog" class="bg-secondary">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ blog_header }}
+        </h2>
+
+        {% unless product.blog_post_section.overview == blank %}
+          <p class="mb-5 text-center max-width-med mx-auto">
+            {{ product.blog_post_section.overview }}
+          </p>
+        {% endunless %}
+
+        {% if product.blog_post_section.posts.size > 1 %}
+          <div class="swiper-controls align-items-center justify-content-center mb-5 d-flex {% if product.blog_post_section.posts.size == 2 %}d-md-none{% elsif product.blog_post_section.posts.size  == 3 %}d-lg-none{% endif %}">
+            <div class="swiper-prev blog-prev">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" transform="rotate(-180 20 20)" stroke="var(--body-color)"/>
+                <path d="M22 26.6667L16.6667 20.3333L22 14" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+
+            <div class="swiper-pag blog-pagination text-center label-big w-auto px-4"></div>
+
+            <div class="swiper-next blog-next">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="19.5" stroke="var(--body-color)"/>
+                <path d="M18 14L23.3333 20.3333L18 26.6667" stroke="var(--body-color)"/>
+              </svg>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="swiper-container blog-swiper">
+          <div class="swiper-wrapper">
+            {% for post in product.blog_post_section.posts %}
+              <div class="swiper-slide h-auto mb-4">
+                <div class="blog-card h-100 d-flex flex-column">
+                  {% if post.hero_image != blank %}
+                    <div class="img-aspect">
+                      <img src="{{ post.hero_image.medium_url }}" alt="{{ post.hero_image.name }}" />
+                    </div>
+                  {% endif %}
+
+                  <div class="justify-content-between bg-body-bg text-body-color p-4 flex-grow-1 d-flex flex-column">
+                    {% if post.published_at or post.author.name %}
+                      <p class="mb-3 label-small post-info d-flex align-items-center">
+                        {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                          <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+                        {% endif %}
+
+                        {% if post.author.name %}
+                          <span class="post-autor">
+                            {{ post.author.name }}
+                          </span>
+                        {% endif %}
+
+                        {% if post.published_at and post.author.name %}
+                          <span class="px-3">
+                            &#183;
+                          </span>
+                        {% endif %}
+
+                        {% if post.published_at %}
+                          <span class="post-published">
+                            {{ post.published_at | date: "%a %e %b %Y" }}
+                          </span>
+                        {% endif %}
+                      </p>
+                    {% endif %}
+
+                    <div>
+                      {% if post.title %}
+                        <h4 class="mb-3">
+                          {{ post.title }}
+                        </h4>
+                      {% endif %}
+
+                      {% if post.tagline %}
+                        <p class="post-tagline">
+                          {{ post.tagline }}
+                        </p>
+                      {% endif %}
+                    </div>
+
+                    <a class="d-flex align-items-center hover-arrow-right cursor-pointer mt-3" href="{{ post.url }}" target="_blank">
+                      <span class="mr-2 text-body">
+                        READ
+                      </span>
+
+                      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="15" cy="15" r="14.5" stroke="var(--body-color)"></circle>
+                        <path d="M13.5 10.5L17.5 15.25L13.5 20" stroke="var(--body-color)"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% unless product.faqs == blank %}
+    <section id="product-faqs">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ faqs_header }}
+        </h2>
+
+        <div class="accordion" id="faqAccordion">
+          <div class="px-3 px-md-5">
+            {% for faq in product.faqs %}
+              <div class="py-3">
+                <div id="faqHeading{{ forloop.index }}" class="cursor-pointer w-100 d-flex justify-content-between align-items-center collapsed" role="button" data-toggle="collapse" data-target="#faq{{ forloop.index }}" aria-expanded="true" aria-controls="faq{{ forloop.index }}">
+                  <h5 class="mb-0">
+                    {{ faq.question }}
+                  </h5>
+
+                  <svg class="accordionToggle flex-shrink-0 ml-2" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="15" r="14.5" transform="rotate(90 15 15)" stroke="var(--body-color)"/>
+                    <path d="M19.5 13.5L14.75 17.5L10 13.5" stroke="var(--body-color)"/>
+                  </svg>
+                </div>
+
+                <div id="faq{{ forloop.index }}" class="collapse" aria-labelledby="faqHeading{{ forloop.index }}">
+                  <div class="pt-3">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endunless %}
+
+  {% if show_in_series %}
+    <section id="product-dates" class="bg-secondary">
+      <div class="container">
+        <h2 class="mb-5 text-center">
+          {{ dates_header }}
+        </h2>
+
+        {% for product in product.series.upcoming_products %}
+          {% assign featured_variant = product.featured_variant %}
+          {% assign date_full_price = featured_variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+
+          {% if featured_variant.promotion.active %}
+            {% assign promo_price_drop = featured_variant.price | apply_promotion: featured_variant.promotion %}
+            {% assign date_promo_price = promo_price_drop.per_person_fractional | money: no_cents_if_whole: true %}
+            {% assign date_promo_tagline = featured_variant.promotion.tagline %}
+            {% assign date_cheapest_price = promo_price_drop.per_person_fractional %}
+          {% else %}
+            {% assign date_cheapest_price = featured_variant.price.per_person_fractional | money: no_cents_if_whole: true %}
+          {% endif %}
+
+          {% if variant.deposit.enabled and variant.product.type != 'accommodation' and variant_cheapest_price != 0 and variant.product.sold_out == false %}
+            {% assign date_deposit_active = true %}
+            {% assign deposit_rate = variant.product.deposit.rate %}
+            {% assign date_deposit_price = date_cheapest_price | times: deposit_rate | money: no_cents_if_whole: true %}
+          {% else %}
+            {% assign date_deposit_active = false %}
+          {% endif %}
+
+          {% if featured_variant.product.type == "experience" %}
+            {% capture variant_unit %}
+              <sub>/pp</sub>
+            {% endcapture %}
+          {% else %}
+            {% capture variant_unit %}
+              <sub>/night</sub>
+            {% endcapture %}
+          {% endif %}
+
+          {% if featured_variant.promotion.active %}
+            {% capture date_price_string %}
+              <span class="label-small pr-2">FROM</span>{{ date_promo_price }}{{ variant_unit }}<span class="label-small"><del class="text-danger">{{ date_full_price }}{{ variant_unit }}</del></span>
+            {% endcapture %}
+          {% elsif variant_cheapest_price == 0 %}
+            {% capture date_price_string %}
+              Free
+            {% endcapture %}
+          {% else %}
+            {% capture date_price_string %}
+              <span class="label-small pr-2">FROM</span>{{ date_full_price }}{{ variant_unit }}
+            {% endcapture %}
+          {% endif %}
+
+          <div class="date-card bg-body-bg {% unless forloop.last %}mb-4{% endunless %}">
+            <div class="p-3 d-md-flex align-items-end date-card-text">
+              <div class="flex-fill pr-md-3">
+                <div class="d-flex flex-wrap justify-content-end mb-3 mb-md-1">
+                  {% if featured_variant.promotion.active %}
+                    <p class="label-small label-banner banner-promo mb-1">
+                      {{ date_promo_tagline }}
+                    </p>
+                  {% endif %}
+
+                  {% assign stock = product.remaining_stock | plus: 0 %}
+
+                  {% if stock < 10 and stock != 0 and product.sold_out == false %}
+                    <p class="label-small label-banner banner-limited mb-1">
+                      {{ stock }} SPOT{% if stock > 1 %}S{% endif %} LEFT
+                    </p>
+                  {% endif %}
+
+                  {% if date_deposit_active and date_deposit_price != "0" %}
+                    <p class="label-small label-banner banner-deposit mb-1">
+                      PAY ONLY {{ date_deposit_price }}{{ variant_unit }} DEPOSIT
+                    </p>
+                  {% endif %}
+                </div>
+
+                <div class="d-md-flex align-items-end">
+                  <div class="mr-auto">
+                    <h5>
+                      {{ product.dates }}
+                    </h5>
+                  </div>
+
+                  <div class="d-md-flex flex-column justify-content-end">
+                    <p class="label-big mb-3 mb-md-0 text-md-right">
+                      {{ date_price_string }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex-shrink-0">
+                {% if product.enquire_only %}
+                  <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                    {{ enquire_button_text }}
+                  </a>
+                {% elsif product.min_price contains "Announcing" %}
+                  <a class="button button-primary-outline button-disabled">
+                    COMING SOON
+                  </a>
+                {% elsif product.sold_out %}
+                  <a class="button button-primary-outline button-disabled">
+                    SOLD OUT
+                  </a>
+                {% else %}
+                  <a class="button button-primary-outline" href="{{ product.shop_path }}">
+                    BOOK NOW
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <div class="bg-secondary fixed-bottom" id="product-bookingbar">
+    <div class="booking-bar-inner">
+      <div class="container-fluid px-0 px-md-2 px-lg-5">
+        <div class="d-flex d-md-none w-100">
+          {% if has_promotion %}
+            <p class="label-small-uppercase label-banner banner-promo mb-0 {% if deposit_active and deposit_price != '0' %}w-50{% else %}w-100{% endif %} text-center">
+              {{ promo_tagline }}
+            </p>
+          {% endif %}
+
+          {% if deposit_active and deposit_price != "0" %}
+            <p class="label-small-uppercase label-banner banner-deposit mb-0 flex-grow-1 text-center">
+              PAY ONLY {{ deposit_price }}{{ unit }} DEPOSIT
+            </p>
+          {% endif %}
+        </div>
+
+        <div class="py-3 px-3 px-md-0 d-flex align-items-center align-items-md-end">
+          <div class="mr-auto">
+            <h5 class="mb-2 d-none d-md-block product-name">
+              {% if show_in_series %}
+                {{ product.series.name }}
+              {% else %}
+                {{ product.name }}
+              {% endif %}
+            </h5>
+
+            <p class="label-small-uppercase mb-0">
+              {% if product.country %}
+                <span>
+                  {{ product.country }}
+                </span>
+                {% if dates_string or product.duration %}
+                  <span class="px-3 hide-sm">&#183;</span>
+                {% endif %}
+              {% endif %}
+
+              {% if dates_string %}
+                <span>{{ dates_string }}</span>
+
+                {% if product.duration %}
+                  <span class="px-3">
+                    &#183;
+                  </span>
+                {% endif %}
+              {% endif %}
+
+              {% if product.duration %}
+                <span>
+                  {{ product.duration }}
+                </span>
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="d-md-flex flex-column justify-content-end pr-3 pr-md-3">
+            <div class="d-none d-md-flex flex-wrap justify-content-end booking-bar-banners">
+              {% if has_promotion %}
+                <p class="label-small label-banner banner-promo mb-1">
+                  {{ promo_tagline }}
+                </p>
+              {% endif %}
+
+              {% unless show_in_series %}
+                {% assign stock = product.remaining_stock | plus: 0 %}
+
+                {% if stock < 10 and stock != 0 and product.sold_out == false %}
+                  <p class="label-small label-banner banner-limited mb-1">
+                    {{ stock }} SPOT{% if stock > 1 %}S{% endif %} LEFT
+                  </p>
+                {% endif %}
+              {% endunless %}
+
+              {% if deposit_active and deposit_price != 0 %}
+                <p class="label-small label-banner banner-deposit mb-1">PAY ONLY {{ deposit_price }}{{ unit }} DEPOSIT</p>
+              {% endif %}
+            </div>
+
+            <p class="label-big mb-0 text-right d-flex {% if strikethrough_price %}flex-column-reverse{% else %}flex-column{% endif %} d-md-block">
+              {% if cheapest_price == 0 %}
+                FREE
+              {% elsif has_promotion %}
+                <span class="label-small-uppercase pr-2 d-none d-md-inline">FROM</span>{{ promo_price }}{{ unit }}<del class="text-danger">{{ full_price }}{{ unit }}</del>
+              {% elsif cheapest_price > 0 %}
+                <span class="label-small-uppercase pr-2">
+                  {{ full_price }}{{ unit }}
+                </span>
+              {% else %}
+                COMING SOON
+              {% endif %}
+            </p>
+          </div>
+
+          <div class="flex-shrink-0">
+            {% if show_in_series %}
+              <a class="button button-primary-solid view-dates" href="#product-dates">
+                VIEW DATES
+              </a>
+            {% elsif product.enquire_only %}
+              <a class="button button-primary-outline cursor-pointer" onclick="openPopupSignup()">
+                {{ enquire_button_text }}
+              </a>
+            {% elsif product.variants.first.name == nil %}
+              <a class="button button-primary-outline button-disabled">
+                COMING SOON
+              </a>
+            {% elsif product.sold_out %}
+              <a class="button button-primary-outline button-disabled">
+                SOLD OUT
+              </a>
+            {% else %}
+              <a class="button button-primary-solid" href="{{ product.shop_path }}">
+                BOOK NOW
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main><!-- product-name -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    {% unless product.highlights == blank %}
+      var highlightsSwiper = new Swiper('.highlights-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        simulateTouch: false,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        pagination: {
+          el: '.highlights-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.highlights-next',
+          prevEl: '.highlights-prev',
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            {% if product.highlights.size > 2 %}
+              loop: true,
+            {% endif %}
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            {% if product.highlights.size > 3 %}
+              loop: true,
+            {% else %}
+              loop: false,
+            {% endif %}
+          },
+        }
+      });
+    {% endunless %}
+
+    {% unless product.host_section.hosts == blank %}
+      var hostsSwiper = new Swiper('.hosts-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        simulateTouch: false,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        pagination: {
+          el: '.hosts-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.hosts-next',
+          prevEl: '.hosts-prev',
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            {% if product.host_section.hosts.size > 2 %}
+              loop: true,
+            {% endif %}
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            {% if product.host_section.hosts.size > 3 %}
+              loop: true,
+            {% else %}
+              loop: false,
+            {% endif %}
+          },
+        }
+      });
+    {% endunless %}
+
+    {% unless product.schedule == blank %}
+      var scheduleSwiper = new Swiper('.schedule-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        simulateTouch: false,
+        updateOnWindowResize: true,
+        autoHeight: true,
+        pagination: {
+          el: '.schedule-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.schedule-next',
+          prevEl: '.schedule-prev',
+        },
+      });
+    {% endunless %}
+
+    {% unless product.extras == blank %}
+      var extrasSwiper = new Swiper('.extras-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        simulateTouch: false,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        pagination: {
+          el: '.extras-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.extras-next',
+          prevEl: '.extras-prev',
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            {% if product.extras.size > 2 %}
+              loop: true
+            {% endif %}
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            {% if product.extras.size > 3 %}
+              loop: true
+            {% else %}
+              loop: false
+            {% endif %}
+          },
+        }
+      });
+    {% endunless %}
+
+    {% unless product.testimonials == blank %}
+      var reviewsSwiper = new Swiper('.reviews-swiper', {
+        updateOnWindowResize: true,
+        simulateTouch: false,
+        pagination: {
+          el: '.reviews-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.reviews-next',
+          prevEl: '.reviews-prev',
+        },
+        {% if testimonial_images == true %}
+          slidesPerView: 1,
+          spaceBetween: 10,
+          {% if product.testimonials.size > 1 %}
+            loop: true
+          {% endif %}
+        {% else %}
+          slidesPerView: 1,
+          spaceBetween: 20,
+          breakpoints: {
+            576: {
+              {% if product.testimonials.size == 1 %}
+                slidesPerView: 1,
+              {% else %}
+                slidesPerView: 2,
+              {% endif %}
+              centeredSlides: false,
+              spaceBetween: 20,
+              {% if product.testimonials.size > 2 %}
+                loop: true
+              {% endif %}
+            },
+            992: {
+              slidesPerView: {% if product.testimonials.size == 2 %}2{% else %}3{% endif %},
+              spaceBetween: 30,
+              {% if product.testimonials.size > 3 %}
+                loop: true
+              {% else %}
+                loop: false
+              {% endif %}
+            },
+          },
+        {% endif %}
+      });
+    {% endunless %}
+
+    {% unless product.blog_post_section == blank %}
+      var blogSwiper = new Swiper('.blog-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        updateOnWindowResize: true,
+        centerInsufficientSlides: true,
+        simulateTouch: false,
+        pagination: {
+          el: '.blog-pagination',
+          type: 'fraction',
+        },
+        navigation: {
+          nextEl: '.blog-next',
+          prevEl: '.blog-prev',
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+            {% if product.blog_post_section.posts.size > 2 %}
+              loop: true,
+            {% endif %}
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            {% if product.blog_post_section.posts.size > 3 %}
+              loop: true,
+            {% else %}
+              loop: false,
+            {% endif %}
+          },
+        }
+      });
+    {% endunless %}
+
+    var $gallery = new SimpleLightbox('.gallery-img', {
+      showCounter: false,
+    });
+
+    $gallery.on('shown.simplelightbox', function () {
+      $('.sl-prev').html('<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19.5" transform="rotate(180 20 20)" stroke="var(--primary)"/><path d="M22 26L16.6667 19.6667L22 13.3333" stroke="var(--primary)"/></svg>');
+      $('.sl-next').html('<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19.5" stroke="var(--primary)"/><path d="M17.9999 14L23.3333 20.3333L17.9999 26.6667" stroke="var(--primary)"/></svg>');
+    });
+
+    $('#view-gallery').click(function() {
+      $gallery.open();
+    })
+
+    function resizeHero() {
+      if (document.getElementById('product-jumpbar')) {
+        let jumpbarHeight = document.getElementById('product-jumpbar').clientHeight;
+        document.documentElement.style.setProperty('--jumpbar-height', jumpbarHeight + "px");
+      }
+
+      if (document.getElementById('product-bookingbar')) {
+        let bookingbarHeight = document.getElementById('product-bookingbar').clientHeight;
+        document.documentElement.style.setProperty('--booking-bar-height', bookingbarHeight + "px");
+      }
+    };
+
+    resizeHero();
+
+    $( window ).resize(function() {
+      resizeHero();
+    });
+
+    jQuery('.label-jumpbar').click(function() {
+      let clicked = jQuery(this).attr('href');
+      jQuery(this).addClass('active');
+
+      jQuery('html, body').animate({
+        scrollTop: jQuery(clicked).position().top - 0
+      }, 200);
+
+      event.preventDefault();
+    });
+
+    jQuery('.view-dates').click(function() {
+      jQuery('html, body').animate({
+        scrollTop: jQuery('#product-dates').position().top - 0
+      }, 200);
+
+      event.preventDefault();
+    });
+
+    $('.extra-readmore').click(function() {
+      $(this).siblings('.toggleExtra').toggleClass('d-none');
+      $(this).text($(this).text() == 'Read More' ? 'Read Less' : 'Read More');
+    });
+
+    jQuery(document).scroll(function(){
+      var st = jQuery(this).scrollTop();
+
+      jQuery('section').each(function() {
+        if(st > jQuery(this).offset().top && st <= jQuery(this).offset().top + jQuery(this).height() ){
+          var id = jQuery(this).attr('id');
+          jQuery('a[href="#'+id+'"]').addClass('active');
+        } else {
+          var id = jQuery(this).attr('id');
+          jQuery('a[href="#'+id+'"]').removeClass('active');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,16 @@
+{
+  "key": "filter_link",
+  "name": "Filter Link",
+  "attributes": [
+    {
+      "name": "label",
+      "label": "Label",
+      "type": "string"
+    },
+    {
+      "name": "block_id",
+      "label": "Block ID",
+      "type": "string"
+    }
+  ]
+}

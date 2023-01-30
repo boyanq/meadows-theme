@@ -1,0 +1,26 @@
+{
+  "key": "testimonial_image_card",
+  "name": "Testimonial Image Card",
+  "attributes": [
+    {
+      "name": "name",
+      "label": "Name",
+      "type": "string"
+    },
+    {
+      "name": "text",
+      "label": "Text",
+      "type": "text"
+    },
+    {
+      "name": "image",
+      "label": "Image",
+      "type": "image"
+    },
+    {
+      "name": "label",
+      "label": "Image alt text",
+      "type": "string"
+    }
+  ]
+}

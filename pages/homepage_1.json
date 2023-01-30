@@ -1,0 +1,58 @@
+{
+  "name": "Homepage 1",
+  "category": "Homepage",
+  "blocks": [
+    {
+      "key": "announcement_bar"
+    },
+    {
+      "key": "hero_video_or_image",
+      "attributes": {
+        "Align_Text_Bottom_Left": true
+      }
+    },
+    {
+      "key": "single_image_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "featured_experiences",
+      "attributes": {
+        "cards_per_row": "2",
+        "Center_Incomplete_Rows": 1,
+        "Experiences": ["random", "random"],
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "featured_experiences",
+      "attributes": {
+        "Header": "",
+        "Text": "",
+        "Show_Button": false,
+        "Experiences": ["random", "random", "random"],
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "testimonials_text_only",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "gallery"
+    },
+    {
+      "key": "blog_posts",
+      "attributes": {
+        "Max_Number_Of_Posts_To_Show": 3
+      }
+    },
+    {
+      "key": "mailchimp"
+    }
+  ]
+}

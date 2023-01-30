@@ -1,0 +1,144 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 0
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 0
+    unit: px
+  Center_Logos:
+    group: layout
+    label: Align logos to the centre
+    type: Boolean
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: secondary
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: FEATURED IN
+  logos:
+    type: logo
+    label: Logos
+    hint: Recommended minimum width of logos 405px.
+    array: true
+    default:
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/futuremag.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/outdoor.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/paradise.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/travel-with-magazine.png
+---
+
+<style>
+    #{{ block.id }} .featuredin-item img {
+      object-fit: contain;
+      object-position: center;
+      max-width: 7rem;
+      max-height: 2.85rem;
+    }
+
+    @media (max-width: 991px) {
+      #{{ block.id }} .featuredin-item img {
+        max-width: 6.4rem;
+        max-height: 2.5rem;
+      }
+    }
+
+    @media (max-width: 767px) {
+      #{{ block.id }} .featuredin-item img {
+        max-width: 5.6rem;
+        max-height: 2.4rem;
+      }
+    }
+
+    #{{ block.id }} .block-container {
+      padding-top: {{ padding_top }}px;
+      padding-bottom: {{ padding_bottom }}px;
+      {% if Background_Image %}
+        background-image: url('{{ Background_Image.xxlarge_url }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      {% endif %}
+      {% if Text_Color %}
+        color: {{ Text_Color.hex }};
+      {% endif %}
+      {% if Background_Color %}
+        background-color: {{ Background_Color.hex }};
+      {% endif %}
+    }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container featuredin">
+  <div class="container-fluid px-0">
+    <div class="px-0 {% unless Center_Logos %}d-sm-flex{% endunless %} align-items-center {% if Header %}justify-content-between{% else %}justify-content-center{% endif %}">
+      {% if Header %}
+        <div class="d-sm-flex align-items-center text-center justify-content-center py-3 {% unless Center_Logos %}py-sm-0 pl-3 pl-md-5 pr-4 pr-md-5{% endunless %} flex-shrink-0">
+          <p class="label-small-uppercase">
+            {{ Header }}
+          </p>
+        </div>
+      {% endif %}
+
+      <div class="d-flex flex-wrap align-items-center justify-content-center px-3 px-md-5 {% unless Center_Logos %}justify-content-sm-end{% endunless %}">
+        {% for logo in logos %}
+          <a class="featuredin-item {% if Center_Logos %}px-1 px-md-2 px-xl-3 pb-3{% else %}pl-3 pl-md-5 pb-3 pt-sm-3{% endif %}"{% if logo.link %}href="{{ logo.link }}"{% endif %}>
+            <img class="h-100 w-100" src="{{ logo.image.thumbnail_url }}" {% if logo.label %} alt="{{ logo.label }}" {% endif %} />
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

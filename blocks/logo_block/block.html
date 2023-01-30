@@ -1,0 +1,209 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Increase_Logo_Row_Width:
+    group: layout
+    label: Increase width of logo rows
+    type: Boolean
+  Large_Logos:
+    type: design
+    label: Increase size of logos
+    type: Boolean
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  logos:
+    type: logo
+    label: Logos
+    hint: Recommended minimum width of logos 405px.
+    array: true
+    default:
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/futuremag.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/outdoor.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/paradise.png
+      - label: Easol
+        link: https://easol.com/
+        image:
+          asset: images/travel-with-magazine.png
+---
+
+<style>
+  #{{ block.id }} .logo-block .max-width-900 {
+    max-width: 900px;
+  }
+
+  #{{ block.id }} .logo-block-item img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  {% if Large_Logos %}
+    #{{ block.id }} .logo-block-item img {
+      max-width: 12rem;
+      max-height: 7rem;
+    }
+  {% else %}
+    #{{ block.id }} .logo-block-item img {
+      max-width: 7rem;
+      max-height: 4rem;
+    }
+  {% endif %}
+
+  @media (max-width: 991px) {
+    #{{ block.id }} .logo-block-item img {
+      max-width: 6.4rem;
+      max-height: 3rem;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #{{ block.id }} .logo-block-item img {
+      max-width: 5.6rem;
+      max-height: 2.4rem;
+    }
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .view-gallery-button svg circle,
+  #{{ block.id }} .view-gallery-button svg path {
+    {% if Text_Color %}
+      stroke: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container logo-block">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="mb-5 text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    <div class="{% unless Increase_Logo_Row_Width %}max-width-900{% endunless %} mx-auto">
+      <div class="d-flex flex-wrap align-items-center justify-content-center">
+        {% for logo in logos %}
+          <a class="logo-block-item pr-3 pr-md-5 pl-xl-5 pb-3 py-sm-3" {% if logo.link %}href="{{ logo.link }}" {% endif %}>
+            <img class="h-100 w-100" {% if logo.label %} alt="{{ logo.label }}" {% endif %} src="{{ logo.image.thumbnail_url }}" />
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if Show_Button %}
+      <a href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %} class="mt-4 mt-md-5 text-center d-flex align-items-center justify-content-center cursor-pointer view-gallery-button">
+        <p class="button mr-2 text-primary">
+          {{ Button_Text }}
+        </p>
+
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="15" r="14.5"/>
+          <path d="M13.5 10.5L17.5 15.25L13.5 20"/>
+        </svg>
+      </a>
+    {% endif %}
+  </div>
+</section>

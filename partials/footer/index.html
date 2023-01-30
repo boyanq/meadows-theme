@@ -1,0 +1,544 @@
+---
+max_item_levels: 2
+supports_open_new_tab: true
+attributes:
+  background_colour:
+    label: Background colour
+    type: color
+    group: design
+    default: { palette: body-bg }
+  text_colour:
+    label: Text colour
+    type: color
+    group: design
+    default: { palette: body-color }
+  overide_logo:
+    type: boolean
+    label: Set an alternative logo
+    hint: By default we'll use your wordmark logo.
+  logo:
+    type: image
+    label: Upload logo
+    hint: If your [wordmark logo](/admin/link/wordmark-logo) doesn't look right, upload an alternative. Minimum width 405px.
+  label_without_link:
+    label: Labels without link are headers
+    type: boolean
+    group: design
+    default: true
+  social_icons:
+    label: Social icons
+    type: social_icons
+    array: true
+    default:
+      - icon: facebook
+      - icon: instagram
+      - icon: youtube
+  number_of_columns:
+    label: Number of columns
+    type: range
+    min: 1
+    max: 4
+    step: 1
+    group: layout
+    default: 1
+    hint: For more control of column order and organisation, drag and drop navigation links to make use of nesting.
+  text_alignment:
+    label: Navigation links text alignment
+    type: select
+    options:
+      - label: Left
+        value: opt_1
+      - label: Center
+        value: opt_2
+      - label: Right
+        value: opt_3
+    group: layout
+    default: opt_3
+  footer_layout:
+    label: Content order
+    type: select
+    options:
+      - label: Logo & Social Icons · Navigation Links
+        value: opt_1
+      - label: Navigation Links · Logo & Social Icons
+        value: opt_2
+layout:
+  - type: tab
+    label: Content
+    elements:
+    - overide_logo
+    - logo
+    - text_alignment
+    - footer_layout
+    - background_colour
+    - text_colour
+    - social_icons
+    - number_of_columns
+    - label_without_link
+---
+
+<style>
+  #footer {
+    {% if footer.text_colour %}
+      color: {{ footer.text_colour.rgba }};
+    {% endif %}
+    {% if footer.background_colour %}
+      background-color: {{ footer.background_colour.rgba }};
+    {% endif %}
+  }
+
+  {% if footer.label_without_link %}
+    #footer p.footer-item {
+      font-size: large;
+      font-weight: 500;
+    }
+  {% endif %}
+
+  footer {
+    margin-top: auto;
+  }
+
+  .footer-logobox {
+    padding-bottom: 3rem;
+    text-align: center;
+  }
+  .footer-logo {
+    height: 60px;
+    object-fit: contain;
+    max-width: 100%;
+  }
+
+  .footer-socials {
+    text-align: center;
+  }
+
+  .footer-social-item {
+    color: inherit;
+    padding-right: 1rem;
+    {% if footer.text_colour %}
+      color: {{ footer.text_colour.rgba }};
+    {% endif %}
+  }
+
+  .footer-social-item:last-of-type {
+    padding-right: 0;
+  }
+
+  .footer-item {
+    {% if footer.text_colour %}
+      color: {{ footer.text_colour.rgba }};
+    {% else %}
+      color: inherit;
+    {% endif %}
+  }
+
+  .footer-popup-open {
+    overflow-y: hidden;
+    height: 100%;
+  }
+
+  .footer-popup-open .footer-popup {
+    display: flex !important;
+  }
+
+  .footer-popup {
+    top:0;
+    left:0;
+    z-index:9999;
+    background-color:rgba(0,0,0,0.6);
+    overflow-y: auto;
+  }
+
+  .footer-popup .popup-inner {
+    width: 95%;
+    max-width: 750px;
+  }
+
+  .mailchimp-popup input:not(#mc-embedded-subscribe) {
+    border-radius: 0 !important;
+    background: #F7F7F9;
+    border: none !important;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form div.mce_inline_error {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important;
+    color: var(--body-color);
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+  }
+
+  .mailchimp-popup#mc_embed_signup #mc-embedded-subscribe-form .optin-field div.mce_inline_error {
+    padding-top: 0 !important;
+    padding-left: 1rem;
+  }
+
+  @media (max-width: 767px) {
+    .mailchimp-popup .mc-field-group {
+      width: 100% !important;
+    }
+
+    #footer .footer-socials a .fa {
+      font-size: 30px !important;
+      margin: 1rem;
+    }
+  }
+
+  #formstack-popup .fsBody {
+    padding: 0;
+    background-color: transparent;
+    text-align: unset !important;
+  }
+
+  #formstack-popup .fsForm {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+  }
+
+  #formstack-popup .fsBody .fsLabel,#formstack-popup .fsRequiredMarker, 
+  #formstack-popup .fsBody .fsSupporting {
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    font-family: var(--font-family-base);
+    color: var(--body-color);
+    margin-bottom: 0.5rem;
+  }
+
+  #formstack-popup .fsBody .fsSupporting {
+    font-size: 0.7rem;
+    opacity: 0.8;
+  }
+
+  #formstack-popup .fsRow {
+    margin-bottom: 0 !important;
+  }
+
+  #formstack-popup .fsFieldCell {
+    margin-bottom: 1rem !important;
+  }
+
+  #formstack-popup .fsFieldFocused:not(.fsValidationError) {
+    padding-bottom: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #formstack-popup input, #formstack-popup textarea, #formstack-popup select {
+    background-color: #F7F7F9;
+    border: none;
+    height: 50px;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  #formstack-popup input[type=radio], #formstack-popup  input[type=checkbox] {
+    height: 10px;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  #formstack-popup .fsForm .fsSubmit {
+    margin-top: 1rem;
+    padding: 0;
+  }
+
+  #formstack-popup .fsForm .fsSubmitButton {
+    padding: 1em 2.1875em;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+    border: solid 1px var(--primary);
+    font-size: 1rem;
+    letter-spacing: 0.125em;
+    text-transform: uppercase;
+    display: block;
+    transition: all 0.2s ease;
+    font-family: var(--headings-font-family);
+    width: 100%;
+  }
+
+  #formstack-popup .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameFirst,
+  #formstack-popup .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameFirst {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-left: 0;
+  }
+
+  #formstack-popup .fsSubFieldGroup .fsSubField:nth-child(1):nth-last-child(2).fsNameLast,
+  #formstack-popup .fsSubFieldGroup .fsSubField:nth-child(2):nth-last-child(1).fsNameLast {
+    width: 48% !important;
+    margin: 0 2%;
+    margin-right: 0;
+  }
+
+  #formstack-popup .fsRowBody input[type=checkbox]:before,
+  #formstack-popup .fsRowBody input[type=checkbox]:checked:before,
+  #formstack-popup .fsRowBody input[type=radio]:before,
+  #formstack-popup .fsRowBody input[type=radio]:checked:before {
+    position: absolute;
+  }
+  
+  #currency-switcher-sites {
+    width: 10rem;
+  }
+
+
+  .footer-items {
+    text-align: center;
+  }
+
+  a.footer-item {
+    display: block;
+  }
+
+  a.footer-item:hover {
+    text-decoration: underline;
+  }
+
+  .footer-item-header {
+    padding-top: 1rem;
+  }
+
+  .footer-items .column:last-child {
+    padding-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer-items .column {
+      flex-grow: 3;
+    }
+
+    .footer-logobox {
+      text-align: {% if footer.footer_layout  == "opt_1" %}left{% else %}right{% endif %};
+    }
+
+    {% if footer.footer_layout == "opt_1" %}
+      .footer-socials {
+        text-align: left;
+      }
+
+      .footer-social-item svg:first-of-type {
+        padding-left: 0;
+      }
+    {% else %}
+      .footer-socials {
+        text-align: right;
+      }
+
+      .footer-social-item svg:first-of-type {
+        padding-right: 0;
+      }
+    {% endif %}
+
+    .footer-items {
+      display: flex;
+      {% if footer.text_alignment == "opt_1" %}
+        justify-content: start;
+        text-align: left;
+      {% elsif footer.text_alignment == "opt_2" %}
+        justify-content: space-around;
+        text-align: center;
+      {% else %}
+        justify-content: end;
+        text-align: right;
+      {% endif %}
+    }
+  }
+</style>
+
+{% if footer.logo and footer.overide_logo %}
+  {% assign logo = footer.logo.small_url %}
+{% elsif company.logo %}
+  {% assign logo = company.logo.small_url %}
+{% else %}
+  {% assign logo = false %}
+{% endif %}
+
+{% assign footer_is_nested = false %}
+{% for item in footer.items %}
+  {% if item.items.size > 0 %}
+    {% assign footer_is_nested = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<footer id="footer">
+  <div class="container-fluid p-5">
+    <div class="row">
+      <div class="col-md-4">
+        {% if logo %}
+          <div class="footer-logobox">
+            <img class="footer-logo" alt="logo" src="{{ logo }}" />
+          </div>
+        {% endif %}
+
+        <div class="footer-socials">
+          {% for social in footer.social_icons %}
+          <a class="footer-social-item" href="{{ social.link.url }}" {% if social.link.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}>
+            <i class="{{ social.icon }}"></i>
+          </a>
+        {% endfor %}
+        </div>
+      </div>
+
+      {% unless footer.items == blank %}
+        <div class="footer-items col-md-8{% if footer.footer_layout == 'opt_2' %} order-md-first{% endif %}">
+          <hr class="my-4 d-md-none">
+          
+          {% assign count = 0 %}
+          {% for i in (1..footer.number_of_columns) %}
+            {% if footer_is_nested %}
+              {% assign items_per_column = footer.items[0].items.size %}
+            {% else %}
+              {% assign number_of_columns_float = footer.number_of_columns | times: 1.0 %}
+              {% assign items_per_column = footer.items.size | divided_by: number_of_columns_float | ceil %}
+            {% endif %}
+
+            {% if footer_is_nested %}
+              <div class="column">
+                {% for item in footer.items limit: 1 offset: count %}
+                  {% if item.url %}
+                    <a class="footer-item footer-item-header label-big" href="{{ item.url }}" {% if item.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ item.label }}</a>
+                  {% else %}
+                    <p class="footer-item footer-item-header label-big">{{ item.label }}</p>
+                  {% endif %}
+                  
+                  {% if item.items.size > 0 %}
+                    {% for nested_item in item.items %}
+                      <a class="footer-item footer-item-child" href="{{ nested_item.url }}" {% if nested_item.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ nested_item.label }}</a>
+                    {% endfor %}
+                  {% endif %}
+                  
+                  {% assign count = count | plus: 1 %}
+                  {% assign items_per_column = footer.items[forloop.index].items.size %}
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="column">
+                {% for item in footer.items limit: items_per_column offset: count %}
+                  {% if item.url %}
+                    <a class="footer-item footer-item-child" href="{{ item.url }}" {% if item.new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ item.label }}</a>
+                  {% else %}
+                    <p class="footer-item footer-item-child">{{ item.label }}</p>
+                  {% endif %}
+                  {% assign count = count | plus: 1 %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endunless %}
+    </div>
+
+    <hr class="my-4">
+
+    <div class="text-center">
+      <select id="currency-switcher-sites" onchange="changeCurr()" class="undefined form-control custom-select">
+        <option value="USD">$ United States Dollar</option>
+        <option value="CHF">CHF Swiss Franc</option>
+        <option value="EUR">€ Euro</option>
+        <option value="GBP">£ British Pound</option>
+        <option value="CAD">CAD$ Canadian Dollar</option>
+        <option value="RON">Lei Romanian Leu</option>
+        <option value="AUD">A$ Australian Dollar</option>
+      </select>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+      <div class="col-12 text-center">
+        {% easol_badge %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="popup-overlay footer-popup p-4 p-md-5 position-fixed w-100 vh-100 flex-column d-none">
+  <div class="popup-inner p-4 p-md-5 mx-auto bg-body-bg">
+    <div class="d-flex justify-content-between mb-4">
+      <h4 class="mr-5">
+        Your text here!
+      </h4>
+
+      <div class="closepop cursor-pointer" onclick="closePop()">
+        <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14.5" cy="14.5" r="14.5" fill="var(--primary)"/>
+          <path d="M9 9L20 20M20 9L9 20" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="text-field">
+        Would you like to receive enquiries from customers via a pop up form? Contact the Easol team to get this feature set up.
+      </div>
+    </div>
+
+    <!-- Begin Mailchimp Signup Form -->
+    <div id="mc_embed_signup" class="mailchimp-popup opacity-2">
+      <form action="" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate p-0" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll" class="d-flex flex-wrap">
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-FNAME" class="label-small-uppercase d-block">First Name </label>
+            <input type="text" value="" name="FNAME" class="w-100" id="mce-FNAME">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-LNAME" class="label-small-uppercase d-block">Last Name </label>
+            <input type="text" value="" name="LNAME" class="w-100" id="mce-LNAME">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-EMAIL" class="label-small-uppercase d-block">Email Address  <span class="asterisk">*</span></label>
+            <input type="email" value="" name="EMAIL" class="required email w-100" id="mce-EMAIL">
+          </div>
+
+          <div class="mc-field-group m-0 w-50 pb-3 pr-4">
+            <label for="mce-PHONE" class="label-small-uppercase d-block">Phone  </label>
+            <input type="text" value="" name="PHONE" class="phone w-100" id="mce-PHONE">
+          </div>
+
+          <div class="mc-field-group m-0 w-100 d-flex align-items-center optin-field">
+            <input type="checkbox" value="OPTIN" name="" class="required" id="mce-OPTIN"><label for="mce-OPTIN" class="label-small mb-0 pl-3">Tell me more  </label>
+          </div>
+
+          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_f5d8e779a9ef4bf56908a5178_cdee62a635" tabindex="-1" value=""></div>
+          <div class="clear mt-4 w-100"><input type="submit" value="TELL ME MORE" name="subscribe" id="mc-embedded-subscribe" class="button button-primary-solid d-block w-100 m-0"></div>
+
+          <div id="mce-responses" class="clear">
+            <div class="response" id="mce-error-response" style="display:none"></div>
+            <div class="response" id="mce-success-response" style="display:none"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+    <script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='SELECTYUI';ftypes[3]='text';fnames[4]='TEXTAREAY';ftypes[4]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    <!--End mc_embed_signup-->
+
+    <!--
+    <div id="formstack-popup">
+    </div>
+    -->
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.2.0/swiper-bundle.min.js" integrity="sha512-XHnWZWvy5TkCnPgLU7XsWhGAks1JQ3uFutVxRSH0Z4+djsGkCkxVsYu+JgfrDicvbCmjfUf1HeMWYUvUYKgjzQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.2.0/swiper-bundle.min.css" integrity="sha512-BYn1UZcpzkgi4cForzUzU/FqsewIcfXDYAU0tThFfehimrUrp5hOtcWPI1Wpli8rKopUIhaDCbxXPttBDTISgA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.2.1/simple-lightbox.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.2.1/simple-lightbox.jquery.min.js"></script>
+
+{% if footer.social_icons.size > 0 %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" integrity="sha512-6PM0qYu5KExuNcKt5bURAoT6KCThUmHRewN3zUFNaoI6Di7XJPTMoT6K0nsagZKk2OB4L7E3q1uQKHNHd4stIQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endif %}

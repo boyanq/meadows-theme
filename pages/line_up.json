@@ -1,0 +1,26 @@
+{
+  "name": "Line-up",
+  "blocks": [
+    {
+      "key": "poster_hero"
+    },
+    {
+      "key": "lineup"
+    },
+    {
+      "key": "lineup"
+    },
+    {
+      "key": "video_swiper",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "faq_without_categories"
+    },
+    {
+      "key": "mailchimp"
+    }
+  ]
+}

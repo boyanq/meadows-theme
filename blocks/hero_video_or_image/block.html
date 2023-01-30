@@ -1,0 +1,488 @@
+---
+attributes:
+  Align_Text_Bottom_Left:
+    group: layout
+    label: Align text to bottom left
+    type: Boolean
+  Set_To_Fill_Screen_Height:
+    group: layout
+    label: Increase block size to full screen
+    type: Boolean
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on background image
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Button_Text_Color:
+    group: design
+    label: Button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Logo:
+    group: content
+    label: Logo
+    hint: Recommended minimum width 405px.
+    type: Image
+  Default_Logo:
+    type: Image
+    default:
+      asset: images/bayou-light.png
+  Increase_Logo_Size:
+    group: design
+    label: Increase size of logo
+    type: Boolean
+  Show_Logo:
+    group: design
+    label: Show logo
+    type: Boolean
+    default: true
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Lower_Text_Line_1:
+    group: content
+    label: Subheading text
+    type: String
+    default: Location
+  Lower_Text_Line_2:
+    group: content
+    label: Secondary subheading text
+    type: String
+    default: Date
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Show_Video_Popup:
+    group: content
+    label: Display a popup video
+    type: Boolean
+    default: true
+  Popup_Video_Button_Text:
+    group: content
+    label: Video popup button text
+    type: String
+    default: VIEW VIDEO
+  Popup_iFrame_Code:
+    group: content
+    label: Insert popup video iframe
+    hint: "[Learn more](https://support.easol.com/hc/en-gb/articles/4405191147665)."
+    type: String
+    default: <iframe src="https://player.vimeo.com/video/456897895?&title=0&byline=0&showinfo=0&portrait=0" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  Show_Video_Background:
+    group: content
+    label: Display a background video
+    type: Boolean
+    default: true
+  Hide_Video_Background_On_Mobile:
+    group: mobile
+    label: Hide background video on mobile devices
+    hint: Some mobile devices block autoplaying videos. For best results, enable this to display a background image instead.
+    type: Boolean
+    default: true
+  Video_Background_iFrame_Code:
+    group: content
+    label: Insert background video iframe
+    hint: Recommended to mute sound on autoplaying videos. [Learn more](https://support.easol.com/hc/en-gb/articles/4405191147665).
+    type: String
+    default: <iframe src="https://player.vimeo.com/video/456897895?autoplay=1&loop=1&title=0&byline=0&portrait=0&showinfo=0&background=1&muted=1" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+layout:
+  - type: tab
+    label: Content
+    elements: 
+      - Logo
+      - Show_Logo
+      - Header
+      - Text
+      - Lower_Text_Line_1
+      - Lower_Text_Line_2
+      - Show_Button
+      - Button_Text
+      - Button_Link
+      - Show_Video_Popup
+      - Popup_Video_Button_Text
+      - Popup_iFrame_Code
+      - Show_Video_Background
+      - Video_Background_iFrame_Code
+  - type: tab
+    label: Layout
+    elements:
+      - Align_Text_Bottom_Left
+      - Set_To_Fill_Screen_Height
+  - type: tab
+    label: Design
+    elements: 
+      - Remove_Background_Image_Overlay
+      - Background_Image
+      - Background_Color
+      - Button_Text_Color
+      - Increase_Logo_Size
+  - type: tab
+    label: Mobile
+    elements:
+      - Mobile_Background_Image
+      - Hide_Video_Background_On_Mobile
+---
+
+{% assign logo_override_url = Logo.thumbnail_url %}
+{% assign company_logo_url = company.avatar_logo.thumbnail_url %}
+{% assign default_logo_url = Default_Logo.thumbnail_url %}
+
+{%- capture logo_url -%}
+  {%- if logo_override_url -%}
+    {{- logo_override_url -}}
+  {%- elsif company_logo_url -%}
+    {{- company_logo_url -}}
+  {%- elsif default_logo_url -%}
+    {{- default_logo_url -}}
+  {% endif %}
+{%- endcapture -%}
+
+<style>
+  #{{ block.id }} .hero-video-container {
+    min-height: 43rem;
+  }
+
+  #{{ block.id }} .hero-video-header {
+    max-width: 66rem;
+  }
+
+  #{{ block.id }} .hero-video-text {
+    max-width: 43rem;
+  }
+
+  {% if Increase_Logo_Size %}
+    #{{ block.id }} .hero-video-logo {
+      width: 100%;
+      max-width: 15rem;
+      max-height: 15rem;
+    }
+  {% else %}
+    #{{ block.id }} .hero-video-logo {
+      width: 100%;
+      max-width: 7rem;
+      max-height: 7rem;
+    }
+  {% endif %}
+
+  {% if Show_Logo == false %}
+    #{{ block.id }} .hero-video-logo {
+      display: none;
+    }
+  {% endif %}
+
+  #{{ block.id }} .hero-video .video-popup svg path {
+    transition: all 0.2s ease;
+  }
+
+  #{{ block.id }} .hero-video .video-popup svg path {
+    transition: all 0.2s ease;
+  }
+
+  .popup-hero-video-{{ block.id }}-open .popup-hero-video {
+    display: flex !important;
+  }
+
+  #{{ block.id }} .popup-hero-video-inner-video {
+    width: 100%;
+    max-width: 71rem;
+  }
+
+  #{{ block.id }} .popup-hero-video iframe {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  #{{ block.id }} .popup-hero-video .closepop-hero-video-container {
+    top: 0;
+    right: 0;
+  }
+
+  #{{ block.id }} .hero-section-background-video {
+    z-index: -1;
+  }
+
+  #{{ block.id }} .hero-section-background-video .iframe-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  #{{ block.id }} .hero-section-background-video .iframe-container iframe {
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.77vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #{{ block.id }} .hero-video .video-popup:hover {
+    opacity: 0.7;
+  }
+
+  #{{ block.id }} .popup-hero-video {
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: rgba(0,0,0,0.6);
+    overflow-y: auto;
+  }
+
+  #{{ block.id }} .hero-section-background-video {
+    {% if Hide_Video_Background_On_Mobile %}
+      background-image: url('{{ Background_Image.medium_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+  }
+
+  #{{ block.id }} .hero-video-container {
+    {% if Show_Video_Background %}
+      {% unless Remove_Background_Image_Overlay %}
+        background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
+      {% endunless %}
+    {% else %}
+      background-image: {% unless Remove_Background_Image_Overlay %} linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%), {% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Set_To_Fill_Screen_Height %}
+      min-height: calc(100vh - var(--menu-height));
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .hero-video-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .video-popup {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }} !important;
+      padding: 1em 2.1875em;
+    {% endif %}
+  }
+
+  #{{ block.id }} .video-popup path {
+    {% if Button_Color %}
+      fill: {{ Button_Color.hex }};
+    {% else %}
+      fill: #fff;
+    {% endif %}
+  }
+
+  #{{ block.id }} .button-primary-solid {
+    {% if Button_Text_Color %}
+      color: {{ Button_Text_Color.hex }} !important;
+    {% endif %}
+    {% if Button_Color %}
+      border: solid 1px {{ Button_Color.hex }} !important;
+      background-color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .closePopHeroVideo circle {
+    {% if Button_Color %}
+      fill: {{ Button_Color.hex }};
+    {% else %}
+      fill: var(--primary);
+    {% endif %}
+  }
+
+  #{{ block.id }} .closePopHeroVideo path {
+    {% if Button_Text_Color %}
+      stroke: {{ Button_Text_Color.hex }};
+    {% endif %}
+  }
+</style>
+
+<section class="genie-block hero-video py-0">
+  {% if Show_Video_Background %}
+    <div class="position-absolute w-100 h-100 hero-section-background-video">
+      <div class="iframe-container w-100 h-100 {% if Hide_Video_Background_On_Mobile %}d-none d-md-block{% endif %}">
+        {{ Video_Background_iFrame_Code }}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="hero-video-container container-fluid py-5 px-md-5 d-flex flex-column {% if Align_Text_Bottom_Left %}justify-content-end{% else %}justify-content-between align-items-center{% endif %}">
+    <div class="hero-video-inner {% unless Align_Text_Bottom_Left %}py-5 text-center flex-grow-1 d-flex flex-column align-items-center justify-content-center{% endunless %}">
+      {% if logo_url != blank %}
+        <img class="mb-4 hero-video-logo" src="{{ logo_url }}" alt="{{ company.name }}" />
+      {% endif %}
+
+      {% if Align_Text_Bottom_Left %}
+        {% if Lower_Text_Line_1 or Lower_Text_Line_2 %}
+          <div class="align-self-start mb-4 mt-3">
+            {% if Lower_Text_Line_1 %}
+              <h5 class="{% if Lower_Text_Line_2 %}mb-3{% endif %}">
+                {{ Lower_Text_Line_1 }}
+              </h5>
+            {% endif %}
+
+            {% if Lower_Text_Line_2 %}
+              <p class="label-small">
+                {{ Lower_Text_Line_2 }}
+              </p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+
+      {% if Header %}
+        <h1 class="mb-4 mb-md-3 hero-video-header w-100">
+          {{ Header }}
+        </h1>
+      {% endif %}
+
+      {% if Text %}
+        <div class="text-big mb-4 hero-video-text w-100 text-field">
+          {{ Text }}
+        </div>
+      {% endif %}
+
+      <div class="w-100 d-flex {% if Align_Text_Bottom_Left %}justify-content-md-between align-items-end{% else %}justify-content-center align-items-center{% endif %}">
+        {% if Show_Button %}
+          <a class="button button-primary-solid {% if Show_Video_Popup %} mr-4{% endif %}" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ Button_Text }}
+          </a>
+        {% endif %}
+
+        {% if Show_Video_Popup %}
+          <a class="button {% unless Button_Color %}button-white-outline{% endunless %} cursor-pointer video-popup" onclick="openpopupherovideo{{ block.id | remove: '-' }}()">
+            <svg width="17" height="19" viewBox="0 0 17 19" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 9.96143L0 0.961426V18.9614L17 9.96143Z"/>
+            </svg>
+
+            <span class="ml-3 d-none d-sm-inline">
+              {{ Popup_Video_Button_Text }}
+            </span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% unless Align_Text_Bottom_Left %}
+      {% if Lower_Text_Line_1 or Lower_Text_Line_2 %}
+        <div class="align-self-start">
+          {% if Lower_Text_Line_1 %}
+            <h5 class="{% if Lower_Text_Line_2 %}mb-3{% endif %}">
+              {{ Lower_Text_Line_1 }}
+            </h5>
+          {% endif %}
+
+          {% if Lower_Text_Line_2 %}
+            <p class="label-small">
+              {{ Lower_Text_Line_2 }}
+            </p>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endunless %}
+  </div>
+</section>
+
+{% if Show_Video_Popup %}
+  <!-- VIDEO MODAL -->
+  <div class="popup-overlay popup-hero-video p-3 position-fixed w-100 vh-100 flex-column d-none">
+    <div class="popup-hero-video-inner mx-auto h-100 w-100 d-flex flex-column">
+      <div class="popup-hero-video-inner-video d-flex flex-column justify-content-center flex-grow-1 px-md-5 mx-auto">
+        <div class="align-self-end pb-3 closepop-hero-video-container">
+          <div class="closePopHeroVideo closePop cursor-pointer" onclick="closePopHeroVideo{{ block.id | remove: '-' }}()">
+            <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="14.5" cy="14.5" r="14.5"/>
+              <path d="M9 9L20 20M20 9L9 20" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="img-aspect img-aspect-video">
+          <div class="iframe-container">
+            {{ Popup_iFrame_Code }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- VIDEO MODAL -->
+
+  <script>
+    function openpopupherovideo{{ block.id | remove: '-' }} () {
+      jQuery('body').addClass('popup-open');
+      jQuery('body').addClass('popup-hero-video-{{ block.id }}-open');
+    }
+
+    function closePopHeroVideo{{ block.id | remove: '-' }} () {
+      jQuery('body').removeClass('popup-open');
+      jQuery('body').removeClass('popup-hero-video-{{ block.id }}-open');
+    };
+  </script>
+{% endif %}

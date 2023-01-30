@@ -1,0 +1,153 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Image:
+    group: content
+    label: Image
+    hint: Recommended minimum width 1920px.
+    type: Image
+    default:
+      asset: images/footsteps.jpg
+  Mobile_Image:
+    group: mobile
+    label: Mobile Image
+    hint: Show a different image on mobile devices.
+    type: Image
+  Full_Width_Image:
+    group: layout
+    label: Increase image size
+    type: Boolean
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %} 
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Color %}
+      color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container single-image">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text or Show_Button %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="mb-5 text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    {% if Show_Button %}
+      <div class="mb-4 mb-md-5 text-center">
+        <a class="button button-primary-outline text-center" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ Button_Text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="{% if Full_Width_Image %}container-fluid px-0{% else %}container{% endif %}">
+    {% if Mobile_Image %}
+      <img class="w-100 d-md-none" src="{{ Mobile_Image.large_url }}" alt="{{ Mobile_Image.name }}" />
+      <img class="w-100 d-none d-md-block" src="{{ Image.xxlarge_url }}" alt="{{ Image.name }}" />
+    {% else %}
+      <img class="w-100" src="{{ Image.xxlarge_url }}" alt="{{ Image.name }}" />
+    {% endif %}
+  </div>
+</section>

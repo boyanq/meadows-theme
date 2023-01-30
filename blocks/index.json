@@ -1,0 +1,154 @@
+{
+  "text_block": {
+    "name": "Text Block",
+    "category": "Text"
+  },
+  "text_block_2_column": {
+    "name": "Text Block - 2 Column",
+    "category": "Text"
+  },
+  "faq_with_categories": {
+    "name": "FAQ with Categories",
+    "category": "Text"
+  },
+  "faq_without_categories": {
+    "name": "FAQ without Categories",
+    "category": "Text"
+  },
+  "testimonials_text_and_image": {
+    "name": "Testimonials - Text and Image",
+    "category": "Text"
+  },
+  "testimonials_text_only": {
+    "name": "Testimonials - Text Only",
+    "category": "Text"
+  },
+  "image_grid_with_text": {
+    "name": "Image Grid with Text",
+    "category": "Images"
+  },
+  "hero_image": {
+    "name": "Hero Image",
+    "category": "Hero"
+  },
+  "single_image_and_text": {
+    "name": "Single Image and Text",
+    "category": "Images"
+  },
+  "image_with_text_over": {
+    "name": "Image with Text Over",
+    "category": "Images"
+  },
+  "logo_block": {
+    "name": "Logo Block",
+    "category": "Marketing"
+  },
+  "gallery": {
+    "name": "Gallery",
+    "category": "Images"
+  },
+  "poster_gallery": {
+    "name": "Poster Gallery",
+    "category": "Line Up & Posters"
+  },
+  "poster_single": {
+    "name": "Poster Single",
+    "category": "Line Up & Posters"
+  },
+  "featured_experiences": {
+    "name": "Featured Experiences",
+    "category": "Display Experiences"
+  },
+  "featured_variants": {
+    "name": "Featured Variants",
+    "category": "Display Experiences"
+  },
+  "all_upcoming_experiences": {
+    "name": "All Upcoming Experiences",
+    "category": "Display Experiences"
+  },
+  "search_page": {
+    "name": "Search Page",
+    "category": "Search Experiences"
+  },
+  "search_hero": {
+    "name": "Search Hero",
+    "category": "Search Experiences"
+  },
+  "filter_bar": {
+    "name": "Filter Bar",
+    "category": "Search Experiences"
+  },
+  "blog_posts": {
+    "name": "Blog Posts",
+    "category": "Integrations"
+  },
+  "embed_block": {
+    "name": "Embed Block",
+    "category": "Integrations"
+  },
+  "mailchimp": {
+    "name": "Mailchimp",
+    "category": "Integrations"
+  },
+  "text_and_video": {
+    "name": "Text & Video",
+    "category": "Videos"
+  },
+  "video_swiper": {
+    "name": "Video Swiper",
+    "category": "Videos"
+  },
+  "lineup": {
+    "name": "Lineup",
+    "category": "Line Up & Posters"
+  },
+  "poster_hero": {
+    "name": "Poster Hero",
+    "category": "Line Up & Posters"
+  },
+  "featured_in": {
+    "name": "Featured In",
+    "category": "Marketing"
+  },
+  "announcement_bar": {
+    "name": "Announcement Bar",
+    "category": "Marketing"
+  },
+  "pop_up": {
+    "name": "Pop Up",
+    "category": "Marketing"
+  },
+  "jump_bar": {
+    "name": "Jump Bar",
+    "category": "Search Experiences"
+  },
+  "hero_swiper": {
+    "name": "Hero Swiper",
+    "category": "Hero"
+  },
+  "landing_page": {
+    "name": "Landing Page",
+    "category": "Integrations"
+  },
+  "single_image": {
+    "name": "Single Image",
+    "category": "Images"
+  },
+  "gallery_grid": {
+    "name": "Gallery Grid",
+    "category": "Images"
+  },
+  "video_grid": {
+    "name": "Video Grid",
+    "category": "Videos"
+  },
+  "hero_video_or_image": {
+    "name": "Hero Video or Image",
+    "category": "Hero"
+  },
+  "multiple_images_and_text": {
+    "name": "Multiple Images and Text",
+    "category": "Images"
+  }
+}

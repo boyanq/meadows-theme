@@ -1,0 +1,337 @@
+/* GENIE THEME 2.0 RECOMMEDNATIONS - 1/9/20 */
+html {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: unset;
+}
+
+body {
+  background-color: #f7f7f9;
+}
+
+#app {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  #app {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  #app {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  #app {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #app {
+    max-width: 1000px;
+  }
+}
+
+body {
+  font-family: var(--font-family-base);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.btn {
+  font-family: var(--headings-font-family);
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 2rem 0;
+}
+
+.recommendation-hero-image {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 50%;
+}
+
+.recommendation-hero-image:after {
+  content: "";
+  display: block;
+  padding-bottom: 66.6%;
+}
+
+.recommendation-hero-image img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.recommendation-name-image {
+  display: none;
+}
+
+.recommendation-editorial-copy {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 50%;
+  min-height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.recommendation-meta {
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin-bottom: 1rem;
+}
+
+.recommendation-name-copy {
+  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+.recommendation-message p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.recommendation-trip {
+  margin-top: 2rem;
+}
+
+.recommendation-trip-heading {
+  margin-bottom: 2rem;
+}
+
+.recommendation-item {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;
+  background: white;
+  color: inherit;
+}
+
+.recommendation-item-image {
+  flex-basis: 30%;
+}
+
+.recommendation-item-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  max-height: 8rem;
+}
+
+.recommendation-item-info {
+  padding: 1rem 2rem;
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recommendation-product-name {
+  font-size: 0.875rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0;
+}
+
+.recommendation-item-meta {
+  flex-basis: 15%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.recommendation-item-meta h6 {
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0;
+}
+
+.recommendation-item-pricing {
+  flex-basis: 20%;
+  padding: 1rem;
+  text-align: right;
+}
+
+.recommendation-item-pricing-original {
+  font-size: 80%;
+  text-decoration: line-through;
+  color: #ef4320;
+}
+
+.recommendation-breakdown {
+  margin: 4rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recommendation-breakdown-heading {
+  margin-bottom: 2rem;
+}
+
+.recommendation-breakdown-table tr {
+  border: 1px solid #eceeef;
+  background: #fff;
+}
+
+.recommendation-breakdown-table td {
+  padding: 0.5rem;
+}
+
+.recommendation-breakdown-table td h6 {
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.recommendation-breakdown-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.recommendation-breakdown-summary td,
+.recommendation-breakdown-table tr td:last-of-type {
+  text-align: right;
+}
+
+.recommendation-breakdown-table .recommendation-breakdown-deposit {
+  background: var(--primary);
+  color: white;
+}
+
+.booking-navbar {
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px solid #eceeef;
+  bottom: 0px;
+  box-sizing: border-box;
+  color: #fff;
+  display: flex;
+  left: 0px;
+  padding: 8px 16px;
+  position: fixed;
+  right: 0px;
+  z-index: 1030;
+  justify-content: flex-end;
+}
+
+.booking-navbar .checkout-btn {
+  color: #fff;
+  background: var(--primary);
+}
+
+.footer-main {
+  background-color: #ededf0;
+}
+
+@media only screen and (max-device-width: 480px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .recommendation-header {
+    flex-direction: column;
+    padding-top: 15px;
+  }
+
+  .recommendation-editorial-copy {
+    padding: 1.5rem;
+  }
+
+  .recommendation-name-copy {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .recommendation-trip-heading {
+    text-align: center;
+  }
+
+  .recommendation-meta {
+    font-size: 1rem;
+  }
+
+  .recommendation-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recommendation-item-image {
+    width: 100%;
+  }
+
+  .recommendation-item-image img {
+    max-height: 10rem;
+  }
+
+  .recommendation-item-info {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+  }
+
+  .recommendation-product-name {
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+
+  .recommendation-item-meta {
+    padding: 0 1.5rem;
+  }
+
+  .recommendation-item-meta h6 {
+    font-size: 1rem;
+  }
+
+  .recommendation-item-meta h6:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .recommendation-item-pricing {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+  }
+
+  .recommendation-breakdown-table {
+    width: 100%;
+  }
+
+  .recommendation-breakdown-table td h6 {
+    font-size: 1rem;
+  }
+
+  .booking-navbar .checkout-btn {
+    font-size: 1.2rem;
+  }
+}

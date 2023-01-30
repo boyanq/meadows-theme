@@ -1,0 +1,40 @@
+{
+  "name": "Story & Team",
+  "category": "Info",
+  "blocks": [
+    {
+      "key": "hero_image"
+    },
+    {
+      "key": "text_block_2_column"
+    },
+    {
+      "key": "single_image_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "single_image_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" },
+        "Image_Right": true
+      }
+    },
+    {
+      "key": "lineup"
+    },
+    {
+      "key": "video_swiper"
+    },
+    {
+      "key": "logo_block"
+    },
+    {
+      "key": "testimonials_text_only",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    }
+  ]
+}

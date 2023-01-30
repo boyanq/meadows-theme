@@ -1,0 +1,191 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Box_Background_Image:
+    group: design
+    label: Text box background image
+    hint: Recommended minimum width 1140px.
+    type: Image
+    default:
+      asset: images/cliff.jpg
+  Remove_Box_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on featured image
+    hint: By default, a dark overlay is added to the featured image in order to make the text and buttons more visible and readable.
+    type: Boolean
+  Box_Background_Color:
+    group: design
+    label: Text box background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Subheader:
+    group: content
+    label: Subtitle
+    type: String
+    default: CREATING EXPERIENCES IS AN ART
+  Text_Left:
+    group: content
+    label: Left-column text
+    type: Text
+  Text_Right:
+    group: content
+    label: Right-column text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out. </p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .text-over-image-container {
+    min-height: 21rem;
+    {% if Box_Background_Image %}
+      background-image: {% unless Remove_Box_Background_Image_Overlay %}
+      linear-gradient(rgba(247,247,249, 0.7) 0%, rgba(247,247,249, 0.7) 100%),{% endunless %}
+      url('{{ Box_Background_Image.large_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+    {% if Box_Background_Color %}
+      background-color: {{ Box_Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Color %}
+      background-color: {{ Button_Color.hex }} !important;
+      border: solid 1px {{ Button_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container text-over-image">
+  <div class="container-fluid container-md">
+    <div class="text-over-image-container px-3 px-md-5 py-5 d-flex flex-column justify-content-end text-body-color">
+      <div class="row h-100 pt-5">
+        {% if Header or Subheader or Text_Left %}
+          <div class="col-md d-flex flex-column justify-content-end">
+            {% if Subheader %}
+              <p class="label-small-uppercase mb-3">
+                {{ Subheader }}
+              </p>
+            {% endif %}
+
+            {% if Header %}
+              <h3 class="mb-3 {% unless Text_Left %}mb-md-0{% endunless %}">
+                {{ Header }}
+              </h3>
+            {% endif %}
+
+            {% if Text_Left %}
+              <div class="mb-3 mb-md-0 text-field">
+                {{ Text_Left }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if Text_Right %}
+          <div class="col-md d-flex flex-column justify-content-end">
+            <div class="text-field">
+              {{ Text_Right }}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if Show_Button %}
+          <div class="mt-4 col-12">
+            <a class="button button-primary-solid" href="{{ Button_Link.ur l }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              {{ Button_Text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

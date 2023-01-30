@@ -1,0 +1,243 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+    default:
+      asset: images/bay.jpg
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on images
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Button_Text_Color:
+    group: design
+    label: Button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Center_Text:
+    group: layout
+    label: Align text to the centre
+    type: Boolean
+  Full_Screen_Height:
+    group: layout
+    label: Increase block size to full screen
+    type: Boolean
+  Logo:
+    group: content
+    label: Logo
+    hint: Recommended minimum width 405px.
+    type: Image
+  Default_Logo:
+    type: Image
+    default:
+      asset: images/bayou-light.png
+  Increase_Logo_Size:
+    group: design
+    label: Increase size of logo
+    type: Boolean
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_CTA:
+    group: content
+    label: Display button
+    type: Boolean
+    default: True
+  CTA_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  CTA_Link:
+    group: content
+    label: Button link
+    type: link
+  Show_Logo:
+    group: design
+    label: Show logo
+    type: Boolean
+    default: true
+
+layout:
+  - type: tab
+    label: Content
+    elements: 
+      - Logo
+      - Show_Logo
+      - Header
+      - Text
+      - Show_CTA
+      - CTA_Text
+      - CTA_Link
+  - type: tab
+    label: Layout
+    elements:
+      - Center_Text
+      - Full_Screen_Height
+  - type: tab
+    label: Design
+    elements: 
+      - Background_Image
+      - Remove_Background_Image_Overlay
+      - Background_Color
+      - Text_Color
+      - Button_Color
+      - Button_Text_Color
+      - Increase_Logo_Size
+  - type: tab
+    label: Mobile
+    elements:
+      - Mobile_Background_Image
+---
+
+{% assign logo_override_url = Logo.thumbnail_url %}
+{% assign company_logo_url = company.avatar_logo.thumbnail_url %}
+{% assign default_logo_url = Default_Logo.thumbnail_url %}
+
+{%- capture logo_url -%}
+  {%- if logo_override_url -%}
+    {{- logo_override_url -}}
+  {%- elsif company_logo_url -%}
+    {{- company_logo_url -}}
+  {%- elsif default_logo_url -%}
+    {{- default_logo_url -}}
+  {% endif %}
+{%- endcapture -%}
+
+<style>
+  #{{ block.id }} .hero-image-container {
+    min-height: 28rem;
+  }
+
+  #{{ block.id }} .hero-image-header {
+    max-width: 65rem;
+  }
+
+  #{{ block.id }} .hero-image-text {
+    max-width: 45rem;
+  }
+
+  {% if Increase_Logo_Size %}
+    #{{ block.id }} .hero-image-logo {
+      width: 100%;
+      max-width: 15rem;
+      max-height: 15rem;
+    }
+  {% else %}
+    #{{ block.id }} .hero-image-logo {
+      width: 100%;
+      max-width: 7rem;
+      max-height: 7rem;
+    }
+  {% endif %}
+
+  {% if Show_Logo == false %}
+    #{{ block.id }} .hero-image-logo {
+      display: none;
+    }
+  {% endif %}
+
+  #{{ block.id }} .hero-image-container {
+    {% if Background_Image %}
+      background-image: {% unless Remove_Background_Image_Overlay %} linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%),{% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+
+    {% if Full_Screen_Height %}
+      min-height: calc(100vh - var(--menu-height));
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Button_Text_Color %}
+      color: {{ Button_Text_Color.hex }} !important;
+    {% endif %}
+
+    {% if Button_Color %}
+      border: solid 1px {{ Button_Color.hex }} !important;
+      background-color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .hero-image-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="genie-block hero-image py-0">
+  <div class="hero-image-container container-fluid px-md-5 d-flex flex-column {% if Center_Text %}justify-content-center{% else %}justify-content-end{% endif %}">
+    <div class="hero-image-inner py-4 py-md-5 {% if Center_Text %}d-flex flex-column align-items-center text-center{% endif %}">
+      {% if logo_url != blank %}
+        <img class="mb-5 hero-image-logo" src="{{ logo_url }}" alt="{{ company.name }}" />
+      {% endif %}
+
+      {% if Header %}
+        <h1 class="{% if Text %}mb-3{% endif %} hero-image-header w-100">
+          {{ Header }}
+        </h1>
+      {% endif %}
+
+      {% if Text %}
+        <div class="text-big text-field hero-image-text w-100">
+          {{ Text }}
+        </div>
+      {% endif %}
+
+      {% if Show_CTA %}
+        <a class="button button-primary-solid mt-4" href="{{ CTA_Link.url }}"{% if CTA_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ CTA_Text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

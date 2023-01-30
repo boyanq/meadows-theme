@@ -1,0 +1,42 @@
+{
+  "name": "Homepage 3",
+  "category": "Homepage",
+  "blocks": [
+    {
+      "key": "search_hero"
+    },
+    {
+      "key": "featured_in"
+    },
+    {
+      "key": "image_grid_with_text",
+      "attributes": {
+        "Show_Button": false
+      }
+    },
+    {
+      "key": "featured_experiences"
+    },
+    {
+      "key": "testimonials_text_and_image",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "gallery"
+    },
+    {
+      "key": "blog_posts",
+      "attributes": {
+        "Show_Cards_In_A_Swiper": true,
+        "Show_Button_Below_Cards": true,
+        "Show_Button_Above_Cards": false,
+        "Button_Text": "LEARN MORE"
+      }
+    },
+    {
+      "key": "mailchimp"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: primary
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Text:
+    group: content
+    label: Announcement bar text
+    type: String
+    default: MAKE YOUR MOMENTS STAND OUT
+  Link:
+    group: content
+    label: Announcement bar link
+    type: link
+  Fix_To_Top_Of_Page:
+    group: layout
+    label: Fix bar to top of page on scroll
+    type: Boolean
+  Hide_Announcement_Bar:
+    group: layout
+    label: Hide block from page
+    type: Boolean
+---
+
+{% unless Hide_Announcement_Bar %}
+  <style>
+    {% if Fix_To_Top_Of_Page %}
+      :root {
+        --announcement-height: 1.5rem;
+      }
+
+      #menu {
+        margin-top: var(--announcement-height);
+      }
+    {% endif %}
+
+    #{{ block.id }} .announcement-container {
+      {% if Background_Image %}
+        background-image: url('{{ Background_Image.xxlarge_url }}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      {% endif %}
+      {% if Text_Color %}
+        color: {{ Text_Color.hex }} !important;
+      {% endif %}
+      {% if Background_Color %}
+        background-color: {{ Background_Color.hex }} !important;
+      {% endif %}
+    }
+
+    #{{ block.id }} path {
+      {% if Text_Color %}
+        stroke: {{ Text_Color.hex }};
+      {% endif %}
+    }
+
+    {% if Mobile_Background_Image %}
+      @media (max-width: 767px) {
+        #{{ block.id }} .announcement-container {
+          background-image: url('{{ Mobile_Background_Image.large_url }}');
+        }
+      }
+    {% endif %}
+  </style>
+
+  <section{% if Fix_To_Top_Of_Page %} id="announcement-fixedtop"{% endif %} class="genie-block announcement py-0{% if Fix_To_Top_Of_Page %} fixed-top{% endif %}">
+    <a class="w-100 p-1 bg-primary text-white announcement-container container-fluid d-flex justify-content-center align-items-center" href="{{ Link.url }}"{% if Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+      <p class="label-small-uppercase pr-2 text-center">
+        {{ Text }}
+      </p>
+
+      <svg class="d-none d-sm-block" width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.5 6.5H17.5M17.5 6.5L12 1M17.5 6.5L12 12"/>
+      </svg>
+    </a>
+  </section>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      let root = document.documentElement;
+      let announcementHeight = 0;
+
+      function resizeAnnouncement() {
+        if (document.getElementById('announcement-fixedtop')) {
+          announcementHeight = document.getElementById('announcement-fixedtop').clientHeight;
+        }
+
+        root.style.setProperty('--announcement-height', announcementHeight + "px");
+      };
+
+      resizeAnnouncement();
+
+      $( window ).resize(function() {
+        resizeAnnouncement();
+      });
+    });
+  </script>
+{% endunless %}

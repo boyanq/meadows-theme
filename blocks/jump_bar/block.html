@@ -1,0 +1,116 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: secondary
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Active_Link_Text_Color:
+    group: design
+    label: Active link colour
+    type: color
+    default:
+      palette: primary
+  Center_Links:
+    group: layout
+    label: Align links to the centre
+    type: Boolean
+    default: true
+  links:
+    type: section_link
+    label: Links
+    hint: "[Learn more](https://support.easol.com/hc/en-gb/articles/4405551869841-Alchemist-Search-Experiences-Blocks#h_01FCX9MD1CAWAZJ9ZAA7A089XY) about adding links."
+    array: true
+    default:
+      - label: Section Label
+      - label: Section Label
+      - label: Section Label
+---
+
+<style>
+  #{{ block.id }} .theme-jump-option:first-of-type {
+    margin-left: 0 !important;
+  }
+
+  #{{ block.id }} .theme-jump-option:last-of-type {
+    margin-right: 0 !important;
+  }
+
+  {% if Active_Link_Text_Color %}
+    #{{ block.id }} .theme-jump-option.active,
+    #{{ block.id }} .theme-jump-option:hover {
+      color: {{ Active_Link_Text_Color.hex }} !important;
+    }
+  {% else %}
+    #{{ block.id }} .theme-jump-option.active,
+    #{{ block.id }} .theme-jump-option:hover {
+      color: var(--primary) !important;
+    }
+  {% endif %}
+
+  #{{ block.id }} .block-container {
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="genie-block theme-jump py-0 block-container bg-secondary text-body">
+  <div class="container-fluid px-md-5 py-4 d-flex {% if Center_Links %}justify-content-center{% else %}justify-content-end{% endif %} align-items-center">
+    <div class="d-flex {% if Center_Links %}justify-content-center{% else %}justify-content-end{% endif %} align-items-center flex-wrap">
+      {% for link in links %}
+        <a class="{% if Center_Links %}mx-3{% else %}ml-3 ml-md-4{% endif %} label-small-uppercase cursor-pointer theme-jump-option" data-filter="{{ link.block_id }}">
+          {{ link.label }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    $('.theme-jump-option').click(function() {
+      let clicked = $(this).data('filter');
+
+      $('html, body').animate({
+        scrollTop: $(clicked).position().top - 0
+      }, 200);
+
+      event.preventDefault();
+    });
+  });
+</script>

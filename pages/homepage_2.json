@@ -1,0 +1,37 @@
+{
+  "name": "Homepage 2",
+  "category": "Homepage",
+  "blocks": [
+    {
+      "key": "hero_video_or_image"
+    },
+    {
+      "key": "text_block_2_column"
+    },
+    {
+      "key": "multiple_images_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" },
+        "Card_Background_Color": { "palette": "body-bg" }
+      }
+    },
+    {
+      "key": "featured_variants"
+    },
+    {
+      "key": "testimonials_text_only",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "video_swiper"
+    },
+    {
+      "key": "faq_with_categories"
+    },
+    {
+      "key": "mailchimp"
+    }
+  ]
+}

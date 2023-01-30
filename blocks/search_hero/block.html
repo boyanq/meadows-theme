@@ -1,0 +1,638 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+    default:
+      asset: images/waves.jpg
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Remove_Background_Image_Overlay:
+    group: design
+    label: Remove dark overlay on images
+    hint: By default, a dark overlay is added to the background image to make text more readable.
+    type: Boolean
+  Center_Text:
+    group: layout
+    label: Align text to the centre
+    type: Boolean
+  Full_Screen_Height:
+    group: layout
+    label: Increase block size to full screen
+    type: Boolean
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Button_Color:
+    group: design
+    label: Button colour
+    type: color
+    default:
+      palette: primary
+  Button_Text_Color:
+    group: design
+    label: Button text colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Dropdown_Background_Color:
+    group: design
+    label: Search dropdown background colour
+    type: color
+    default:
+      r: 255
+      g: 255
+      b: 255
+  Dropdown_Text_Color:
+    group: design
+    label: Search dropdown text colour
+    type: color
+    default:
+      r: 0
+      g: 0
+      b: 0
+  Logo:
+    group: content
+    label: Logo
+    hint: Recommended minimum width 405px.
+    type: Image
+    default:
+      asset: images/bayou-light.png
+  Increase_Logo_Size:
+    group: design
+    label: Increase size of logo
+    type: Boolean
+  Show_Logo:
+    group: content
+    label: Show logo
+    type: Boolean
+    default: true
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Search Experiences
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Search_Results_Page_Url:
+    group: content
+    label: URL of search results page
+    hint: The search query must be linked to a page with a Search Page block. [Learn more](https://support.easol.com/hc/en-gb/articles/4405551869841-Alchemist-Search-Experiences-Blocks#h_01FCX9KYR5K6CN075PWVKTP87C).
+    type: String
+  Button_Text:
+    group: content
+    label: Search button text
+    type: String
+    default: Search
+  Show_Promotion_Filter:
+    group: content
+    label: Enable search by active promotions
+    type: Boolean
+  Show_Category_Filter:
+    group: content
+    label: Enable search by experience category
+    type: Boolean
+    default: true
+  Show_Subcategory_Filter:
+    group: content
+    label: Enable search by experience subcategory
+    type: Boolean
+  Show_Country_Filter:
+    group: content
+    label: Enable search by experience country
+    type: Boolean
+    default: true
+  Show_Departure_Month_Filter:
+    group: content
+    label: Enable search by experience departure month
+    type: Boolean
+    default: true
+  Show_Departure_Year_Filter:
+    group: content
+    label: Enable search by experience departure year
+    type: Boolean
+  Show_Duration_Filter:
+    group: content
+    label: Enable search by experience duration
+    type: Boolean
+---
+
+{% assign filter_count = 0 %}
+
+{% if Show_Country_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Category_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Subcategory_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Departure_Month_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Departure_Year_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Duration_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+{% if Show_Promotion_Filter %}
+  {% assign filter_count = filter_count | plus: 1 %}
+{% endif %}
+
+<style>
+  #{{ block.id }} .search-hero-container {
+    min-height: 43rem;
+    {% if Background_Image %}
+      background-image: {% unless Remove_Background_Image_Overlay %}linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%),{% endunless %} url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+    {% if Full_Screen_Height %}
+      min-height: calc(100vh - var(--menu-height));
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .search-hero-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+
+  #{{ block.id }} .btn-search {
+    {% if Button_Text_Color %}
+      color: {{ Button_Text_Color }} !important;
+    {% endif %}
+    {% if Button_Color %}
+      border: solid 1px {{ Button_Color.hex }} !important;
+      background-color: {{ Button_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .search-hero-header {
+    max-width: 66rem;
+  }
+
+  #{{ block.id }} .search-hero-text {
+    max-width: 43rem;
+  }
+
+  #{{ block.id }} .search-hero .filters-select {
+    position: relative;
+    display: block;
+    padding: 1rem 2.5rem 1rem 1.3rem;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    height: 4rem;
+  }
+
+  #{{ block.id }} .search-hero .filters .btn-search {
+    height: 4rem;
+  }
+
+  #{{ block.id }} .search-hero .filters-select:after {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    content: '';
+  }
+
+  #{{ block.id }} .search-hero .filters-select:not(.first-of-type) {
+    border-left: solid 1px #EDEDF0;
+  }
+
+  #{{ block.id }} .search-hero .filters-open {
+    position: absolute;
+    top: calc(100% + 0px);
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+    z-index: 20;
+  }
+
+  #{{ block.id }} .search-hero .filters-open ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+
+  #{{ block.id }} .search-hero .filters-open ul li {
+    padding: 1rem 1.3rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  #{{ block.id }} .search-hero .hover-arrow-right:hover span {
+    color: var(--primary) !important;
+  }
+
+  #{{ block.id }} .search-hero .btn-search:focus {
+    outline: none;
+  }
+
+  #{{ block.id }} .search-hero .filters-select:focus {
+    outline: none;
+    border-bottom: solid 1px #EDEDF0;
+  }
+
+  #{{ block.id }} .search-hero-widget-container {
+    right: 0;
+    bottom: 0;
+  }
+
+  {% if Show_Subcategory_Filter %}
+    @media (min-width: 576px) {
+      #{{ block.id }} .search-hero .filter-item-outer {
+        width: 17rem;
+      }
+    }
+  {% else %}
+    @media (min-width: 576px) {
+      #{{ block.id }} .search-hero .filter-item-outer {
+        width: 13rem;
+      }
+    }
+  {% endif %}
+
+  {% if Increase_Logo_Size %}
+    #{{ block.id }} .search-hero-logo {
+      width: 100%;
+      max-width: 15rem;
+      max-height: 15rem;
+    }
+  {% else %}
+    #{{ block.id }} .search-hero-logo {
+      width: 100%;
+      max-width: 7rem;
+      max-height: 7rem;
+    }
+  {% endif %}
+
+  {% if Show_Logo == false %}
+    #{{ block.id }} .search-hero-logo {
+      display: none;
+    }
+  {% endif %}
+</style>
+
+{% if Dropdown_Background_Color %}
+  <style>
+    #{{ block.id }} .search-hero .filters-select {
+      background-color: {{ Dropdown_Background_Color.hex }};
+    }
+
+    #{{ block.id }} .search-hero .filters-open {
+      background-color: {{ Dropdown_Background_Color.hex }};
+    }
+  </style>
+{% endif %}
+
+{% if Dropdown_Text_Color %}
+  <style>
+    #{{ block.id }} .search-hero .filters-select:after {
+      border-top: 5px solid {{ Dropdown_Text_Color.hex }};
+    }
+
+    #{{ block.id }} .search-hero .filters-open {
+      color: {{ Dropdown_Text_Color.hex }};
+    }
+
+    #{{ block.id }} .search-hero .filters-select {
+      color: {{ Dropdown_Text_Color.hex }};
+    }
+  </style>
+{% endif %}
+
+<section class="genie-block search-hero py-0">
+  <div class="search-hero-container container-fluid px-md-5 d-flex flex-column {% if Center_Text %}justify-content-center{% else %}justify-content-end{% endif %}">
+    <div class="search-hero-inner py-4 py-md-5 position-relative {% if Center_Text %}d-flex flex-column align-items-center text-center{% endif %}">
+      {% if Logo %}
+        <img class="mb-5 search-hero-logo" src="{{ Logo.thumbnail_url }}" alt="{{ Logo.name }}" />
+      {% endif %}
+
+      {% if Header %}
+        <h1 class="{% if Text %}mb-3{% else %}mb-5{% endif %} search-hero-header w-100">
+          {{ Header }}
+        </h1>
+      {% endif %}
+
+      {% if Text %}
+        <div class="text-big mb-5 search-hero-text w-100 text-field">
+          {{ Text }}
+        </div>
+      {% endif %}
+
+      <div class="filters">
+        <div class="filters-wrapper {% if filter_count < 5 %}d-md-flex{% endif %} justify-content-start">
+          <div class="filters-wrapper-selects d-sm-flex flex-wrap">
+            {% if Show_Country_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="countrySelect" data-filteron="country">
+                  <span class="text-nowrap">
+                    All countries
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-country"></div>
+              </div>
+            {% endif %}
+
+            {% if Show_Category_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="categorySelect" data-filteron="category">
+                  <span class="text-nowrap">
+                    All categories
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-category"></div>
+              </div>
+            {% endif %}
+
+            {% if Show_Subcategory_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="subcategorySelect" data-filteron="subcategory">
+                  <span class="text-nowrap">
+                    All subcategories
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-subcategory"></div>
+              </div>
+            {% endif %}
+
+            {% if Show_Departure_Month_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="monthSelect" data-filteron="departure_month">
+                  <span class="text-nowrap">
+                    All months
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-month"></div>
+              </div>
+            {% endif %}
+
+            {% if Show_Departure_Year_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="yearSelect" data-filteron="departure_year">
+                  <span class="text-nowrap">
+                    All years
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-year"></div>
+              </div>
+            {% endif %}
+
+            {% if Show_Duration_Filter %}
+            <div class="filter-item-outer position-relative flex-grow-1">
+              <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="durationSelect" data-filteron="duration">
+                <span class="text-nowrap">
+                  All durations
+                </span>
+              </button>
+
+              <div class="filters-open filters-open-duration"></div>
+            </div>
+            {% endif %}
+
+            {% if Show_Promotion_Filter %}
+              <div class="filter-item-outer position-relative flex-grow-1">
+                <button class="filters-select label-big text-uppercase text-left w-100 d-flex align-items-center" id="promotionSelect" data-filteron="active_promotion">
+                  <span class="text-nowrap">
+                    All prices
+                  </span>
+                </button>
+
+                <div class="filters-open filters-open-promotion"></div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div>
+            <button class="btn-search button button-primary-solid mt-3 {% if filter_count < 5 %} mt-md-0 {% endif %}" onclick="searchClick()">
+              {{ Button_Text }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* SETUP ARRAYS */
+  var country = [],
+      category = [],
+      subcategory = [];
+      departure_month = [];
+      departure_year = [];
+      duration = [];  
+      active_promotion = ['All Prices', 'On Offer', 'Full Price']; 
+</script>
+
+{% for product in company.products %}
+  {% assign today_date = 'now' | date: '%s' %}
+  {% assign depart_date = product.depart_on | date: '%s' %}
+
+  {% if depart_date > today_date %}
+    <script>
+      country.push('{{ product.country }}');
+      category.push('{{ product.category }}');
+      subcategory.push('{{ product.subcategory }}');
+      departure_month.push('{{ product.depart_on | date: "%B" }}');
+      departure_year.push('{{ product.depart_on | date: "%Y" }}');
+      duration.push('{{ product.duration  | split: " " | first }}');
+    </script>
+  {% endif %}
+{% endfor %}
+
+<script>
+  var uniqCountries = new Set(country);
+  country = [...uniqCountries];
+  country.sort();
+  country.unshift('All Countries');
+
+  var uniqCategories = new Set(category);
+  category = [...uniqCategories];
+  category.sort();
+  category.unshift('All Categories');
+
+  var uniqSubcategory = new Set(subcategory);
+  subcategory = [...uniqSubcategory];
+  subcategory.sort();
+  subcategory.unshift('All Subcategories');
+
+  var uniqMonths = new Set(departure_month);
+  departure_month = [...uniqMonths];
+  var monthNames = {
+    "January": 1,
+    "February": 2,
+    "March": 3,
+    "April": 4,
+    "May": 5,
+    "June": 6,
+    "July": 7,
+    "August": 8,
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12
+  };
+
+  departure_month.sort(function(a, b) {
+    return monthNames[a] - monthNames[b];
+  });
+
+  departure_month.unshift('All Months');
+
+  var uniqYears = new Set(departure_year);
+  departure_year = [...uniqYears];
+  departure_year.sort();
+  departure_year.unshift('All Years');
+
+  var uniqDurations = new Set(duration);
+  duration = [...uniqDurations];
+  duration.sort(function(a, b){return a-b});
+  duration = duration.map(i => i + ' nights');
+  duration.unshift('All Durations');
+
+  function filterClick(clicked) {
+    var selectedFilter = clicked;
+    var filterId = $(selectedFilter).attr('id');
+    var filterArray = $(selectedFilter).closest('.filter-item-outer').find('.filters-select').data('filteron');
+    var newText = eval(filterArray)[filterId];
+
+    $(selectedFilter).closest('.filter-item-outer').find('span').html(newText);
+
+    jQuery('.filters-open').html('');
+  }
+
+  function searchClick() {
+    var searchString = '{{ Search_Results_Page_Url }}?'
+    var searchOption;
+    var searchTag;
+    var searchCount = 0;
+
+    $( ".filters-select" ).each(function() {
+      searchOption = $(this).find('span').html();
+
+      if (searchOption.indexOf("All") < 0) {
+        searchTag = $(this).data('filteron')
+
+        if (searchTag == 'duration') {
+          /* fix nights vs days */
+          searchOption = +searchOption.replace(' nights','')+1;
+        }
+
+        if (searchTag == 'departure_month') {
+          /* fix full date vs abbrev date */
+          searchOption = searchOption.slice(0,3);
+        }
+
+        if (searchTag == 'departure_year') {
+          /* create date range */
+          var selectedYear = Number(searchOption); 
+          var endDate = (selectedYear + 1)+"-01-01";
+          var startDate = (selectedYear - 1)+"-12-31";
+          fullStartDate = new Date(startDate);
+          var currentDate = new Date();
+
+          if (fullStartDate < currentDate) {
+            var searchStartDate = "{{ 'now' | date: '%F' }}"
+          } else {
+            var searchStartDate = startDate;
+          }
+
+          yearSearchString = "search[departure_date][greater_than]="+searchStartDate+"&search[departure_date][less_than]="+endDate;
+        }
+
+        if (searchCount == 0) {
+          if (searchTag == 'departure_year') {
+            searchString += yearSearchString;
+          } else {
+            searchString += 'search['+searchTag+']='+searchOption;
+          }
+        } else {
+          if (searchTag == 'departure_year') {
+            searchString += '&'+yearSearchString;
+          } else {
+            searchString += '&search['+searchTag+']='+searchOption;
+          }
+        }
+
+        searchCount++;
+      }
+    });
+
+    searchString = searchString.replace('[duration]','[duration][equal_to]').replace('On Offer','true').replace('Full Price','false').replace(' ','+');
+    document.location = searchString;
+  }
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    jQuery('.filters-select').click(function () {
+      if (jQuery(this).next('.filters-open').find('ul').length !== 0) {
+        jQuery('.filters-open').html('');
+      } else {
+        var counter = 0;
+        var filterArray = jQuery(this).data('filteron');
+
+        jQuery('.filters-open').html('');
+        jQuery(this).next('.filters-open').html('<ul></ul>');
+
+        while (counter < eval(filterArray).length) {
+          jQuery(this).next('.filters-open').find('ul').append('<li onclick="filterClick(this)" id="' + counter + '">' + eval(filterArray)[counter] + '</li>');
+          counter++;
+        }
+      }
+    });
+  });
+</script>

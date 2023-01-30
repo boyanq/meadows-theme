@@ -1,0 +1,523 @@
+<style>
+  .modifier-overlay-labels {
+    top: 0;
+  }
+
+  body {
+    overflow: unset !important;
+    background-color: #f7f7f9;
+    color: #000;
+  }
+
+  .small-text p {
+    font-size: 1rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .template {
+    display: none;
+  }
+
+  .rules-validation-message {
+    text-transform: uppercase;
+    padding: 0.416em 0.833em;
+    color: #721c24;
+    background-color: #f8d7da;
+    font-size: 0.8rem;
+    line-height: 1.33;
+    letter-spacing: 0.0833em;
+    margin-top: 0.6rem;
+  }
+
+  .rules-validation-message:not(.hidden) {
+    display: inline-block;
+  }
+
+  .remove-selection {
+    font-size: 0.7rem;
+    line-height: 1.33;
+    letter-spacing: 0.166em;
+    text-transform: uppercase;
+    padding: 0 2rem;
+  }
+
+  .fixed-top ~ div .selections-cart-outer {
+    top: var(--menu-height);
+  }
+
+  @media (max-width: 991.98px) {
+    .selections-cart-outer {
+      position: fixed !important;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1031;
+      border: none;
+      pointer-events: none;
+      padding: 0 !important;
+    }
+
+    .selections-body-wrapper {
+      background-color: #fff;
+      flex: 1 100%;
+      overflow-x: hidden;
+      transform: translateY(100%);
+      transition: transform 0.2s ease-out;
+      height: 100%;
+    }
+
+    .selections-footer {
+      width: 100%;
+      border-top: 1px solid #eceeef;
+      z-index: 1032;
+      pointer-events: all;
+      position: fixed;
+      bottom: 0;
+    }
+
+    .selections-cart-outer.show .selections-body-wrapper {
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .selections-cart-outer.show .toggle-mobile-cart {
+      display: none !important;
+    }
+  }
+
+  .modifier-row {
+    border-top: 1px solid #eceeef;
+  }
+
+  .modifier--input input[type=checkbox] {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .modifier--input input[type=checkbox]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+    top: 0;
+    left: 0;
+    border: 1px solid #000;
+    border-color: rgba(0,0,0,0.25);
+    background-color: white;
+  }
+
+  .modifier--input input[type=checkbox][disabled] {
+    cursor: not-allowed;
+  }
+
+  .modifier--input input[type=checkbox][disabled]:before {
+    background-color: #e9ecef;
+  }
+
+  .modifier--input input[type=checkbox]:checked:after {
+    content: "";
+    display: block;
+    width: .4rem;
+    height: .8rem;
+    border: solid #000;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: .15rem;
+    left: .4rem;
+  }
+
+  .modifier-group-cart:last-of-type {
+    margin-bottom: 0!important;
+  }
+</style>
+
+{% if flash.notice %}
+  <div class="alert alert-success text-center m-0">
+    <p class="m-0">
+      {{ flash.notice }}
+    </p>
+  </div>
+{% endif %}
+
+{% if flash.alert %}
+  <div class="alert alert-danger text-center m-0">
+    <p class="m-0">
+      {{ flash.alert }}
+    </p>
+  </div>
+{% endif %}
+
+<div class="selections-page">
+  <div class="container selections-hero pt-4 pb-2">
+    <div class="mb-2">
+      <a href="https://myeasol.com/bookings" class="label-small-uppercase">
+        <u>
+          BACK TO BOOKINGS
+        </u>
+      </a>
+    </div>
+
+    <div class="row mx-0">
+      <div class="col-md-6 px-0">
+        <div class="img-aspect img-aspect-xwide">
+          <img src="{{ item.product.hero_image.medium_url }}" />
+        </div>
+      </div>
+
+      <div class="col-md-6 px-0 bg-white p-4 d-flex align-items-center justify-content-center">
+        <div class="experience-info text-center">
+          <h3 class="mb-2">
+            {{ item.product.name }}
+          </h3>
+
+          <div class="d-flex justify-content-center">
+            {% if item.product.dates %}
+              <p class="mb-0 text-uppercase label-big">
+                {{ item.product.dates }}
+              </p>
+            {% endif %}
+
+            {% if item.product.dates and item.variant.name %}
+              <span class="px-3">
+                ·
+              </span>
+            {% endif %}
+
+            {% if item.variant.name %}
+              <p class="mb-3 text-uppercase label-big">
+                {{ item.variant.name }}
+              </p>
+            {% endif %}
+          </div>
+
+          {% if item.guest_name %}
+            <p class="label-small text-uppercase">
+              Selections for {{ item.guest_name }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container selections-container pb-5">
+    {% form 'item_selections', item %}
+      <div class="row">
+        <div class="col-lg-8 pt-3">
+          {% for group in modifier_groups %}
+            <div class="mb-4 modifier-group bg-white" data-min-selection="{{ group.min_selection }}" data-max-selection="{{ group.max_selection }}" data-id="{{ group.id }}">
+              <div class="p-3">
+                <div class="d-flex align-items-end">
+                  {% if group.name %}
+                    <h6 class="pr-4 text-uppercase label-small">
+                      {{ group.name }}
+                    </h6>
+                  {% endif %}
+
+                  <p class="label-small">
+                    (Selected <span data-group-selected-count="{{ group.id }}"></span>{% if group.max_selection %} of<span>{{ group.max_selection }}</span>{% endif %})
+                  </p>
+                </div>
+
+                {% if group.tagline %}
+                  <div class="small-text">
+                    {{ group.tagline }}
+                  </div>
+                {% endif %}
+
+                <p class="rules-validation-message hidden">
+                  {% if group.rules_validation_message %}
+                    {{ group.rules_validation_message }}
+                  {% endif %}
+                </p>
+              </div>
+
+              <div>
+                {% for modifier in group.modifiers %}
+                  <div class="row mx-0 modifier-row mb-3 mb-md-0">
+                    {% if modifier.image %}
+                      <div class="col-12 col-md-3 px-0">
+                        <div class="img-aspect img-aspect-wide">
+                          <img src="{{ modifier.image.medium_url }}" />
+                        </div>
+
+                        <div class="position-absolute p-3 modifier-overlay-labels">
+                          <div class="d-flex flex-wrap">
+                            {% if modifier.sold_out %}
+                              <p class="label-small label-banner banner-limited">
+                                SOLD OUT
+                              </p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}
+
+                    <div class="col-10 {% if modifier.image %}col-md-8{% else %}col-md-11{% endif %} bg-white px-0">
+                      <div class="modifier-info py-3 p-3">
+                        <h6 class="text-uppercase label-small">
+                          {{ modifier.name }}{% if modifier.start_at or modifier.end_at %} | {% endif %}{% if modifier.start_at %}{{ modifier.start_at | date: "%d-%m-%Y %k:%M" }}{% endif %}{% if modifier.start_at and modifier.end_at %} - {% endif %}{% if modifier.end_at %}{{ modifier.end_at | date: "%d-%m-%Y %k:%M" }}{% endif %}
+                        </h6>
+
+                        <p class="label-small">
+                          {% for contents in modifier.contents %}
+                            <a href="{{ contents.url }}" target="_blank">
+                              {{ contents.name }}
+                            </a>
+                          {% endfor %}
+                        </p>
+
+                        <div class="pt-2">
+                          {{ modifier.tagline }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-2 col-md-1 px-0 d-flex align-items-center justify-content-center">
+                      <div class="modifier--input {% if modifier.sold_out %}modifier-unavailable{% endif %}" {{ modifier.filter_attributes }}>
+                        <span class="radio__input">
+                          <input {{ modifier.checkbox_attributes }} {{ modifier.data_attributes }} data-group-id="{{ group.id }}">
+                          <span class="radio__control"></span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-lg-4">
+          <div class="selections-cart-outer py-3 sticky-top" id="selections-cart">
+            <div class="bg-white p-3 selections-body-wrapper">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="label-small">
+                  YOUR SELECTIONS
+                </h6>
+
+                <a class="d-lg-none" id="close-cart">
+                  <svg width="10" height="10" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0L29 29M29 0L0 29" stroke="black" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </a>
+              </div>
+
+              {% for group in modifier_groups %}
+                <hr>
+
+                <div class="modifier-group-cart mb-3" data-modifier-group-cart="{{ group.id }}">
+                  <p class="label-small mb-3">
+                    Your selections for {{ group.name }}
+                  </p>
+
+                  <div class="template">
+                    <div class="d-flex">
+                      <div>
+                        <a href="#" class="remove-selection" data-modifier-cart-remove>remove</a>
+                      </div>
+
+                      <div>
+                        <p>
+                          <span class="label-small-uppercase" data-modifier-name>
+                            Selection name
+                          </span>
+                        </p>
+
+                        <p class="label-small">
+                          <span class="small" data-modifier-start-end></span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="selections-footer bg-white p-3">
+              <a class="d-block d-lg-none mb-1" id="toggle-mobile-cart">
+                View Selections
+              </a>
+
+              <input type="submit" id="save" value="Confirm my selections" disabled class="button button-primary-solid button-disabled w-100">
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endform %}
+  </div>
+</div>
+
+<script>
+  const inputs = document.querySelectorAll("input[name='modifiers[]']")
+  const groups = document.querySelectorAll('.modifier-group')
+
+  const selectedInputsForGroup = groupId => {
+    return Array.from(inputs).filter(modifierInput => modifierInput.dataset.groupId == groupId && modifierInput.checked)
+  }
+
+  //
+  // Toggle cart view on mobile
+  //
+  const selectionsCart = document.querySelector('#selections-cart')
+  const toggleCartButton = document.querySelector('#toggle-mobile-cart')
+  const toggleCartClose = document.querySelector('#close-cart')
+
+  const openCart = () => {
+    selectionsCart.classList.add('show')
+    toggleCartButton.classList.add('d-none')
+    toggleCartButton.classList.remove('d-block')
+  }
+
+  const closeCart = () => {
+    selectionsCart.classList.remove('show')
+    toggleCartButton.classList.remove('d-none')
+    toggleCartButton.classList.add('d-block')
+  }
+
+  //
+  // Update live "how many are selected in this group" counters
+  //
+  const updateGroupCounters = groupId => {
+    const counters = Array.from(document.querySelectorAll('[data-group-selected-count="' + groupId + '"]'))
+    counters.forEach(counter => counter.innerText = selectedInputsForGroup(groupId).length)
+  }
+
+  //
+  // List currently selected modifiers in cart
+  //
+  const formatStartEnd = (startAt, endAt) => {
+    if (startAt && endAt) {
+      return startAt + ' - ' + endAt
+    }
+
+    return startAt || endAt || null
+  }
+
+  const updateCart = groupId => {
+    const groupCartSection = document.querySelector('[data-modifier-group-cart="' + groupId + '"]')
+    const template = groupCartSection.querySelector('.template')
+
+    Array.from(groupCartSection.querySelectorAll('.modifier-cart')).forEach(element => element.remove())
+
+    selectedInputsForGroup(groupId).forEach(modifierInput => {
+      const newNode = template.cloneNode(true)
+
+      newNode.classList.remove('template')
+      newNode.classList.add('modifier-cart')
+      newNode.querySelector('[data-modifier-name]').innerText = modifierInput.dataset.modifierName
+      newNode.querySelector('[data-modifier-start-end]').innerText = formatStartEnd(modifierInput.dataset.modifierStartAt, modifierInput.dataset.modifierEndAt)
+      newNode.querySelector('[data-modifier-cart-remove]').addEventListener('click', e => {
+        e.preventDefault()
+
+        if (modifierInput.checked) {
+          modifierInput.click()
+        }
+      })
+
+      groupCartSection.appendChild(newNode)
+    })
+  }
+
+  //
+  // Validate selections against group rules, show messages and
+  // enable/disable form submission
+  //
+  const saveButton = document.querySelector('#save')
+
+  const disableSaveButton = () => {
+    saveButton.disabled = true
+    saveButton.classList.add('button-disabled')
+  }
+
+  const enableSaveButton = () => {
+    saveButton.disabled = false
+    saveButton.classList.remove('button-disabled')
+  }
+
+  const showRulesValidationMessageForGroup = groupElement => {
+    groupElement.querySelector('.rules-validation-message').classList.remove('hidden')
+  }
+
+  const hideMessageForGroup = groupElement => {
+    groupElement.querySelector('.rules-validation-message').classList.add('hidden')
+  }
+
+  const setGroupNotValid = groupElement => {
+    groupElement.dataset.isValid = ""
+  }
+
+  const setGroupValid = groupElement => {
+    groupElement.dataset.isValid = true
+  }
+
+  const validateGroup = groupId => {
+    const groupElement = Array.from(groups).find(group => group.dataset.id === groupId)
+    const minSelection = parseInt(groupElement.dataset.minSelection)
+    const maxSelection = parseInt(groupElement.dataset.maxSelection)
+    const selectedCount = selectedInputsForGroup(groupId).length
+
+    hideMessageForGroup(groupElement)
+    setGroupValid(groupElement)
+
+    if (maxSelection) {
+      if (selectedCount > maxSelection) {
+        setGroupNotValid(groupElement)
+        showRulesValidationMessageForGroup(groupElement)
+      }
+    }
+
+    if (minSelection) {
+      if (selectedCount < minSelection) {
+        setGroupNotValid(groupElement)
+        showRulesValidationMessageForGroup(groupElement)
+      }
+    }
+  }
+
+  const validateForm = () => {
+    const nonValidGroups = Array.from(groups).filter(groupElement => !groupElement.dataset.isValid)
+
+    if (nonValidGroups.length === 0) {
+      enableSaveButton()
+    } else {
+      disableSaveButton()
+    }
+  }
+
+  //
+  // do it
+  //
+  inputs.forEach(input => input.addEventListener('change', e => {
+    const groupId = e.target.dataset.groupId
+
+    updateGroupCounters(groupId)
+    updateCart(groupId)
+
+    validateGroup(groupId)
+    validateForm()
+  }))
+
+  document.addEventListener('DOMContentLoaded', () => {
+    toggleCartClose.addEventListener("click", () => { closeCart() })
+    toggleCartButton.addEventListener("click", () => { openCart() })
+
+    groups.forEach(groupElement => {
+      const groupId = groupElement.dataset.id
+
+      updateGroupCounters(groupId)
+      updateCart(groupId)
+
+      validateGroup(groupId)
+    })
+    validateForm()
+  })
+</script>

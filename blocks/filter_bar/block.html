@@ -1,0 +1,123 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+    default:
+      palette: secondary
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Active_Link_Text_Color:
+    group: design
+    label: Active link colour
+    type: color
+    default:
+      palette: primary
+  Center_Links:
+    group: layout
+    label: Align links to the centre
+    type: Boolean
+    default: true
+  Block_Class_To_Filter:
+    group: content
+    label: Block type to filter by
+    hint: Add the common class attribute shared by all the blocks' <section> tags to be filtered. [Learn more](https://support.easol.com/hc/en-gb/articles/4405551869841-Alchemist-Search-Experiences-Blocks#h_01FCX9M5BCXKHF5N7V5SK5ZD56).
+    type: String
+  links:
+    type: filter_link
+    label: Links
+    hint: "[Learn more](https://support.easol.com/hc/en-gb/articles/4405551869841-Alchemist-Search-Experiences-Blocks#h_01FCX9M5BCXKHF5N7V5SK5ZD56) about adding links."
+    array: true
+    default:
+      - label: Section Label
+      - label: Section Label
+      - label: Section Label
+---
+
+<style>
+  {% if Active_Link_Text_Color %}
+    #{{ block.id }} .theme-filter-option.active, .theme-filter-option:hover {
+      color: {{ Active_Link_Text_Color.hex }} !important;
+    }
+  {% else %}
+    #{{ block.id }} .theme-filter-option.active, .theme-filter-option:hover {
+      color: var(--primary) !important;
+    }
+  {% endif %}
+
+  #{{ block.id }} .theme-filter-option:first-of-type {
+    margin-left: 0 !important;
+  }
+
+  #{{ block.id }} .block-container {
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="genie-block theme-filter py-0 block-container bg-secondary text-body">
+  <div class="container-fluid px-md-5 py-4 d-flex {% if Center_Links %}justify-content-center{% else %}justify-content-end{% endif %} align-items-center">
+    <div class="d-flex {% if Center_Links %}justify-content-center{% else %}justify-content-end{% endif %} align-items-center flex-wrap">
+      <a class="ml-5 label-small-uppercase cursor-pointer theme-filter-option active" data-filter="#all">
+        All
+      </a>
+
+      {% for link in links %}
+        <a class="ml-5 label-small-uppercase cursor-pointer theme-filter-option" data-filter="{{ link.block_id }}">
+          {{ link.label }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    $('.theme-filter-option').click(function() {
+      let showSection = $(this).data('filter');
+
+      $('.theme-filter-option').removeClass('active');
+      $(this).addClass('active');
+
+      if (showSection == '#all') {
+        $('.{{ Block_Class_To_Filter }}').removeClass('d-none');
+      } else {
+        $('.{{ Block_Class_To_Filter }}').addClass('d-none');
+        $(showSection).find('.{{ Block_Class_To_Filter }}').removeClass('d-none');
+      }
+    });
+  });
+</script>

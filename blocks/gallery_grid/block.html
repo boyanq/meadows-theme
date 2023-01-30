@@ -1,0 +1,202 @@
+---
+attributes:
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>Creating experiences is an art. Whether you’re launching a new idea to share your passion with the world, or maybe you’re taking your business to the next level. No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    hint: Opens a lightbox where customers can scroll through full gallery.
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: VIEW ALL
+  cards_per_row:
+    group: layout
+    label: Number of images per row
+    type: range
+    min: 2
+    max: 4
+    step: 1
+    default: 4
+    unit: images
+  Images:
+    group: content
+    label: Gallery images
+    hint: Recommended minimum width 1200px.
+    type: Image
+    array: true
+    default:
+      - asset: images/sky.jpg
+      - asset: images/steps.jpg
+      - asset: images/beach.jpg
+      - asset: images/sea.jpg
+      - asset: images/tree.jpg
+      - asset: images/grass.jpg
+      - asset: images/bay.jpg
+      - asset: images/cliff.jpg
+---
+
+<style>
+  @media (max-width: 767px) {
+    .sl-next, .sl-next svg, .sl-prev, .sl-prev svg {
+      width: 30px !important;
+    }
+  }
+
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .row {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  #{{ block.id }} .button {
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .view-gallery-button circle,
+  #{{ block.id }} .view-gallery-button path {
+    {% if Text_Color %}
+      stroke: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  .sl-{{ block.id }} circle,
+  .sl-{{ block.id }} path {
+    {% if Text_Color %}
+      stroke: {{ Text_Color.hex }};
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container gallery-grid">
+  <div class="container">
+    {% if Header %}
+      <h2 class="text-center {% if Text %}mb-4{% else %}mb-5{% endif %}">
+        {{ Header }}
+      </h2>
+    {% endif %}
+
+    {% if Text %}
+      <div class="mb-5 text-center max-width-med mx-auto text-field">
+        {{ Text }}
+      </div>
+    {% endif %}
+
+    {% if Show_Button %}
+      <div class="mb-5 text-center d-flex align-items-center justify-content-center cursor-pointer view-gallery-button">
+        <p class="button mr-2 text-primary">
+          {{ Button_Text }}
+        </p>
+
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="15" cy="15" r="14.5"/>
+          <path d="M13.5 10.5L17.5 15.25L13.5 20"/>
+        </svg>
+      </div>
+    {% endif %}
+
+    <div class="row">
+      {% for image in Images %}
+        <div class="col-6 {% if cards_per_row == '2' %}col-md-6{% elsif cards_per_row == '3' %}col-md-4{% else %}col-md-3{% endif %} px-2 mb-3">
+          <a class="gallery-img" href="{{ image.xxlarge_url }}">
+            <div class="img-aspect">
+              <img class="" src="{{ image.medium_url }}" alt="{{ image.name }}" />
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var $gallery{{ block.id | remove: '-' }} = new SimpleLightbox('#{{ block.id }} .gallery-img', {
+      showCounter: false,
+    });
+
+    $gallery{{ block.id | remove: '-' }}.on('shown.simplelightbox', function () {
+      $('.sl-prev').html('<svg class="sl-{{ block.id }}" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19.5" transform="rotate(180 20 20)"/><path d="M22 26L16.6667 19.6667L22 13.3333"/></svg>');
+      $('.sl-next').html('<svg class="sl-{{ block.id }}" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="19.5"/><path d="M17.9999 14L23.3333 20.3333L17.9999 26.6667"/></svg>');
+    });
+
+    $('#{{ block.id }} .view-gallery-button').click(function () {
+      $gallery{{ block.id | remove: '-' }}.open();
+    });
+  });
+</script>

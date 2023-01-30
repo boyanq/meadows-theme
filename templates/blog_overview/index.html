@@ -1,0 +1,144 @@
+{% assign One_Card_Per_Row = false %}
+{% assign Two_Cards_Per_Row = false %}
+
+<div class="container mt-5 mb-5">
+  {% for post in posts %} 
+    {% if forloop.first == true %}
+      <div class="text-image-card row mx-0 mb-4">
+        {% if post.hero_image != blank %}
+          <div class="img-aspect img-aspect-wide col-md-6 px-0">
+            <img src="{{ post.hero_image.medium_url }}" alt="{{ post.hero_image.name }}" />
+          </div>
+        {% endif %}
+
+        <div class="col-md-6 justify-content-between px-lg-5 bg-secondary text-body-color p-4 py-lg-5 flex-grow-1 d-flex flex-column">
+          {% if post.published_at or post.author.name %}
+            <p class="mb-3 label-small post-info d-flex align-items-center">
+              {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+              {% endif %}
+
+              {% if post.author.name %}
+                <span class="post-autor">
+                  {{ post.author.name }}
+                </span>
+              {% endif %}
+
+              {% if post.published_at and post.author.name %}
+                <span class="px-3">
+                  &#183;
+                </span>
+              {% endif %}
+
+              {% if post.published_at %}
+                <span class="post-published">
+                  {{ post.published_at | date: "%a %e %b %Y" }}
+                </span>
+              {% endif %}
+            </p>
+          {% endif %}
+
+          <div>
+            {% if post.title %}
+              <h4 class="mb-3">
+                {{ post.title }}
+              </h4>
+            {% endif %}
+
+            {% if post.tagline %}
+              <p class="post-tagline">
+                {{ post.tagline }}
+              </p>
+            {% endif %}
+          </div>
+
+          <a href="{{ post.url }}" class="d-flex align-items-center button hover-arrow-right cursor-pointer mt-3">
+            <span class="mr-2 text-body">
+              READ
+            </span>
+
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="15" cy="15" r="14.5" stroke="var(--body-color)"></circle>
+              <path d="M13.5 10.5L17.5 15.25L13.5 20" stroke="var(--body-color)"></path>
+            </svg>   
+          </a>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="row">
+    {% for post in posts %} 
+      {% unless forloop.first == true %}
+        <div class="{% if One_Card_Per_Row %}col-12{% elsif Two_Cards_Per_Row %}col-md-6{% else %}col-md-6 col-lg-4{% endif %} mb-4">
+          <div class="{% if One_Card_Per_Row %}row mx-0{% else %}h-100 d-flex flex-column{% endif %}">
+            {% if post.hero_image != blank %}
+              <div class="img-aspect img-aspect-wide {% if One_Card_Per_Row %}col-md-6 px-0{% endif %}">
+                <img src="{{ post.hero_image.medium_url }}" alt="{{ post.hero_image.name }}" />
+              </div>
+            {% endif %}
+
+            <div class="{% if One_Card_Per_Row %}col-md-6 px-lg-5 py-lg-5{% endif %} justify-content-between bg-secondary text-body-color p-4 flex-grow-1 d-flex flex-column">
+              {% if post.published_at or post.author.name %}
+                <p class="mb-3 label-small post-info d-flex align-items-center">
+                  {% if post.author.avatar.thumbnail_url and Hide_Author_Images != true %}
+                    <img class="blog-author-image mr-3" alt="{{ post.author.name }}" src="{{ post.author.avatar.thumbnail_url }}" />
+                  {% endif %}
+
+                  {% if post.author.name %}
+                    <span class="post-autor">
+                      {{ post.author.name }}
+                    </span>
+                  {% endif %}
+
+                  {% if post.published_at and post.author.name %}
+                    <span class="px-3">
+                      &#183;
+                    </span>
+                  {% endif %}
+
+                  {% if post.published_at %}
+                    <span class="post-published">
+                      {{ post.published_at | date: "%a %e %b %Y" }}
+                    </span>
+                  {% endif %}
+                </p>
+              {% endif %}
+
+              <div>
+                {% if post.title %}
+                  <h4 class="mb-3">
+                    {{ post.title }}
+                  </h4>
+                {% endif %}
+
+                {% if post.tagline %}
+                  <p class="post-tagline">
+                    {{ post.tagline }}
+                  </p>
+                {% endif %}
+              </div>
+
+              <a href="{{ post.url }}" class="d-flex align-items-center button hover-arrow-right cursor-pointer mt-3">
+                <span class="mr-2 text-body">
+                  READ
+                </span>
+
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="14.5" stroke="var(--body-color)"></circle>
+                  <path d="M13.5 10.5L17.5 15.25L13.5 20" stroke="var(--body-color)"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+
+  <div class="mt-4 d-flex align-items-center justify-content-center">
+    <div class="pagination label-big">
+      {{ paginate | default_pagination }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+{
+  "name": "Location",
+  "category": "Info",
+  "blocks": [
+    {
+      "key": "hero_image"
+    },
+    {
+      "key": "multiple_images_and_text"
+    },
+    {
+      "key": "single_image_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "single_image_and_text",
+      "attributes": {
+        "Background_Color": { "palette": "secondary" },
+        "Image_Right": true
+      }
+    },
+    {
+      "key": "faq_without_categories"
+    },
+    {
+      "key": "gallery_grid",
+      "attributes": {
+        "Header": "",
+        "Text": "",
+        "Show_Button": false,
+        "Background_Color": { "palette": "secondary" }
+      }
+    },
+    {
+      "key": "testimonials_text_only"
+    }
+  ]
+}

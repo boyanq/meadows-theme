@@ -1,0 +1,21 @@
+{
+  "key": "logo",
+  "name": "Logo",
+  "attributes": [
+    {
+      "name": "image",
+      "label": "Image",
+      "type": "image"
+    },
+    {
+      "name": "link",
+      "label": "Link",
+      "type": "string"
+    },
+    {
+      "name": "label",
+      "label": "Image alt text",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+---
+attributes:
+  Background_Image:
+    group: design
+    label: Background image
+    hint: Recommended minimum width 1920px.
+    type: Image
+  Mobile_Background_Image:
+    type: image
+    label: Mobile background image
+    hint: Override background image on mobiles and tablets. Recommended minimum width 960px.
+    group: mobile
+  Background_Color:
+    group: design
+    label: Background colour
+    type: color
+  Text_Color:
+    group: design
+    label: Text colour
+    type: color
+    default:
+      palette: body-color
+  Card_Background_Image:
+    group: design
+    label: Card background image
+    hint: Recommended minimum width 720px.
+    type: Image
+  Card_Background_Color:
+    group: design
+    label: Card background colour
+    type: color
+    default:
+      palette: secondary
+  Card_Button_And_Subheader_Color:
+    group: design
+    label: Card button and subtitle color
+    type: color
+    default:
+      palette: primary
+  Image:
+    group: content
+    label: Image
+    hint: Recommended minimum width 720px.
+    type: Image
+    default: 
+      asset: images/cliff.jpg
+  Subheader:
+    group: content
+    label: Subtitle
+    type: String
+    default: Creating experiences is an art
+  Header:
+    group: content
+    label: Header
+    type: String
+    default: Make your moments stand out
+  Text:
+    group: content
+    label: Text
+    type: Text
+    default: <p>No matter what you are building – carefully craft every moment of your story online. Brands built with love are the ones that stand out.</p>
+  Show_Button:
+    group: content
+    label: Display button
+    type: Boolean
+    default: true
+  Button_Text:
+    group: content
+    label: Button text
+    type: String
+    default: LEARN MORE
+  Button_Link:
+    group: content
+    label: Button link
+    type: link
+  Image_Right:
+    group: layout
+    label: Display the image on the right
+    type: Boolean
+  padding_top:
+    group: design
+    label: Block padding top
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+  padding_bottom:
+    group: design
+    label: Block padding bottom
+    type: range
+    min: 0
+    max: 500
+    step: 10
+    default: 80
+    unit: px
+---
+
+<style>
+  #{{ block.id }} .block-container {
+    padding-top: {{ padding_top }}px;
+    padding-bottom: {{ padding_bottom }}px;
+    {% if Background_Image %}
+      background-image: url('{{ Background_Image.xxlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Text_Color %}
+      color: {{ Text_Color.hex }};
+    {% endif %} 
+    {% if Background_Color %}
+      background-color: {{ Background_Color.hex }};
+    {% endif %}
+  }
+
+  #{{ block.id }} .text-section {
+    {% if Card_Background_Image %}
+      background-image: url('{{ Card_Background_Image.xlarge_url }}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+    {% if Card_Background_Color %}
+      background-color: {{ Card_Background_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .subheader {
+    {% if Card_Button_And_Subheader_Color %}
+      color: {{ Card_Button_And_Subheader_Color.hex }} !important;
+    {% endif %}
+  }
+
+  #{{ block.id }} .button {
+    {% if Card_Button_And_Subheader_Color %}
+      color: {{ Card_Button_And_Subheader_Color.hex }} !important;
+      border: solid 1px {{ Card_Button_And_Subheader_Color.hex }} !important;
+    {% endif %}
+  }
+
+  {% if Mobile_Background_Image %}
+    @media (max-width: 767px) {
+      #{{ block.id }} .block-container {
+        background-image: url('{{ Mobile_Background_Image.large_url }}');
+      }
+    }
+  {% endif %}
+</style>
+
+<section class="block-container single-image-text">
+  <div class="container">
+    <div class="row mx-0">
+      <div class="col-md-6 px-0 d-flex">
+        {% if Image %}
+          <div class="img-aspect img-aspect-wide">
+            <img src="{{ Image.medium_url }}" alt="{{ Image.name }}" />
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="text-section col-md-6 d-flex flex-column justify-content-center pt-4 p-md-4 p-lg-5 {% if Image_Right %}order-md-first{% endif %}">
+        {% if Subheader %}
+          <p class="subheader label-big text-primary mb-4">
+            {{ Subheader }}
+          </p>
+        {% endif %}
+
+        {% if Header %}
+          <h2 class="mb-4">
+            {{ Header }}
+          </h2>
+        {% endif %}
+
+        {% if Text %}
+          <div class="text-field">
+            {{ Text }}
+          </div>
+        {% endif %}
+
+        {% if Show_Button %}
+          <div>
+            <a class="button button-primary-outline mt-4" href="{{ Button_Link.url }}"{% if Button_Link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              {{ Button_Text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
